@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>New Registration</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        Hi Admin, <br><br>
+        
+        A new group registration has been submitted. <br>
+        
+        <b>Group ID: </b>{{groupID}}<br>
+        <b>League: </b>{{league}}<br>
+        <b>League is flexible: </b>{{flexibleL}}<br>
+        <b>Team name: </b>{{teamName}}<br>
+        <b>Applicants: </b><span id="num">{{num}}</span><br><br>
+
+<!--        <script>
+            var num = parseInt(document.getElementById("num").innerHTML);
+            
+            for (i = 1; i <= num; i++) {
+                var member = document.createElement("span");
+                var bMember = document.createElement("b");
+                var memberTxt = document.createTextNode("Team Member" + i);
+                bMember.appendChild(memberTxt);
+                member.appendChild(bMember);
+                member.appendChild(document.createElement("br"));
+                
+                var memName = document.createElement("span");
+                var bName = document.createElement("b");
+                var nameTxt = document.createTextNode("{{firstName" + i + "}} {{lastName" + i + "}}");
+                bName.appendChild(document.createTextNode("Name: "));
+                memName.appendChild(bName);
+                memName.appendChild(nameTxt);
+                memName.appendChild(document.createElement("br"));
+                
+                var address = document.createElement("span");
+                var bAddress = document.createElement("b");
+                var addressTxt = document.createTextNode("{{address" + i + "}}");
+                bAddress.appendChild(document.createTextNode("Address: "));
+                address.appendChild(bAddress);
+                address.appendChild(addressTxt);
+                address.appendChild(document.createElement("br"));
+                
+                var city = document.createElement("span");
+                var bCity = document.createElement("b");
+                var cityTxt = document.createTextNode("{{city" + i + "}}");
+                bCity.appendChild(document.createTextNode("City: "));
+                city.appendChild(bCity);
+                city.appendChild(cityTxt);
+                city.appendChild(document.createElement("br"));
+                
+                var postal = document.createElement("span");
+                var bPostal = document.createElement("b");
+                var postalTxt = document.createTextNode("{{postal" + i + "}}");
+                bPostal.appendChild(document.createTextNode("Postal code: "));
+                postal.appendChild(bPostal);
+                postal.appendChild(postalTxt);
+                postal.appendChild(document.createElement("br"));
+                
+                var email = document.createElement("span");
+                var bEmail = document.createElement("b");
+                var emailTxt = document.createTextNode("{{email" + i + "}}");
+                bEmail.appendChild(document.createTextNode("Email: "));
+                email.appendChild(bEmail);
+                email.appendChild(emailTxt);
+                email.appendChild(document.createElement("br"));
+                
+                var phone = document.createElement("span");
+                var bPhone = document.createElement("b");
+                var phoneTxt = document.createTextNode("{{phone" + i + "}}");
+                bPhone.appendChild(document.createTextNode("Phone number: "));
+                phone.appendChild(bPhone);
+                phone.appendChild(phoneTxt);
+                phone.appendChild(document.createElement("br"));
+                
+                var memPos = document.createElement("span");
+                var bPosition = document.createElement("b");
+                var positionTxt = document.createTextNode("{{position" + i + "}}");
+                bPosition.appendChild(document.createTextNode("Phone number: "));
+                memPos.appendChild(bPosition);
+                memPos.appendChild(positionTxt);
+                memPos.appendChild(document.createElement("br"));
+                
+                var flexibleP = document.createElement("span");
+                var bFlexible = document.createElement("b");
+                var flexibleTxt = document.createTextNode("{{flexibleP" + i + "}}");
+                bFlexible.appendChild(document.createTextNode("Position is flexible: "));
+                flexibleP.appendChild(bFlexible);
+                flexibleP.appendChild(flexibleTxt);
+                flexibleP.appendChild(document.createElement("br"));
+                flexibleP.appendChild(document.createElement("br"));
+                
+                
+                document.getElementById("members").appendChild(member);
+                document.getElementById("members").appendChild(memName);
+                document.getElementById("members").appendChild(address);
+                document.getElementById("members").appendChild(city);
+                document.getElementById("members").appendChild(postal);
+                document.getElementById("members").appendChild(email);
+                document.getElementById("members").appendChild(phone);
+                document.getElementById("members").appendChild(memPos);
+                document.getElementById("members").appendChild(flexibleP);
+            }
+        </script>-->
+    </body>
+</html>

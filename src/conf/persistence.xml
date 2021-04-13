@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="CurlingPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <non-jta-data-source>java:/comp/env/jdbc/curlingdb</non-jta-data-source>
+    <class>models.Position</class>
+    <class>models.Game</class>
+    <class>models.League</class>
+    <class>models.Spare</class>
+    <class>models.Team</class>
+    <class>models.PlayerReg</class>
+    <class>models.Player</class>
+    <class>models.Contact</class>
+    <class>models.Standing</class>
+    <class>models.Executive</class>
+    <class>models.Code</class>
+    <class>models.Score</class>
+    <class>models.User</class>
+    <class>models.Role</class>
+    <class>models.Registration</class>
+    <class>database.Player</class>
+    <class>database.Registration</class>
+    <class>database.League</class>
+    <class>database.Contact</class>
+    <class>database.User</class>
+    <class>database.Game</class>
+    <class>database.Executive</class>
+    <class>database.Team</class>
+    <class>database.Score</class>
+    <class>database.Code</class>
+    <class>database.Spare</class>
+    <class>database.Standing</class>
+    <class>database.Position</class>
+    <class>database.Role</class>
+    <class>models.ArchivedGames</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+  </persistence-unit>
+</persistence>

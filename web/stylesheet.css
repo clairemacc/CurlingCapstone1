@@ -1,0 +1,1342 @@
+.header {
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    left: 0;
+    margin: 0;
+    padding: 0px;
+    background-color: #FFFFFF;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.navbar {
+    margin: 0px;
+    border-collapse: collapse;
+}
+
+.navbar .edgeG {
+    width: 500px;
+}
+
+.navbar .edgeP {
+    width: 320px;
+}
+
+.navbar a {
+    transition: background 200ms ease-in-out, transform 150ms ease;
+}
+
+.navbar table {
+    margin: 0px auto;
+    width: 100%;
+    background: black;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.navbar a {
+    display: inline-block;
+    color: #f2f2f2;
+    text-decoration: none;
+    line-height: 45px;
+    margin: -1px;
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.navbar a:hover{
+    background: #ddd;
+    color: black;
+    cursor: pointer;
+}
+
+.navSpace {
+    width: 30%;
+}
+
+.sidebar {
+    background-color: #CC3333;
+    height: 100%;
+    width: 17%;
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+.sidebar2 {
+    background-color: #2f3e5e;
+    height: 100%;
+    width: 1.5%;
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: -1;
+    top: 0;
+    left: 0;
+    margin-left: 17%;
+}
+
+.pageTitle {
+    margin-left: 22.5%;
+    margin-top: 170px;
+}
+
+.registerTitle {
+    margin-left: 22.5%;
+    margin-top: 170px;
+    margin-bottom: 20px;
+    font-family: 'Merriweather', serif;
+    font-size: 22px;
+}
+
+.steps {
+    background: #E6E6E6;
+    font-size: 14px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-radius: 0px 0px 4px 4px;
+    text-align: center;
+    position: absolute;
+    border: none;
+} 
+
+.groupInfo {
+    background: #f5f9fc;
+    border-left: 1px solid #afbbc7;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 95%;
+    font-size: 13px;
+    padding: 5px;
+    max-width: 200px;
+}
+
+.steps td {
+    color: #8c8c8c;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.steps td b {
+    color: #2f3e5e;
+}
+
+.content {
+    background: rgba(255,255,255, .8);
+    padding: 30px;
+    margin-left: 22.5%;
+    left: 0;
+    position: absolute;
+    border: 1px solid #002c91;
+    border-radius: 4px;
+}
+
+.managementContent {
+    margin-right: 5%;
+    display: block;
+    position: relative;
+}
+
+.accountContent {
+    margin-right: 10%;
+    width: 1000px;
+    position: relative;
+}
+
+.submitContent {
+    padding-bottom: 70px;
+    min-width: 500px;
+}
+
+.newsContent {
+    line-height: 30px;
+    width: 700px;
+}
+
+.loginContent {
+    margin-top: 170px;
+    border: 1px solid #CC3333;
+    padding-top: 12px;
+}
+
+.registerContent {
+    margin-left: 22.5%;
+    padding: 15px;
+    padding-bottom: 25px;
+    border-radius: 5px;
+    border: 1px solid #002c91;
+    background: #F3F3F3;
+    margin-bottom: 60px;
+    position: absolute;
+    height: 500px;
+}
+
+.regh4 {
+    margin-top: 0px;    
+    font-size: 17px;
+    padding-bottom: 25px;
+}
+
+
+.regP2 {
+    margin: 0px;
+    color: #e00000;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+.loginTable input {
+    height: 16px;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 6px;
+    border-radius: 3px;
+}
+
+.loginButton {
+    width: 100px;
+    margin-left: 267px;
+    display: block;
+    cursor: pointer;
+}
+
+.confirmButton {
+    text-align: right;
+}
+
+.background {
+    background-image: url("./photos/backgroundCurling.jpg");
+    opacity: 0.2;
+    width: 100%;
+    height: 100%;
+    margin-left: 18.5%;
+    top: 0;
+    background-size: cover;
+    left: 0;
+    z-index: -1;
+    position: fixed;
+
+}
+
+.backgroundLogin {
+    background-image: url("./photos/curling-brooms.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px ;
+    width: 99%;
+    z-index: 5;
+}
+
+h1 {
+    text-decoration: none;
+    font-family: 'Merriweather', serif;
+    font-size: 30px;
+    color: #636363;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 26px;
+    color: #CC3333;
+}
+
+h4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.loginH2 {
+    color: #002c91;
+    font-size: 24px;
+}
+
+.tableButtons {
+    padding-top: 20px;
+    width: 100%;
+}
+
+.tableButtons tr td {
+    vertical-align: bottom;
+}
+
+button {
+    display: inline-flex;
+    padding: 5px;
+    font-family: 'Open Sans', serif;
+    border-radius: 3px;
+    background-color: #bdbdbd;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background 250ms ease-in-out, 
+            transform 250ms ease;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+button:hover {
+    background-color: #CC3333;
+    color: #E6E6E6;
+    cursor: pointer;
+}
+
+.cancelButton {
+    background-color:#ddd;
+    color: #636363;
+    padding: 3px;
+    font-size: 13px;
+}
+
+.cancelButton:hover {
+    background-color: #888;
+}
+
+.address {
+    padding-right: 10px;
+    padding-top: 2px;
+    font-size: 13px;
+    text-align: right;
+    width: 20%;
+}
+
+img {
+    padding-left: 10px;
+}
+
+hr {
+    width: 100%;
+    align-content: center;
+    display: flex;
+    color: #949494;
+}
+
+.newsHr {
+    color: #CC3333;
+    margin-bottom: 30px;
+}
+
+.forgot {
+    margin-left: 33px;
+    font-size: 15px;
+}
+
+.forgot a {
+    color: #006bc2;
+}
+
+.forgot a:hover {
+    color: #2f3e5e;
+}
+
+.footer {
+    width:100%;
+    color:#FFF;
+    background-color: #000;
+    text-align: right;        
+}
+
+.role {
+    color: #888;
+}
+
+.hrTd {
+    color: #CC3333;
+}
+
+.chosenGame {
+    margin-top: 0px;
+}
+
+
+.chosenGame .icon {
+    color: #596b94;
+}
+
+.chosenGame br {
+    line-height: 30px;
+}
+
+.chosenGame i {
+    font-weight: normal;
+}
+
+.postTitle {
+    background-color: #dbdbdb;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px 4px 0px 0px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    vertical-align: bottom;
+    color: #2f3e5e;
+}
+
+.postTitle .postDate {
+    text-align: right;
+    font-size: 16px;
+    color: #596b94;
+}
+
+.postContent {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    background-color: #F3F3F3;
+    border-radius: 0px 0px 4px 4px;
+    margin-bottom: 26px;
+}
+
+.postContent p {
+    border-left: 3px solid #596b94;
+    padding-left: 10px;
+}
+
+.selectGameP {
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
+
+.gameSelect select {
+    padding: 2px;
+    padding-left: 10px;
+    font-size: 14px;
+    display: flex;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    height: 34px;
+    background: url("./photos/blackArrow.png") no-repeat right #ddd;
+    background-size: 20px;
+    padding-right: 10px;
+    -webkit-appearance: none;
+    background-position-x: 98%;
+}
+
+.gameSelect select:hover {
+    background: url("./photos/whiteArrow.png") no-repeat right;
+    background-size: 20px;
+    background-position-x: 98%;
+    background-color: #0078d7;
+    color: white;
+    cursor: pointer;
+}
+
+.gameSelect option {
+    background-color: #eee; 
+    color: black;
+}
+
+.enterScoreTable .teamName {
+    padding-right: 20px;
+}
+
+.enterScoreTable tr td {
+    padding-right: 0px;
+    padding-bottom: 20px;
+}
+
+.enterScoreTable input {
+    height: 14px;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 6px;
+    border-radius: 3px;
+}
+
+.bottom {
+    vertical-align: bottom;
+}
+
+.proceed {
+    text-align: right;
+}
+
+.reviewTable {
+    border-left: 3px solid #a38800;
+    padding-left: 20px;
+    margin-left: 10px;
+    padding-bottom: 0px;
+}
+
+.submitTable {
+    border-left: 3px solid #596b94;
+}
+
+.reviewTable tr td {
+    padding-bottom: 5px;
+}
+
+.standingsContent table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.standingsContent table tr td {
+    padding: 24px 50px;
+}
+
+.standingsContent .t {
+    font-weight: bold;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 3px solid black;
+}
+
+.standingsContent .t1 {
+    padding-right: 90px;
+    padding-left: 30px;
+    text-align: left;
+}
+
+.standingsContent br {
+    line-height: 24px;
+}
+
+.standingsContent p {
+    margin: 0px;
+    text-align: center;
+    border-top: 3px dotted #a38800;
+    padding-top: 20px;
+}
+
+.standingsTeams {
+    border-radius: 0px 0px 4px 4px;
+}
+
+.one {
+    background: #e6e9f2;
+}
+
+.two {
+    background: #f2f6ff;
+}
+
+.membersList {
+    vertical-align: top;
+    align-content: flex-end;
+    background-color: #E6E6E6;
+    border-radius: 5px; 
+    padding-left: 13px;
+    padding-right: 10px;
+    padding-top: 7px;
+    position: relative;
+}
+
+.membersList table {
+    width: 300px;
+}
+
+.membersList{
+    font-size: 14px;
+}
+
+.membersList .teamDetails {
+    padding-bottom: 10px;
+}
+
+.teamMembers {
+    border-bottom: 1px dashed #999999;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    font-size: 12.5px;
+}
+
+.membersList .regButton {
+    bottom: 8px;
+    right: 8px;
+    padding-left: 6px;
+    position: absolute;
+    background: #002c91;
+    color: white;
+    border-radius: 6px;
+    font-weight: normal;
+}
+
+.membersList .editRemoveBtnMem {
+    all: revert;
+    background-color: #b8cbe0;
+    font-size: 12px;
+}
+
+.membersList .editRemoveBtnMem:hover {
+    all: revert;
+    background-color: white;
+    font-size: 12px;
+}
+
+
+
+.membersList button:hover, .membersInput .regButton:hover  {
+    padding-left: 4px;
+    font-weight: bold;
+    background:#ab0000;
+    color: white;
+}
+
+.membersInput {
+    vertical-align: top;
+    width: 300px;
+    font-size: 14px;
+    position: relative;
+}
+
+.membersInput button {
+    float: right;
+    font-size: 14px;
+    padding: 3px;
+    padding-left: 8px;
+    font-weight: normal;
+    position: relative;
+    bottom: 0;
+    right: 18px;
+    display: inline;
+}
+
+.membersInput .in {
+    position: relative;
+    bottom: 0;
+}
+
+.membersInput button:hover{
+    background-color: #b8cbe0;
+    color: black;
+    padding-left: 3px;
+    font-weight: bold;
+}
+
+.membersInput input {
+    height: 15px;
+    font-size: 15px;
+}
+
+.membersInput table tr td {
+    padding-top: 0px;
+    padding-bottom: 19px;
+}
+
+.tl {
+    vertical-align: bottom;
+    text-align: right;
+    padding-top: 20px;
+    margin: 0px;
+}
+
+.gr {
+    vertical-align: top;
+}
+
+.gr h3{
+    padding: 0px;
+    margin-top: 0px;
+}
+
+#tm {
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+}
+
+.groupTable tr td {
+    padding: 5px; 
+}
+
+.leftGr {
+    border-collapse: collapse;
+}
+
+.midGr {
+    border-collapse: collapse;
+}
+
+.midGr tr td {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.leftGr tr td {
+    padding-right: 20px;
+    border-right: 1px solid #949494;
+}
+
+.errors {
+    text-align: center;
+}
+
+.memberNum .memberName{
+    font-size: 14px;
+    margin: 0px;
+    
+}
+
+.contactContent {
+    min-height: 400px;
+}
+
+.contactContent table {
+    border-collapse: collapse;
+    text-align: left;
+    width: 100%;
+    
+}
+
+.contactContent table tr td {
+    padding: 4px 30px;
+}
+
+.contactContent .t {
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0px;
+    padding-top: 5px;
+    text-align: left;
+}
+
+.contactContent br {
+    line-height: 0px;
+}
+
+.contactContent p {
+    margin: 0px;
+    text-align: center;
+    border-top: 3px dotted #a38800;
+    padding-top: 20px;
+}
+
+.contactButton {
+    float:right;
+    padding: 2px;
+}
+
+
+.textareaClass {
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    padding: 10px;
+}
+
+
+.otherwise table tr td {
+    padding: 4px;
+    padding-top: 0px;
+}
+
+.otherwise .msg {
+    padding-right: 40px;
+}
+
+.msg input {
+    width: 55%;
+}
+
+.execContact h4 {
+    text-align: center;
+    margin-bottom: 15px;
+    position: relative;
+    color: #fff9db;
+    background: #2f3e5e;
+    border-radius: 5px 5px 0px 0px;
+    width: 295px;
+    font-size: 17px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.execContact table {
+    width: 275px;
+    text-align: right;
+    font-size: 15px;
+}
+
+.otherwise .execContact {
+    padding: 0px;
+    vertical-align: top;
+    background: #c7ccd6;
+    color: black;
+    border-radius: 5px;
+}
+
+.manageLeft {
+    vertical-align: top;
+    width: 200px;
+}
+
+.manageLeft button {
+    width: 200px;
+    border-radius: 0px;
+    background: #E6E6E6;
+    border: none;
+    margin-bottom: 2px;
+}
+
+.manageLeft button:hover {
+    background: #CC3333;
+}
+
+.manageRight {
+    background: #F3F3F3;
+    padding: 10px;
+    width: 100%;
+}
+
+.manageRight table {
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-top: 2px dotted #a38800;
+}
+
+.acc table {
+    background: none;
+    border:none;
+    width: auto;
+    margin: 0px;
+}
+
+.vg table {
+    border: none;
+    margin-top: 0px;
+}
+
+.att {
+    vertical-align: top;
+}
+
+.att table {
+    border: none;
+    margin-top: 0px;
+}
+.newRegsNum {
+    font-size: 18px;    
+}
+
+.viewButton {
+    font-size: 12px;
+    font-weight: normal;
+    background: #b8cbe0;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.regNumber {
+    text-align: center;
+    width: 30px;
+}
+
+.groupRegButtons {
+    width: 130px;
+    background: #b8cbe0;
+    border: none;
+    border-radius: 0px;
+    font-size: 14.5px;
+    margin-bottom: 1px;
+}
+
+.groupRegButtons:hover {
+    background: #FFF;
+    color: #002c91;
+}
+
+.indivButtons {
+    padding: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    background: #dbdbdb;
+    border: 1px dotted black;
+    border-radius: 0px;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 0px;
+}
+
+.indivTable {
+    border-collapse: collapse;
+}
+
+.indivTable tr td {
+    vertical-align: top;
+    padding-right: 15px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border-bottom: 1px solid #c7ccd6;
+}
+
+.viewIndiv {
+    background: #bdbdbd;
+    font-size: 12px;
+}
+
+.indivButtons:hover {
+    border-radius: 0px;
+}
+
+.memberTable {
+    padding: 15px;
+    vertical-align: top; 
+    background: #E6E6E6;
+    position: relative;
+}
+    
+.memberTable table tr td {
+    padding-bottom: 3px;
+    padding-top: 3px;
+    border-top: 1px dashed gray;
+}
+
+.memberTable .firstTd {
+    width: 110px;
+}
+
+.selectTeam button {
+    font-size: 14px;
+    background: #CC3333;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    padding: 4px;
+    margin-top: 2px;
+}
+
+.selectTeam button:hover {
+    background: #0078d7;
+}
+
+.registrationSetupDiv {
+    width: 650px;
+    height: 300px;
+    background: white;
+    border: 1px solid #a38800;
+    padding: 20px;
+    border-radius: 3px;
+    position: relative;
+}
+
+#chooseLeaguesButton button {
+    padding: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: normal;
+}
+
+.listOfMembers:hover {
+    background: white;
+}
+
+.selectedTeam {
+    padding: 10px;
+    background: #fafaed;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 1px solid #ebebd1;
+}
+
+
+.manageAccountsTable {
+    border-collapse: collapse;
+    display: block;
+    position: relative;
+}
+
+.manageAccountsTable tr th {
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 20px;
+    border-style: double;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.manageAccountsTable tr td {
+    border-top: 1px solid gray;
+    font-size: 14px;
+    padding: 5px;
+    padding-bottom: 5px;
+}
+
+
+.manageAccountsTable button {
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+    font-weight: normal;
+    padding: 2px;
+    padding-left: 6px;
+    padding-right: 7px;
+}
+
+.manageAccountsTable button:hover {
+    background: #596b94;
+    color: white;
+    font-weight: bold;
+    padding-right: 6px;
+}
+
+.manageAccountsTable .showPasswordBtn {
+    background: #ddd;
+    border-radius: 2px;
+    font-style: italic;
+    font-size: 12px;
+}
+.manageAccountsTable .showPasswordBtn:hover {
+    background: #afbbc7;
+    border: none;
+    color: white;
+    font-weight: normal;
+}
+
+.manageAccountsTable .teamSettings .removeTeammateBtn {
+    background: #dbdbdb;
+    border: none;
+    color: black;
+    font-size: 12px;
+}
+
+.manageAccountsTable .teamSettings .removeTeammateBtn:hover {
+    background: #b4b4b4;
+    color: white;
+    font-weight: normal;
+    padding-right: 8px;
+}
+
+.teamsTable tr th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 45px;
+    font-size: 16px;
+}
+.teamsTable {
+    font-size: 14.3px;
+}
+.teamsTable tr td {
+    padding-right: 30px;
+    vertical-align: top;
+}
+
+.thisUserRow:hover, .thisTeamRow:hover {
+    background: #E6E6E6;
+}
+
+.innerEdit tr td table {
+    background: #F3F3F3;
+    border-radius: 2px;
+}
+
+.innerEdit tr td{
+    border: none;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.innerEdit b {
+    color: #002c91;
+}
+
+.saveUserBtn {
+    background: #CC3333;
+    padding-right: 8px;
+    padding-left: 7px;
+    color: white;
+}
+#btns {
+    text-align: right; 
+    padding-right: 20px; 
+    padding-top: 5px; 
+    padding-bottom: 5px;
+    border-top: 1px solid #a38800;
+}
+
+.teamSettings #btns #discardBtn {
+    background: #B4B4B4;
+    border: 1px solid #B4B4B4;
+    color: black;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+.teamSettings #btns #discardBtn:hover {
+    background: #999999;
+    color: white;
+    font-weight: normal;
+    padding-right: 6px;
+    padding-left: 6px;
+}
+
+.manageAccountsTable .saveUserBtn:hover {
+    background: #ab0000;
+    padding-right: 7px;
+}
+
+.contactArea {
+    min-width: 900px;
+}
+
+.contactArea button {
+    border: none;
+    padding: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: normal;
+    border-radius: 2px;
+    border: 1px solid gray;
+    width: 100px;
+    background: #dbdbdb;
+}
+
+.contactArea button:hover {
+    background: #E6E6E6;
+    border: 2px solid gray;
+    padding: 0px;
+    padding-left: 3px;
+    color: black;
+}
+
+.anOption {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.anOption:hover {
+    color: #006bc2;
+    cursor: default;
+}
+
+#leaguesID, #teamsID, #positionsID, #rolesID, #sparesID {
+    position: absolute; 
+    z-index: 1;
+    display: none; 
+    background: white; 
+    border: 1px solid gray;
+    padding-right: 5px;
+}
+
+.contactArea .t5 {
+    padding: 0px;
+    margin: 0px;
+}
+
+.resultsTable {
+    width: 100%;
+    background: #ebebd1;
+    position: relative;
+}
+
+.resultsInfo table {
+    border-collapse: collapse;
+}
+
+.resultsInfo table tr td {
+    vertical-align: top;
+    font-size: 14px;
+    padding: 0px;
+    padding-bottom: 10px;
+}
+
+.resultsInfo td b {
+    font-size: 15px;
+}
+
+.resultsTable .confirmContact {
+    padding: 0px;
+    padding-right: 5px;
+    text-align: right;
+    height: 35px;
+}
+
+.confirmContact button {
+    width: auto;
+    padding-left: 12px;
+    padding-right: 11px;
+    border: none;
+    font-size: 15px;
+    background: #CC3333;
+    color: white;
+    font-weight: bold;
+    transition: background 250ms ease, font-size 250ms ease, padding 250ms ease,
+            transform 250ms ease;
+}
+
+.confirmContact button:active {
+    transform: scale(0.99);
+    border: none;
+} 
+
+.confirmContact button:hover {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 7px;
+    padding-right: 8px;
+    font-size: 16px;
+    background: #002c91;
+    color: white;
+    border: none;
+}
+
+.contactArea .contactHeader {
+    padding: 0px;
+    padding-bottom: 3px;
+    padding-top: 30px;
+    font-size: 18px; 
+    text-shadow: 1px 1px 1px #B4B4B4; 
+    border-bottom: 1px solid #B4B4B4;
+}
+
+.contactArea .contactHeader button {
+    background: #dce9f7;
+    width: auto;
+}
+.contactArea .contactHeader button:hover {
+    background: #E6E6E6;
+    border: 1px solid gray;
+    padding: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.searchBy select{
+    border-radius: 1px;
+    border: 1px solid gray;
+    font-size: 15px;
+    padding: 2.5px;
+}
+
+.searchBy select:hover{
+    background: #F3F3F3;
+}
+
+.searchBy table tr td {
+    padding: 4px;
+    font-size: 14px;
+}
+
+.searchBy input {
+    width: 360px;
+    padding: 3px;
+    border-radius: 1px;
+    border: 1px solid gray;
+    font-size: 15px;
+}
+
+.searchBy .confirmContact button {
+    padding: 3px 10px 3px 10px;
+    border-radius: 3px;
+    border: 1px solid #ab0000;
+}
+
+.searchBy .confirmContact button:hover {
+    font-size: 15px;
+}
+
+.addUsersToTeam {
+    font-family: 'Merriweather', serif;
+    font-size: 15px;
+    margin: 15px;
+    position: relative;
+    z-index: 1;
+    width: 266px;
+    height: 367px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.execContact .recipients {
+    font-family: 'Merriweather', serif;
+    font-size: 15px;
+    margin: 15px;
+    position: relative;
+    width: 266px;
+    height: 367px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.recipients .recName {
+    position: relative;
+    font-weight: bold;
+    line-height: 22px;
+}
+
+.recipients .recName span {
+    font-family: 'Open Sans', sans-serif;
+    position: absolute;
+    padding-top: 15px;
+    font-weight: normal;
+}
+
+.editingTeamDiv table tr td {
+    border: none;
+    padding: 2px;
+    padding-right: 10px;
+}
+
+.teamMemberEdit:hover {
+    background: #dce9f7;
+    cursor: default;
+}
+
+.memstbl tr td {
+    font-size: 13px;
+}
+
+.addTeamMember button, .teamSettings button {
+    background: #CC3333;
+    border: 1px solid #CC3333;
+    color: white;
+    padding-left: 8px;
+}
+.addTeamMember button:hover, .teamSettings button:hover {
+    background: #dbdbdb;
+    border: 1px solid #b4b4b4;
+    padding-left: 7px;
+    color: #ab0000;
+}
+
+.posCh:hover {
+    cursor: default;
+    font-weight: bold;
+}
+
+.deleteUser {
+    position: absolute;
+    padding: 30px; 
+    background: #F3F3F3; 
+    color: #CC3333;
+    display: none;
+    top: 50px;
+    border-radius: 3px;
+    border: 1px solid black;
+    box-shadow: 0px 5px 15px black;
+    text-align: center;
+    align-items: center;
+    width: 300px;
+}
+
+.deleteTeam {
+    position: absolute; 
+    padding: 30px; 
+    bottom: 50%; 
+    right: 50%; 
+    background: #F3F3F3; 
+    color: #CC3333;
+    display: none;
+    border-radius: 3px;
+    border: 1px solid black;
+    box-shadow: 0px 5px 15px black;
+    text-align: center;
+    align-items: center;
+}
+
+.deleteTeam h4 {
+    padding-bottom: 15px;
+}
