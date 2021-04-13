@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Game;
+import models.Player;
 import models.Score;
+import models.Team;
 import models.User;
 import services.GameService;
 import services.ScoreService;
@@ -18,24 +22,56 @@ public class SubmitGameResultsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-
-        GameService gameService = new GameService();
-        List<Game> games = gameService.getAll();
         
+        long date = System.currentTimeMillis();
+        Date today = new Date(date);
+        session.setAttribute("today", today);
+        
+        GameService gameService = new GameService();
+        List<Player> playerList = user.getPlayerList();
+        List<Team> playerTeams = new ArrayList<>();
+        
+        List<Game> playerGames = new ArrayList<>();
+        
+        if (user.getRole().getRoleID() == 2) {
+            for (Player p : playerList) 
+                playerTeams.add(p.getTeamID());
+
+            for (Team t : playerTeams) {
+                for (Game g : t.getGameList()) {
+                    if (g.getDate().before(today))
+                        playerGames.add(g); 
+               }
+
+                for (Game g1 : t.getGameList1()) {
+                    if (g1.getDate().after(today))
+                        playerGames.add(g1);
+                }
+            }
+        }
+        else if (user.getRole().getRoleID() == 1) {
+            for (Game g : gameService.getAll()) {
+                if (g.getDate().before(today))
+                    playerGames.add(g);
+            }
+        }
+
+
         ScoreService scoreService = new ScoreService();
         List<Score> scores = scoreService.getAll();
-        
-        for(int i = 0; i < games.size(); i++){
+
+        for(int i = 0; i < playerGames.size(); i++){
             for (int j = 0; j < scores.size(); j++){
-                if (games.get(i).getGameID().equals(scores.get(j).getGameID()))
-                    games.remove(i);
+                if (playerGames.get(i).getGameID().equals(scores.get(j).getGameID()))
+                    playerGames.remove(i);
             }
         }
         
-        if (games.isEmpty()) 
+        
+        if (playerGames.isEmpty()) 
             request.setAttribute("noGames", true);
         
-        session.setAttribute("games", games);
+        session.setAttribute("games", playerGames);
 
         String gameSelect = "";
         Game game = null;

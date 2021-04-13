@@ -41,11 +41,21 @@
                             </tr>
                             <tr> 
                                 <td><b>Team:</b></td>
-                                <td><select name="teamSelect">
-                                        <c:forEach var="player" items="${user.playerList}">
-                                            <option value="${player.teamID.teamID}">${player.teamID.teamName}</option>
-                                        </c:forEach>
-                                    </select>
+                                <td>
+                                    <c:if test="${isAdmin == true}">
+                                        <select name="teamSelect">
+                                            <c:forEach var="team" items="${teams}">
+                                                <option value="${team.teamID}">${team.teamName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:if>
+                                    <c:if test="${isAdmin == null || isAdmin == false}">
+                                        <select name="teamSelect">
+                                            <c:forEach var="player" items="${user.playerList}">
+                                                <option value="${player.teamID.teamID}">${player.teamID.teamName}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:if>
                                 </td>
                             </tr>
                             <tr>

@@ -46,29 +46,39 @@ public class SpareRequestServlet extends HttpServlet {
         List<Player> playerList = user.getPlayerList();
         List<Team> playerTeams = new ArrayList<>();
         
-        for (Player p : playerList) 
-            playerTeams.add(p.getTeamID());
-        
         List<Game> playerGames = new ArrayList<>();
         
-        for (Team t : playerTeams) {
-            for (Game g : t.getGameList()) {
-                if (g.getDate().after(today))
-                    playerGames.add(g); 
-           }
-                
-            for (Game g1 : t.getGameList1()) {
-                if (g1.getDate().after(today))
-                    playerGames.add(g1);
+        if (user.getRole().getRoleID() == 2) {
+            for (Player p : playerList) 
+                playerTeams.add(p.getTeamID());
+
+            for (Team t : playerTeams) {
+                for (Game g : t.getGameList()) {
+                    if (g.getDate().after(today))
+                        playerGames.add(g); 
+               }
+
+                for (Game g1 : t.getGameList1()) {
+                    if (g1.getDate().after(today))
+                        playerGames.add(g1);
+                }
             }
+        }
+        else if (user.getRole().getRoleID() == 1) {
+            session.setAttribute("isAdmin", true);
+            TeamService teamService = new TeamService();
+            playerTeams = teamService.getAll();
+            
+            for (Game g : gameService.getAll()) {
+                if (g.getDate().after(today)) 
+                    playerGames.add(g);
+            }
+            
+            session.setAttribute("teams", playerTeams);
         }
         
         session.setAttribute("playerGames", playerGames);
-        
-
-        TeamService teamService = new TeamService();
-        List<Team> teams = teamService.getAll();
-        session.setAttribute("teams", teams);
+       
 
         PositionService positionService = new PositionService();
         List<Position> positions = positionService.getAll();
