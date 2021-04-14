@@ -72,6 +72,10 @@
         <servlet-name>SpareRequestServlet</servlet-name>
         <servlet-class>servlets.SpareRequestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewScheduleServlet</servlet-name>
+        <servlet-class>servlets.ViewScheduleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePageServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>SpareRequestServlet</servlet-name>
         <url-pattern>/spareRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewScheduleServlet</servlet-name>
+        <url-pattern>/viewSchedule</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -13,7 +13,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
     </head>
     <body>
-
         <div class="header">
             <jsp:include page="./subpages/arcBanner.jsp"></jsp:include>
             <div class="navbar">

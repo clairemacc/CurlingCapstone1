@@ -1,20 +1,16 @@
-<%-- 
-    Document   : schedules
-    Created on : Feb 21, 2021, 10:38:16 PM
-    Author     : 760483
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ARC Curling - Schedules</title>
         <link href="./stylesheet.css" type="text/css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
-        <title>ARC Curling: Schedule</title>
     </head>
+    <body>
     <body>
         <div class="header">
             <jsp:include page="./subpages/arcBanner.jsp"></jsp:include>
@@ -40,11 +36,20 @@
         <div class="background"></div>
         <div class="pageTitle"><h2>Schedules</h1></div>
         <div class="content submitContent">
+            <h4>Upload a Schedule</h4>
             <form action="schedule" method="POST" enctype="multipart/form-data">
                 Select a file to upload: &nbsp;<input type="file" name="fileSelect" size="50"><br><br>
                 <button type="submit" value="uploadButton">Upload</button>
+                <input type="hidden" name="formType" value="1">
             </form>
+        <c:if test="${uploadMessage != null}">
+            <br/>${uploadMessage}
+        </c:if>
+            
+            <a href="viewSchedule">View schedules</a>
+            
         </div>
 
+       
     </body>
 </html>

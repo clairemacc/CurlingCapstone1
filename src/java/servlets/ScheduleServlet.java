@@ -17,6 +17,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @MultipartConfig
 public class ScheduleServlet extends HttpServlet {
+
     public final String DIR = "uploads\\";
     
     @Override
@@ -30,6 +31,8 @@ public class ScheduleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String uploadMessage = null;
 
         String realPath = request.getServletContext().getRealPath("");
         String filePath = realPath + DIR;
@@ -46,20 +49,34 @@ public class ScheduleServlet extends HttpServlet {
             while (iter.hasNext()) {
                 FileItem fi = (FileItem) iter.next();
                 if (!fi.isFormField()) {
-                    
-                    Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, filePath+fi.getName());
 
-                    file = new File(filePath + fi.getName());
-                    fi.write(file);
+                    Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, filePath + fi.getName());
+
+                    String[] split = fi.getName().split("\\.");
+                    String extension = split[split.length - 1];
+                    
+
+                    Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, extension);
+
+                    if (extension.equals("csv") || extension.equals("xlsx")) {
+                        file = new File(filePath + fi.getName());
+
+                        fi.write(file);
+                        uploadMessage = "File was uploaded!";
+                    } else {
+                        uploadMessage = "ERROR: File must be .csv or .xlsx file.";
+                    }
                 }
             }
 
         } catch (Exception e) {
-            Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, "Catch exception");
+            Logger.getLogger(ScheduleServlet.class
+                    .getName()).log(Level.INFO, "Catch exception");
             e.printStackTrace();
         }
-
+        request.setAttribute("uploadMessage", uploadMessage);
         request.getRequestDispatcher("/WEB-INF/schedules.jsp").forward(request, response);
 
     }
+
 }
