@@ -21,6 +21,8 @@ public class LeagueDB {
         
         try {
             return em.find(League.class, leagueID);
+        } catch (Exception e) {
+            return null;
         } finally {
             em.close();
         }
@@ -72,6 +74,22 @@ public class LeagueDB {
             eTr.commit();
         } catch (Exception e) {
             eTr.rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public void delete(League league) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction eTr = em.getTransaction();
+        
+        try {
+            eTr.begin();
+            league = em.merge(league);
+            em.remove(league);
+            eTr.commit();
+        //} catch (Exception e) {
+          //  eTr.rollback();
         } finally {
             em.close();
         }

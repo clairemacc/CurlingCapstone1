@@ -18,6 +18,16 @@ public class SpareRequestDB {
         }
     }
     
+    public SpareAssigned getSpAssignedByID(String requestID) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+            return em.find(SpareAssigned.class, requestID);
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<SpareRequest> getAll() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
@@ -84,4 +94,20 @@ public class SpareRequestDB {
             em.close();
         }
     }
+    
+    public void deleteSpareAssigned(SpareAssigned spAssigned) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction eTr = em.getTransaction();
+        
+        try {
+            eTr.begin();
+            em.remove(em.merge(spAssigned));
+            eTr.commit();
+        } catch (Exception e) {
+            eTr.rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

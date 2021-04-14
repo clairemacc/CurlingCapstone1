@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import models.Game;
 import models.League;
 import models.Player;
 import models.Team;
@@ -104,14 +105,13 @@ public class TeamDB {
         try {
             League league = team.getLeagueID();
             league.getTeamList().remove(team);
-            
+
             eTr.begin();
-            team = em.merge(team);
-            em.remove(team);
             em.merge(league);
-            eTr.commit();
-       // } catch (Exception e) {
-         //   eTr.rollback();
+            em.remove(em.merge(team));
+           eTr.commit();
+        } catch (Exception e) {
+            eTr.rollback();
         } finally {
             em.close();
         }

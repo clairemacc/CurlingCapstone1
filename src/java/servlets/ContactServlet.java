@@ -324,6 +324,8 @@ public class ContactServlet extends HttpServlet {
                         
                         if (subject == null || subject.equals("") || body == null || body.equals("")) {
                             request.setAttribute("message", "nullFields");
+                            request.setAttribute("subject", subject);
+                            request.setAttribute("body", body);
                         }
                         else {
                             String path = getServletContext().getRealPath("/WEB-INF");
@@ -363,6 +365,7 @@ public class ContactServlet extends HttpServlet {
                         request.setAttribute("email", email);
                         request.setAttribute("subject", subject);
                         request.setAttribute("body", body);
+                        request.setAttribute("admins", new ExecutiveService().getAll());
                     }
                     else {
                         String path = getServletContext().getRealPath("/WEB-INF");

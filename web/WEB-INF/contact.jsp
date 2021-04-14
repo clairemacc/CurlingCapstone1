@@ -53,10 +53,10 @@
                                     <form method="post" action="contact">
                                         <table>
                                             <tr>
-                                                <td>Subject: &ensp;<input placeholder='e.g., "Upcoming game"' type="text" name="subject" value="${message.subject}"></td>
+                                                <td>Subject: &ensp;<input placeholder='e.g., "Upcoming game"' type="text" name="subject" value="${subject}"></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2"><textarea class="textareaClass" name="body" value="${message.body}" rows="10" cols="50" placeholder="Write your message here"></textarea></td>
+                                                <td colspan="2"><textarea class="textareaClass" name="body" value="${body}" rows="10" cols="50" placeholder="Write your message here"></textarea></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" style="padding-top: 5px"><button type="submit" name="sendFromExec" value="send">Send Email</button></td>
@@ -93,79 +93,86 @@
            
             
             <c:otherwise>
-                <div class="content contactContent otherwise">
-                    <table>
-                        <tr>
-                            <td class="msg">
-                                <h3 style="margin: 0px; padding: 0px; padding-bottom: 18px;">Contact League Executive</h3>
-                                <form method="post" action="contact">
+                <c:if test="${messageSent == null || messageSent == false}">
+                    <div class="content contactContent otherwise">
+                        <table>
+                            <tr>
+                                <td class="msg">
+                                    <h3 style="margin: 0px; padding: 0px; padding-bottom: 18px;">Contact League Executive</h3>
+                                    <form method="post" action="contact">
+                                        <table>
+                                            <tr>
+                                                <td width="100px">Your name: </td>
+                                                <td>
+                                                    <c:if test="${role.roleID eq 2}">
+                                                        ${user.contactID.firstName} ${user.contactID.lastName}
+                                                    </c:if>
+                                                    <c:if test="${role.roleID == null}">
+                                                        <input type="text" name="nameEntered" value="${nameEntered}" placeholder="Jane Smith">
+                                                    </c:if>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Your email: </td>
+                                                <td>
+                                                    <c:if test="${role.roleID eq 2}">
+                                                        ${user.email}
+                                                    </c:if>
+                                                    <c:if test="${role.roleID == null}">
+                                                        <input type="text" name="emailEntered" value="${emailEntered}" placeholder="example@email.com">
+                                                    </c:if>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="line-height: 15px">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Subject: </td>
+                                                <td><input placeholder='e.g., "Questions about pricing"' type="text" name="subject" value="${subject}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"><textarea class="textareaClass" name="body" value="${body}" rows="10" cols="50" placeholder="Write your message here"></textarea></td>
+                                            </tr>
+                                            <c:if test="${message == 'nullFields'}">
+                                                <tr>
+                                                    <td colspan="2" style="color: #CC3333"><b>Error: Fields cannot be blank.</b></td>
+                                                </tr>
+                                            </c:if>
+                                            <tr>
+                                                <td colspan="2" style="padding-top: 5px"><button type="submit" name="sendEmailButton" value="send">Send Email</button></td>
+                                            </tr>
+                                        </table>
+                                        <input type="hidden" name="action" value="sendEmail">
+                                    </form>
+                                </td>
+
+                                <td class="execContact">
+                                    <h4>Executive Contact Information</h4>
                                     <table>
-                                        <tr>
-                                            <td width="100px">Your name: </td>
-                                            <td>
-                                                <c:if test="${role.roleID eq 2}">
-                                                    ${user.contactID.firstName} ${user.contactID.lastName}
-                                                </c:if>
-                                                <c:if test="${role.roleID == null}">
-                                                    <input type="text" name="nameEntered" value="${nameEntered}" placeholder="Jane Smith">
-                                                </c:if>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Your email: </td>
-                                            <td>
-                                                <c:if test="${role.roleID eq 2}">
-                                                    ${user.email}
-                                                </c:if>
-                                                <c:if test="${role.roleID == null}">
-                                                    <input type="text" name="emailEntered" value="${emailEntered}" placeholder="example@email.com">
-                                                </c:if>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="line-height: 15px">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Subject: </td>
-                                            <td><input placeholder='e.g., "Questions about pricing"' type="text" name="subject" value="${message.subject}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2"><textarea class="textareaClass" name="body" value="${message.body}" rows="10" cols="50" placeholder="Write your message here"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="padding-top: 5px"><button type="submit" name="sendEmailButton" value="send">Send Email</button></td>
-                                        </tr>
+                                        <c:forEach var="admin" items="${admins}">
+                                            <tr>
+                                                <td width="200px"><b>${admin.execTitle}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>${admin.user.contactID.firstName} ${admin.user.contactID.lastName}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>${admin.user.contactID.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-bottom: 15px">${admin.user.contactID.phone}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </table>
-                                    <input type="hidden" name="action" value="sendEmail">
-                                </form>
-                            </td>
-                            
-                            <td class="execContact">
-                                <h4>Executive Contact Information</h4>
-                                <table>
-                                    <c:forEach var="admin" items="${admins}">
-                                        <tr>
-                                            <td width="200px"><b>${admin.execTitle}</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td>${admin.user.contactID.firstName} ${admin.user.contactID.lastName}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>${admin.user.contactID.email}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding-bottom: 15px">${admin.user.contactID.phone}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </c:if>
                 <c:if test="${messageSent == true}">
                     <div class="content contactContent otherwise">
-                        <h4>Your email has been sent.</h4>
-                        <p>A league executive will be in touch with you shortly.</p>
+                        <h3 style="margin: 0px;">Your email has been sent.</h3>
+                        <p style="border: none">A league executive will be in touch with you shortly.</p>
                     </div>
                 </c:if>
             </c:otherwise>

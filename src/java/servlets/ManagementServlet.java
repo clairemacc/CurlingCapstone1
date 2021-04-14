@@ -828,7 +828,7 @@ public class ManagementServlet extends HttpServlet {
                                 playerService.delete(c.getPlayerID());
                         }
                         
-                        teamService.update(teamID, teamName, league, newList);
+                        teamService.update(teamID, teamName, league, newList, teamService.get(teamID).getGameList(), teamService.get(teamID).getGameList1());
                         session.setAttribute("allTeams", teamService.getAll());
                         session.removeAttribute("newMems");
                         session.removeAttribute("toRemoveList");
@@ -882,7 +882,7 @@ public class ManagementServlet extends HttpServlet {
                 ExecutiveService execService = new ExecutiveService();
 
                 if (leagueAction.equals("saveLeagueSettings")) {
-                    String leagueID = request.getParameter("saveLeagueSettings");
+                    String leagueID = request.getParameter("saveLeagueSettingsBtn");
                     League league = leagueService.getByLeagueID(leagueID);
                     
                     String weekday = request.getParameter(leagueID + "wk");
@@ -911,9 +911,9 @@ public class ManagementServlet extends HttpServlet {
                 
                 else if (leagueAction.equals("deleteLeague")) {
                     String leagueID = request.getParameter("realDeleteLeagueButton");
-                    League league = leagueService.getByLeagueID(leagueID);
-                    
-                    
+                    System.out.println(leagueID);
+                    leagueService.delete(leagueID);
+                    session.setAttribute("allLeagues", leagueService.getAll());
                 }
             }
         }

@@ -72,4 +72,19 @@ public class SpareDB {
         }
     }
     
+    public void delete(Spare spare) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction eTr = em.getTransaction();
+        
+        try {
+            eTr.begin();
+            em.remove(em.merge(spare));
+            eTr.commit();
+        } catch (Exception e) {
+            eTr.rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

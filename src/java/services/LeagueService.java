@@ -3,7 +3,9 @@ package services;
 
 import dataaccess.ExecutiveDB;
 import dataaccess.LeagueDB;
+import dataaccess.SpareDB;
 import dataaccess.TeamDB;
+import java.util.ArrayList;
 import java.util.List;
 import models.Executive;
 import models.League;
@@ -48,34 +50,35 @@ public class LeagueService {
     
     public void delete(String leagueID) {
         LeagueDB ldb = new LeagueDB();
-        /*
+        League league = getByLeagueID(leagueID);
+        
         ExecutiveDB edb = new ExecutiveDB();
-        TeamDB tdb = new TeamDB();
-        ArrayList<String> pids = new ArrayList<>();
-        ArrayList<String> gids = new ArrayList<>();
+        TeamService ts = new TeamService();
+        SpareDB sdb = new SpareDB();
         
-        List<Player> playerList = team.getPlayerList();
-        for (Player p : playerList) {
-            pids.add(p.getPlayerID());
-        }
+        ArrayList<String> eids = new ArrayList<>();
+        ArrayList<String> tids = new ArrayList<>();
+        ArrayList<String> sids = new ArrayList<>();
         
-        List<Game> gameList = team.getGameList();
-        List<Game> gameList1 = team.getGameList1();
+        for (Executive e : league.getExecutiveList()) 
+            eids.add(e.getUserID());
+        for (Team t : league.getTeamList()) 
+            tids.add(t.getTeamID());
+        for (Spare s : league.getSpareList()) 
+            sids.add(s.getSpareID());
+
+        league.getExecutiveList().clear();
+        league.getTeamList().clear();
+        league.getSpareList().clear();
+
+        for (String s : eids) 
+            edb.delete(edb.get(s));
+        for (String s : tids) 
+            ts.delete(s);
+        for (String s : sids) 
+            sdb.delete(sdb.getBySpareID(s));
         
-        for (Game g : gameList) 
-            gids.add(g.getGameID());
-        
-        for (Game g : gameList1) 
-            gids.add(g.getGameID());
-        
-        for (String s : pids) 
-            pdb.delete(pdb.getByPlayerID(s));
-        
-        for (String s : gids)
-            gdb.delete(gdb.get(s));
-        
-        
-        tdb.delete(team);*/
+        ldb.delete(league);
     }
     
     public String generateLeagueID() {

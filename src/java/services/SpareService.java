@@ -1,6 +1,8 @@
 package services;
 
 import dataaccess.SpareDB;
+import dataaccess.SpareRequestDB;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -9,6 +11,7 @@ import models.Contact;
 import models.League;
 import models.Position;
 import models.Spare;
+import models.SpareAssigned;
 
 public class SpareService {
     
@@ -82,6 +85,12 @@ public class SpareService {
         spare.setFlexibleP(flexibleP);
         
         sdb.insert(spare);
+    }
+    
+    public void delete(String spareID) {
+        SpareDB sdb = new SpareDB();
+        Spare spare = get(spareID);
+        sdb.delete(spare);
     }
     
     public String generateSpareID() {

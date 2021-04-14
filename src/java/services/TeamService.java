@@ -63,7 +63,7 @@ public class TeamService {
         return team;
     }
     
-    public void update(String teamID, String teamName, League league, List<Player> playerList) {
+    public void update(String teamID, String teamName, League league, List<Player> playerList, List<Game> gameList, List<Game> gameList1) {
         TeamDB tdb = new TeamDB();
         Team team = get(teamID);
         
@@ -86,29 +86,28 @@ public class TeamService {
         TeamDB tdb = new TeamDB();
         PlayerDB pdb = new PlayerDB();
         GameDB gdb = new GameDB();
+        
         ArrayList<String> pids = new ArrayList<>();
-        ArrayList<String> gids = new ArrayList<>();
+        List<String> gids = new ArrayList<>();
         
-        List<Player> playerList = team.getPlayerList();
-        for (Player p : playerList) {
+        List<Player> playerList = team.getPlayerList();   
+        
+        for (Player p : playerList) 
             pids.add(p.getPlayerID());
-        }
-        
-        List<Game> gameList = team.getGameList();
-        List<Game> gameList1 = team.getGameList1();
-        
-        for (Game g : gameList) 
-            gids.add(g.getGameID());
-        
-        for (Game g : gameList1) 
-            gids.add(g.getGameID());
         
         for (String s : pids) 
             pdb.delete(pdb.getByPlayerID(s));
+
+        for (Game g : team.getGameList()) 
+            gids.add(g.getGameID());
+        for (Game g : team.getGameList1())
+            gids.add(g.getGameID());
+        
+        team.getGameList().clear();
+        team.getGameList1().clear();
         
         for (String s : gids)
             gdb.delete(gdb.get(s));
-        
         
         tdb.delete(team);
     }

@@ -92,7 +92,7 @@
                     <button type="submit" name="realDeleteLeagueButton" id="realDeleteLeagueButton">Delete</button>&ensp;
                     <button type="button" name="cancelDelete" onclick="closeDelete()">Cancel</button>
                 </div>
-                <input type="hidden" name="teamAction" value="deleteLeague">
+                <input type="hidden" name="leagueAction" value="deleteLeague">
             </form>
         </td>
     </tr>
