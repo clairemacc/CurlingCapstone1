@@ -18,7 +18,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 public class ViewScheduleServlet extends HttpServlet {
 
     @Override
@@ -84,15 +83,21 @@ public class ViewScheduleServlet extends HttpServlet {
 
     private void processSelect(HttpServletRequest request) {
         String realPath = request.getServletContext().getRealPath("") + "\\uploads";
+        ArrayList<String> fileNames = null;
+        try {
+            File folder = new File(realPath);
+            File[] folderItems = folder.listFiles();
+            fileNames = new ArrayList<>();
 
-        File folder = new File(realPath);
-        File[] folderItems = folder.listFiles();
-        ArrayList<String> fileNames = new ArrayList<>();
+            for (File read : folderItems) {
+                fileNames.add(read.getName());
+            }
+                    request.setAttribute("fileNames", fileNames);
 
-        for (File read : folderItems) {
-            fileNames.add(read.getName());
+        } catch (Exception e) {
+            request.setAttribute("fileNames", null);
         }
-        request.setAttribute("fileNames", fileNames);
+
     }
 
 }
