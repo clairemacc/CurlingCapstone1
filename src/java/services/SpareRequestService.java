@@ -1,10 +1,13 @@
 package services;
 
+import dataaccess.SpareDB;
 import dataaccess.SpareRequestDB;
 import java.util.Date;
 import java.util.List;
 import models.Game;
 import models.Position;
+import models.Spare;
+import models.SpareAssigned;
 import models.SpareRequest;
 import models.Team;
 import models.User;
@@ -20,6 +23,11 @@ public class SpareRequestService {
         SpareRequestDB srdb = new SpareRequestDB();
         return srdb.getAll();
     } 
+    
+    public List<SpareRequest> getAllActive() {
+        SpareRequestDB srdb = new SpareRequestDB();
+        return srdb.getAllActive();
+    }
     
     public SpareRequest insert(User submitter, Position position, Team team, Game game, Date date) {
         SpareRequestDB srdb = new SpareRequestDB();
@@ -37,9 +45,20 @@ public class SpareRequestService {
         return spRequest;
     }
     
-    public void update(String requestID) {
+    public boolean insertSpareAssigned(String requestID, String spareID) {
         SpareRequestDB srdb = new SpareRequestDB();
         SpareRequest spRequest = get(requestID);
+        Spare spare = new SpareDB().getBySpareID(spareID);
+        
+        SpareAssigned spAssigned = new SpareAssigned(requestID);
+        spAssigned.setSpareRequest(spRequest);
+        spAssigned.setSpareID(spare);
+        
+        return srdb.insertSpareAssigned(spAssigned);
+    }
+    
+    public void deactivate(SpareRequest spRequest) {
+        SpareRequestDB srdb = new SpareRequestDB();
         
         spRequest.setIsActive(false);
         srdb.update(spRequest);

@@ -6,6 +6,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,7 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Registration.findBySignupAll", query = "SELECT r FROM Registration r WHERE r.signupAll = :signupAll")
     , @NamedQuery(name = "Registration.findByRegType", query = "SELECT r FROM Registration r WHERE r.regType = :regType")
     , @NamedQuery(name = "Registration.findByGroupID", query = "SELECT r FROM Registration r WHERE r.groupID = :groupID")
-    , @NamedQuery(name = "Registration.findByTeamName", query = "SELECT r FROM Registration r WHERE r.teamName = :teamName")})
+    , @NamedQuery(name = "Registration.findByTeamName", query = "SELECT r FROM Registration r WHERE r.teamName = :teamName")
+    , @NamedQuery(name = "Registration.findByRegDate", query = "SELECT r FROM Registration r WHERE r.regDate = :regDate")
+    , @NamedQuery(name = "Registration.findByIsActive", query = "SELECT r FROM Registration r WHERE r.isActive = :isActive")})
 public class Registration implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,6 +61,12 @@ public class Registration implements Serializable {
     private String groupID;
     @Column(name = "teamName")
     private String teamName;
+    @Basic(optional = false)
+    @Column(name = "regDate")
+    @Temporal(TemporalType.DATE)
+    private Date regDate;
+    @Column(name = "isActive")
+    private Boolean isActive;
     @JoinColumn(name = "contactID", referencedColumnName = "contactID", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Contact contact;
@@ -70,10 +81,11 @@ public class Registration implements Serializable {
         this.contactID = contactID;
     }
 
-    public Registration(String contactID, String leagues, String regType) {
+    public Registration(String contactID, String leagues, String regType, Date regDate) {
         this.contactID = contactID;
         this.leagues = leagues;
         this.regType = regType;
+        this.regDate = regDate;
     }
 
     public String getContactID() {
@@ -130,6 +142,22 @@ public class Registration implements Serializable {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     public Contact getContact() {

@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -45,14 +46,14 @@
                                     <c:if test="${isAdmin == true}">
                                         <select name="teamSelect">
                                             <c:forEach var="team" items="${teams}">
-                                                <option value="${team.teamID}">${team.teamName}</option>
+                                                <option value="${team.teamID}">${fn:replace(team.teamName, "\\", "")}</option>
                                             </c:forEach>
                                         </select>
                                     </c:if>
                                     <c:if test="${isAdmin == null || isAdmin == false}">
                                         <select name="teamSelect">
                                             <c:forEach var="player" items="${user.playerList}">
-                                                <option value="${player.teamID.teamID}">${player.teamID.teamName}</option>
+                                                <option value="${player.teamID.teamID}">${fn:replace(player.teamID.teamName, "\\", "")}</option>
                                             </c:forEach>
                                         </select>
                                     </c:if>
@@ -75,7 +76,7 @@
                                         <option hidden value>--select--</option>
                                         <c:forEach var="games" items="${playerGames}">
                                             <option value="${games.gameID}" ${games.gameID == selectedGame ? 'selected="selected"' : ''}><span class="thisOption">
-                                            <fmt:formatDate type="date" value="${games.date}"/>: ${games.homeTeam.teamName} <i>vs.</i> ${games.awayTeam.teamName}</span></option>
+                                            <fmt:formatDate type="date" value="${games.date}"/>: ${fn:replace(games.homeTeam.teamName, "\\", "")} <i>vs.</i> ${fn:replace(games.awayTeam.teamName, "\\", "")}</span></option>
                                         </c:forEach>
                                     </select>
                                 </td>
@@ -110,7 +111,7 @@
                             </tr>
                             <tr>
                                 <td><b>Game: </b></td>
-                                <td>${game.homeTeam.teamName} <i>vs.</i> ${game.awayTeam.teamName}</td>
+                                <td>${fn:replace(game.homeTeam.teamName, "\\", "")} <i>vs.</i> ${fn:replace(game.awayTeam.teamName, "\\", "")}</td>
                             </tr>
                             <tr>
                                 <td><b>Game date: </b></td>
@@ -122,7 +123,7 @@
                             </tr>                            
                             <tr>
                                 <td><b>Team: </b></td>
-                                <td>${team.teamName}</td>
+                                <td>${fn:replace(team.teamName, "\\", "")}</td>
                             </tr>
                             <tr>
                                 <td><b>Position: </b></td>

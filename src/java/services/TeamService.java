@@ -16,12 +16,26 @@ import models.Team;
 public class TeamService {
     public List<Team> getAll() {
         TeamDB tdb = new TeamDB();
-        return tdb.getAll();
+        List<Team> teams = tdb.getAll();
+        for (Team t : teams) {
+            String teamName = t.getTeamName();
+            teamName = teamName.replace("'", "\\\'");
+            t.setTeamName(teamName);
+            System.out.println(t.getTeamName());
+        }
+        return teams;
     }
     
     public List<Team> getAllByLeague(League leagueID) {
         TeamDB tdb = new TeamDB();
-        return tdb.getAllByLeague(leagueID);
+        List<Team> teams = tdb.getAllByLeague(leagueID);
+        for (Team t : teams) {
+            String teamName = t.getTeamName();
+            teamName = teamName.replace("'", "\\\'");
+            t.setTeamName(teamName);
+            System.out.println(t.getTeamName());
+        }
+        return teams;
     }
     
     public List<Team> getAllOrdered() {

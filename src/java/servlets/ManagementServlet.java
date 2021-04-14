@@ -16,6 +16,7 @@ import models.Registration;
 import models.Position;
 import models.Role;
 import models.Spare;
+import models.SpareRequest;
 import models.Team;
 import models.User;
 import services.AccountService;
@@ -25,6 +26,7 @@ import services.LeagueService;
 import services.PlayerService;
 import services.PositionService;
 import services.RegistrationService;
+import services.SpareRequestService;
 import services.SpareService;
 import services.TeamService;
 
@@ -50,34 +52,38 @@ public class ManagementServlet extends HttpServlet {
             session.removeAttribute("toRemoveList");
         }
         
-        if (display.equals("verifyRegs")) {
+        if (display.equals("manageRegistration")) {
             RegistrationService regService = new RegistrationService();
-            List<Registration> regs = regService.getAll();
+            List<Registration> regs = regService.getAllActive();
             
-            List<String> groupRegIDs = new ArrayList<>();
+            List<Registration> groupRegs = new ArrayList<>();
             List<Registration> indivRegs = new ArrayList<>();
             List<Registration> spareRegs = new ArrayList<>();
+            String ids = "";
             
             if (regs != null) {
                 request.setAttribute("num", regs.size());
 
-                for (Registration pr : regs) {
-                    if (pr.getGroupID() != null) {
-                        if (!groupRegIDs.contains(pr.getGroupID())) 
-                            groupRegIDs.add(pr.getGroupID());
+                for (Registration r : regs) {
+                    if (r.getRegType().equals("group")) {
+                        if (!ids.contains(r.getGroupID())) {
+                            groupRegs.add(r);
+                            ids += r.getGroupID();
+                            request.setAttribute("num", regs.size() - 1);
+                        }
                     }
-                    else if (pr.getRegType().equals("individual"))
-                        indivRegs.add(pr);
-                    else if (pr.getRegType().equals("spare")) {
-                        spareRegs.add(pr);
+                    else if (r.getRegType().equals("individual"))
+                        indivRegs.add(r);
+                    else if (r.getRegType().equals("spare")) {
+                        spareRegs.add(r);
                     }
                     
                 }
                 
-                session.setAttribute("groupRegIDs", groupRegIDs);
+                session.setAttribute("groupRegs", groupRegs);
                 session.setAttribute("indivRegs", indivRegs);
                 session.setAttribute("spareRegs", spareRegs);
-                request.setAttribute("groupNum", groupRegIDs.size());
+                request.setAttribute("groupNum", groupRegs.size());
                 request.setAttribute("indivNum", indivRegs.size());
                 request.setAttribute("spareNum", spareRegs.size());
             }
@@ -174,6 +180,23 @@ public class ManagementServlet extends HttpServlet {
             List<Executive> allExecutives = execService.getAll();
             session.setAttribute("allExecutives", allExecutives);
         }
+        else if (display.equals("manageSpareRequests")) {
+            session.setAttribute("display", "manageSpareRequests");
+            
+            SpareRequestService srService = new SpareRequestService();
+            List<SpareRequest> requests = srService.getAllActive();
+            request.setAttribute("num", requests.size());
+            session.setAttribute("requests", requests);
+        }
+        else if (display.equals("viewSpareRequest")) {
+            SpareRequestService srService = new SpareRequestService();
+            SpareRequest spRequest = srService.get(request.getParameter("requestID"));
+            request.setAttribute("spRequest", spRequest);
+            
+            SpareService spareService = new SpareService();
+            List<Spare> spares = spareService.getAll();
+            request.setAttribute("spares", spares);
+        }
         
         
         
@@ -248,12 +271,12 @@ public class ManagementServlet extends HttpServlet {
                         if (session.getAttribute("isIndiv") == null && session.getAttribute("isSpare") == null) {
                             List<Registration> regs = (List<Registration>) session.getAttribute("regs");
                             List<Registration> newRegs = new ArrayList<>();
-
+                            
                             for (Registration r : regs) {
                                 if (request.getParameter(r.getContactID()) != null)
                                     newRegs.add(r);
                                 else 
-                                    regService.update(r.getContactID(), r.getPosition().getPositionName(), r.getFlexibleP(), r.getLeagues(), r.getSignupAll(), "individual", null, null);
+                                    regService.update(r.getContactID(), r.getPosition().getPositionName(), r.getFlexibleP(), r.getLeagues(), r.getSignupAll(), "individual", null, null, r.getRegDate());
                             }
                             session.setAttribute("regs", newRegs);
                         } 
@@ -418,6 +441,14 @@ public class ManagementServlet extends HttpServlet {
                         Registration newReg = new Registration(p.getContactID());
                         newReg.setContact(p.getContact());
                         newReg.setPosition(position);
+                        newReg.setFlexibleP(p.getFlexibleP());
+                        newReg.setLeagues(p.getLeagues());
+                        newReg.setSignupAll(p.getSignupAll());
+                        newReg.setRegType(p.getRegType());
+                        newReg.setGroupID(p.getGroupID());
+                        newReg.setTeamName(p.getTeamName());
+                        newReg.setRegDate(p.getRegDate());
+                        
                         updatedRegs.add(newReg);
                     }
 
@@ -425,6 +456,7 @@ public class ManagementServlet extends HttpServlet {
                 }
                 else {
                     Registration reg = (Registration) session.getAttribute("reg");
+                    ContactService contService = new ContactService();
                     
                     String posID = request.getParameter(reg.getContactID() + "pos");
                     Position position = posService.getByPosID(Integer.parseInt(posID));
@@ -433,6 +465,11 @@ public class ManagementServlet extends HttpServlet {
                     updatedReg.setContact(reg.getContact());
                     updatedReg.setPosition(position);
                     updatedReg.setFlexibleP(reg.getFlexibleP());
+                    updatedReg.setLeagues(reg.getLeagues());
+                    updatedReg.setSignupAll(reg.getSignupAll());
+                    updatedReg.setRegType(reg.getRegType());
+                    updatedReg.setRegDate(reg.getRegDate());
+                    
                     session.setAttribute("updatedReg", updatedReg);
                 }
             }
@@ -501,6 +538,18 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
+        //////////////////////////
+        
+        String reqAction = request.getParameter("reqAction");
+        if (reqAction != null) {
+            if (request.getParameter("viewRequest") != null) {
+                String requestID = request.getParameter("viewRequest");
+                session.setAttribute("display", "viewSpareRequest");
+                response.sendRedirect("management?requestID=" + requestID);
+                return;
+            }
+        }
+        
         
         
         request.setAttribute("display", display);
@@ -543,7 +592,6 @@ public class ManagementServlet extends HttpServlet {
                     PositionService posService = new PositionService();
                     List<Position> positions = posService.getAll();
                     request.setAttribute("positions", positions);
-                    System.out.println(positions.get(0).getPositionName());
                     request.setAttribute("displayTeamCreated", true);
                 }
                 
@@ -632,12 +680,14 @@ public class ManagementServlet extends HttpServlet {
 
                     if (session.getAttribute("isIndiv") == null && session.getAttribute("isSpare") == null){
                         for (Registration r : updatedRegs) 
-                            regService.delete(r.getContactID());
+                            regService.deactivate(r);
                     }
-                    else 
-                        regService.delete(updatedReg.getContactID());
+                    else {
+                        regService.deactivate(updatedReg);
+                        
+                    }
 
-                    session.removeAttribute("groupRegIDs");
+                    session.removeAttribute("groupRegs");
                     session.removeAttribute("indivRegIDs");
                     session.removeAttribute("groupID");
                     session.removeAttribute("memNum");
@@ -868,7 +918,23 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
-        
+        String srAction = request.getParameter("srAction");
+        if (srAction != null) {
+            String requestID = request.getParameter("assignSpareButton");
+            String spareID = request.getParameter("selectedSpare");
+            
+            SpareRequestService srService = new SpareRequestService();
+            SpareService spareService = new SpareService();
+            
+            SpareRequest spRequest = srService.get(requestID);
+            Spare spare = spareService.getBySpareID(spareID);
+            
+            if (srService.insertSpareAssigned(requestID, spareID)) {
+                srService.deactivate(spRequest);
+                request.setAttribute("assigned", true);
+            }
+            
+        }
         getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
     }
 }

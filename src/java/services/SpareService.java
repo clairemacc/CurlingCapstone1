@@ -21,6 +21,11 @@ public class SpareService {
         SpareDB sdb = new SpareDB();
         return sdb.getAllOrdered();
     }
+    
+    public Spare getBySpareID(String spareID) {
+        SpareDB sdb = new SpareDB();
+        return sdb.getBySpareID(spareID);
+    }
 
     public Spare get(String email) {
         SpareDB sdb = new SpareDB();

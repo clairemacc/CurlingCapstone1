@@ -3,6 +3,8 @@ package services;
 import dataaccess.ContactDB;
 import dataaccess.PositionDB;
 import dataaccess.RegistrationDB;
+import static java.lang.System.currentTimeMillis;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,6 +15,11 @@ public class RegistrationService {
     public List<Registration> getAll() {
         RegistrationDB rdb = new RegistrationDB();
         return rdb.getAll();
+    }
+    
+    public List<Registration> getAllActive() {
+        RegistrationDB rdb = new RegistrationDB();
+        return rdb.getAllActive();
     }
     
     public List<Registration> getByGroup(String groupID) {
@@ -146,18 +153,21 @@ public class RegistrationService {
         registration.setSignupAll(signupAll);
         registration.setRegType(regType);
         
-        if (groupID != null) 
+        if (regType.equals("group")) {
             registration.setGroupID(groupID);
-        
-        if (teamName != null) {
             registration.setTeamName(teamName);
         }
+        
+        long timeMillis = currentTimeMillis();
+        Date today = new Date(timeMillis);
+        registration.setRegDate(today);
+        registration.setIsActive(true);
         
         rdb.insert(registration);
         return registration;
     }
     
-    public Registration update(String contactID, String positionName, boolean flexibleP, String leagues, boolean signupAll, String regType, String groupID, String teamName) {
+    public Registration update(String contactID, String positionName, boolean flexibleP, String leagues, boolean signupAll, String regType, String groupID, String teamName, Date date) {
         RegistrationDB rdb = new RegistrationDB();
         Registration registration = rdb.getByContactID(contactID);
         
@@ -171,9 +181,17 @@ public class RegistrationService {
         registration.setRegType(regType);
         registration.setGroupID(groupID);
         registration.setTeamName(teamName);
+        registration.setRegDate(date);
         
         rdb.update(registration);
         return registration;
+    }
+    
+    public void deactivate(Registration reg) {
+        RegistrationDB rdb = new RegistrationDB();
+        System.out.println("to string:\n" + reg);
+        reg.setIsActive(false);
+        rdb.update(reg);
     }
     
     public void delete(String contactID) {

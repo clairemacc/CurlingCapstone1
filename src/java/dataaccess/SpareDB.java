@@ -28,6 +28,16 @@ public class SpareDB {
             em.close();
         }
     }
+    
+    public Spare getBySpareID(String spareID) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+            return em.find(Spare.class, spareID);
+        } finally {
+            em.close();
+        }
+    }
 
     public Spare get(String email) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

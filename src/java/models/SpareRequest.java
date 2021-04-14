@@ -8,6 +8,7 @@ package models;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +48,8 @@ public class SpareRequest implements Serializable {
     private Date requestDate;
     @Column(name = "isActive")
     private Boolean isActive;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "spareRequest", fetch = FetchType.EAGER)
+    private SpareAssigned spareAssigned;
     @JoinColumn(name = "gameID", referencedColumnName = "gameID")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Game gameID;
@@ -93,6 +97,14 @@ public class SpareRequest implements Serializable {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public SpareAssigned getSpareAssigned() {
+        return spareAssigned;
+    }
+
+    public void setSpareAssigned(SpareAssigned spareAssigned) {
+        this.spareAssigned = spareAssigned;
     }
 
     public Game getGameID() {

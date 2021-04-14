@@ -1,4 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <table>
     <tr style="border-bottom: 1px dotted black;">
         <td style="vertical-align: top; padding-bottom: 20px">
@@ -8,15 +10,32 @@
                     <c:choose>
                         <c:when test="${isIndiv == true}">
                             <c:forEach var="indivReg" items="${indivRegs}">
-                                <tr><td><button class="groupRegButtons" style="width: auto" type="submit" name="viewReg" value="${indivReg.contactID}">
-                                                ${count1}. &emsp; ${indivReg.contact.firstName} ${indivReg.contact.lastName}</button></td></tr>
+                                <tr>
+                                    <td><button class="groupRegButtons" style="width: auto; padding-right: 10px" type="submit" name="viewReg" value="${indivReg.contactID}">
+                                                ${count1}. &emsp; ${indivReg.contact.firstName} ${indivReg.contact.lastName}</button>
+                                    </td>
+                                    <td>
+                                        <c:choose><c:when test="${innerDisplay != 'viewIndiv'}">&emsp;—&emsp;${indivReg.regDate}</c:when>
+                                        <c:otherwise>
+                                        </c:otherwise></c:choose>
+                                    </td>
+                                    </td>
+                                </tr>
                                 <c:set var="count1" value="${count1 + 1}"/>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
                             <c:forEach var="spareReg" items="${spareRegs}">
-                                <tr><td><button class="groupRegButtons" style="width: auto" type="submit" name="viewReg" value="${spareReg.contactID}">
-                                                ${count1}. &emsp; ${spareReg.contact.firstName} ${spareReg.contact.lastName}</button></td></tr>
+                                <tr>
+                                    <td><button class="groupRegButtons" style="width: auto; padding-right: 10px" type="submit" name="viewReg" value="${spareReg.contactID}">
+                                                ${count1}. &emsp; ${spareReg.contact.firstName} ${spareReg.contact.lastName}</button>&emsp;—&emsp;
+                                    </td>
+                                    <td>
+                                        <c:choose><c:when test="${innerDisplay != 'viewIndiv'}">&emsp;—&emsp;${spareReg.regDate}</c:when>
+                                        <c:otherwise>
+                                        </c:otherwise></c:choose>
+                                    </td>
+                                </tr>
                                 <c:set var="count1" value="${count1 + 1}"/>
                             </c:forEach>
                         </c:otherwise>

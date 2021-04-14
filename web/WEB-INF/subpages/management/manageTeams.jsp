@@ -29,13 +29,15 @@
                 <c:forEach var="team" items="${allTeams}">
                     <tr class="thisTeamRow" id="${team.teamID}row">
                         <td style="padding-top: 10px">${team.teamID}</td>
-                        <td style="padding-top: 10px">${team.teamName}</td>
+                        <td style="padding-top: 10px">${fn:replace(team.teamName, "\\", "")}</td>
                         <td style="padding-top: 10px">${team.leagueID.weekday}</td>
                         <td style="padding-top: 10px">
                             &ensp;${fn:length(team.playerList)} &emsp;<button type="button" class="showPasswordBtn" name="showMembersBtn" id="${team.teamID}ID" value="${team.teamID}" onclick="displayMems(this.value)">show</button>
                         </td>
-                        <td style="width: 120px; padding-top: 10px;"><button type="button" onclick="displayTeamEdit(this.value)" name="editTeamButton" value="${team.teamID}">Edit</button>&nbsp;
+                        <td style="width: 120px; padding-top: 10px;">
+                            <button type="button" onclick="displayTeamEdit(this.value)" name="editTeamButton" value="${team.teamID}">Edit</button>&nbsp;
                             <button type="button" onclick="displayTeamDelete('${team.teamName}', this.value)" name="deleteTeamButton" value="${team.teamID}">Delete</button>&nbsp;
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="5" style="border: none; padding: 0px">
@@ -65,7 +67,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Team name: </td>
-                                                        <td><input type="text" style="width: 90%" name="${team.teamID}teamName" value="${team.teamName}"></td>
+                                                        <td><input type="text" style="width: 90%" name="${team.teamID}teamName" value="${fn:replace(team.teamName, "\\'", "'")}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td>League: </td>
@@ -228,8 +230,9 @@
     }
     
     function displayTeamDelete(teamName, teamValue) {
-        document.getElementById("deleteThisTeam").children[0].innerHTML = "";
-        var text = "Are you sure you want to permanently delete the team \"" + teamName + "\"?";
+        console.log(teamName + " " + teamValue);
+        document.getElementById("deleteThisTeam").children[0].innerHTML = '';
+        var text = 'Are you sure you want to permanently delete the team \"' + teamName + '\"?';
         document.getElementById("deleteThisTeam").children[0].innerHTML = text;
         document.getElementById("deleteThisTeam").style.display = "block";
         document.getElementById("realDeleteTeamButton").value = teamValue;

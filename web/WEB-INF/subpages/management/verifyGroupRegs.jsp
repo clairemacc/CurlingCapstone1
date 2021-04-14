@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <table>
     <tr style="border-bottom: 1px dotted black;">
@@ -5,9 +7,17 @@
             <form method="get" action="management">
                 <table>
                     <c:set var="count1" value="1"/>
-                    <c:forEach var="groupID" items="${groupRegIDs}">
-                        <tr><td><button class="groupRegButtons" type="submit" name="viewGroup" value="${groupID}">
-                                        ${count1}. &emsp; Group ${groupID}</button></td></tr>
+                    <c:forEach var="group" items="${groupRegs}">
+                        <tr>
+                            <td><button class="groupRegButtons" type="submit" name="viewGroup" value="${group.groupID}">
+                                        ${count1}. &emsp; Group ${group.groupID}</button>
+                            </td>
+                            <td>
+                                <c:choose><c:when test="${innerDisplay != 'viewGroup'}">&emsp;—&emsp;<fmt:formatDate type="date" value="${group.regDate}"/></c:when>
+                                <c:otherwise>
+                                </c:otherwise></c:choose>
+                            </td>
+                        </tr>
                         <c:set var="count1" value="${count1 + 1}"/>
                     </c:forEach>
                 </table>
@@ -26,6 +36,10 @@
                                             <table>
                                                 <tr>
                                                     <td><h4 style="font-size: 16px; color: #CC3333;">Group ${thisGroupID}</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Date: </b><br>
+                                                    <fmt:formatDate type="date" value="${regInfo.regDate}"/>
                                                 </tr>
                                                 <tr>
                                                     <td><b>League(s):</b><br>

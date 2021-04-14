@@ -38,7 +38,7 @@
                                     <span class="anOption" onclick="selected('${team.teamID}')">
                                         <input type="checkbox" name="${team.teamID}" id="${team.teamID}ch" onclick="selected(this.value)" 
                                             ${fn:contains(updatedTeams, team.teamID) ? 'checked="checked"' : ''} value="${team.teamID}">
-                                        ${team.teamName}</span><br>
+                                        ${fn:replace(team.teamName, "\\", "")}</span><br>
                                 </c:forEach>
                                 <input type="hidden" name="filter" value="team">
                            </form>
@@ -139,7 +139,7 @@
                                 <c:otherwise>
                                         <c:if test="${fn:length(updatedTeams) == fn:length(teams) || updatedTeams == null || fn:length(updatedTeams) == 0}">All</c:if>
                                         <c:if test="${fn:length(updatedTeams) < fn:length(teams)}">
-                                            <c:forEach var="team" items="${updatedTeams}">${team.teamName} <br></c:forEach>
+                                            <c:forEach var="team" items="${updatedTeams}">${fn:replace(team.teamName, "\\", "")} <br></c:forEach>
                                         </c:if>
                                 </c:otherwise>
                             </c:choose>

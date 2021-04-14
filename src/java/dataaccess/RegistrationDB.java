@@ -16,7 +16,16 @@ public class RegistrationDB {
             em.close();
         }
     }
-
+    
+    public List<Registration> getAllActive() {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+            return em.createNamedQuery("Registration.findByIsActive").setParameter("isActive", true).getResultList();
+        } finally {
+            em.close();
+        }
+    }
     
     public List<Registration> getByGroup(String groupID) {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -64,8 +73,8 @@ public class RegistrationDB {
             eTr.begin();
             em.merge(registration);
             eTr.commit();
-        } catch (Exception e) {
-            eTr.rollback();
+        //} catch (Exception e) {
+          //  eTr.rollback();
         } finally {
             em.close();
         }

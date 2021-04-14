@@ -34,6 +34,7 @@
     <class>database.Role</class>
     <class>models.ArchivedGames</class>
     <class>models.SpareRequest</class>
+    <class>models.SpareAssigned</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
   </persistence-unit>
 </persistence>

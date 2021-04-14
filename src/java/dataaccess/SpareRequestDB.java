@@ -3,6 +3,7 @@ package dataaccess;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import models.SpareAssigned;
 import models.SpareRequest;
 
 public class SpareRequestDB {
@@ -11,7 +12,7 @@ public class SpareRequestDB {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
         try {
-            return em.find(SpareRequest.class, "requestID");
+            return em.find(SpareRequest.class, requestID);
         } finally {
             em.close();
         }
@@ -22,6 +23,16 @@ public class SpareRequestDB {
         
         try {
             return em.createNamedQuery("SpareRequest.findAll").getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<SpareRequest> getAllActive() {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
+        try {
+            return em.createNamedQuery("SpareRequest.findByIsActive").setParameter("isActive", true).getResultList();
         } finally {
             em.close();
         }
@@ -40,6 +51,23 @@ public class SpareRequestDB {
         } finally {
             em.close();
         }
+    }
+    
+    public boolean insertSpareAssigned(SpareAssigned spAssigned) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction eTr = em.getTransaction();
+        boolean valid = false;
+        try {
+            eTr.begin();
+            em.persist(spAssigned);
+            eTr.commit();
+            valid = true;
+        } catch (Exception e) {
+            eTr.rollback();
+        } finally {
+            em.close();
+        }
+        return valid;
     }
     
     public void update(SpareRequest spRequest) {

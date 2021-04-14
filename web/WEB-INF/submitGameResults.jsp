@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,20 +41,20 @@
                 <c:when test="${display == 'displayEnterScore'}">
                     <form method="get" action="submitGameResults">
                         <p class="chosenGame">Submitting results for the following game: <br>
-                            <span class="icon">&nbsp;►&ensp;</span><b><fmt:formatDate type="date" value="${game.date}"/>: ${game.homeTeam.teamName} <i>vs.</i> ${game.awayTeam.teamName}</b><br>
+                            <span class="icon">&nbsp;►&ensp;</span><b><fmt:formatDate type="date" value="${game.date}"/>: ${fn:replace(game.homeTeam.teamName, "\\", "")} <i>vs.</i> ${fn:replace(game.awayTeam.teamName, "\\", "")}</b><br>
                         <table class="enterScoreTable">
                             <tr>
                                 <td colspan="4" style="padding-bottom: 13px"><hr class="hrTd"></td>
                             </tr>
                             <tr>
                                 <td><b>Home team: &nbsp;</b></td>
-                                <td class="teamName">${game.homeTeam.teamName}</td>
+                                <td class="teamName">${fn:replace(game.homeTeam.teamName, "\\", "")}</td>
                                 <td align="right" class="outer"><b>Score: &nbsp;</b></td>
                                 <td><input type="text" placeholder="e.g., 11" name="homeScore" value="${homeScore}"></td>
                             </tr>
                             <tr>
                                 <td><b>Away team: &nbsp;</b></td>
-                                <td class="teamName">${game.awayTeam.teamName}</td>
+                                <td class="teamName">${fn:replace(game.awayTeam.teamName, "\\", "")}</td>
                                 <td align="right" class="outer"><b>Score: &nbsp;</b></td>
                                 <td><input type="text" placeholder="e.g., 11" name="awayScore" value="${awayScore}"></td>
                             </tr>
@@ -148,7 +149,7 @@
                         </tr>
                         <tr>
                             <td><b>Teams: &nbsp;</b></td>
-                            <td>${score.game.homeTeam.teamName} <i>vs. </i> ${score.game.homeTeam.teamName}</td>
+                            <td>${fn:replace(score.game.homeTeam.teamName, "\\", "")} <i>vs. </i> ${fn:replace(score.game.homeTeam.teamName, "\\", "")}</td>
                         </tr>
                         <tr>
                             <td><b>Score: &nbsp;</b></td>
@@ -183,7 +184,7 @@
                                         <option hidden value>--select--</option>
                                         <c:forEach var="games" items="${games}">
                                             <option value="${games.gameID}" ${games.gameID == selectedGame ? 'selected="selected"' : ''}><span class="thisOption">
-                                                <fmt:formatDate type="date" value="${games.date}"/>: ${games.homeTeam.teamName} <i>vs.</i> ${games.awayTeam.teamName}</span></option>
+                                                <fmt:formatDate type="date" value="${games.date}"/>: ${fn:replace(games.homeTeam.teamName, "\\", "")} <i>vs.</i> ${fn:replace(games.awayTeam.teamName, "\\", "")}</span></option>
                                         </c:forEach>
                                     </select><br>
                                 </div>
