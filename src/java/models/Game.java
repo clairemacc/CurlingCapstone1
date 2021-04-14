@@ -7,6 +7,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,11 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,13 +49,15 @@ public class Game implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
     @JoinColumn(name = "awayTeam", referencedColumnName = "teamID")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Team awayTeam;
     @JoinColumn(name = "homeTeam", referencedColumnName = "teamID")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Team homeTeam;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.EAGER)
     private Score score;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "gameID", fetch = FetchType.EAGER)
+    private List<SpareRequest> spareRequestList;
 
     public Game() {
     }
@@ -104,6 +109,15 @@ public class Game implements Serializable {
 
     public void setScore(Score score) {
         this.score = score;
+    }
+
+    @XmlTransient
+    public List<SpareRequest> getSpareRequestList() {
+        return spareRequestList;
+    }
+
+    public void setSpareRequestList(List<SpareRequest> spareRequestList) {
+        this.spareRequestList = spareRequestList;
     }
 
     @Override

@@ -5,18 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Curling League Management</h1>
-        <h2>REQUEST FOR SPARE </h2>
-        <p>
-            Hi {{firstname}} {{lastname}},<br>
-            We are requesting a spare for the following game. <br>
-            <b>Date of Request :</b> {{date}} <br>
-            <b>Date of Game: </b> {{gameDate}} <br>
-            <b>Game: </b> {{homeTeam}} vs. {{awayTeam}} <br>
-            <b>Team of Spare: </b> {{team}} <br>
-            <b>Position: </b> {{position}}<br> <br>
+        <p style="font-size: 18px">
+            Hi {{firstname}} {{lastname}},<br><br>
+            A spare is needed for an upcoming game in the {{weekday}} ({{leagueID}}) curling league.<br><br>
+            The details are as follows: <br><br>
+            <b>Game: </b>{{homeTeam}} vs. {{awayTeam}}<br>
+            <b>Game date: </b> {{gameDate}}<br>
+            <b>Team requesting spare: </b> {{team}} <br>
+            <b>Position: </b> {{position}}<br>
+            <b>Date of request :</b> {{date}} <br><br>
             
-            If you are available, please send a response to 
+            If you are available, please send an email to curlingproject@gmail.com with <b>Request ID {{requestID}}</b> in the subject line.<br><br>
+            Sincerely, <br>
+            ARC Curling 
         </p>
     </body>
 </html>

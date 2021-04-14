@@ -42,6 +42,8 @@ public class Position implements Serializable {
     @Column(name = "positionName")
     private String positionName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "position", fetch = FetchType.EAGER)
+    private List<SpareRequest> spareRequestList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "position", fetch = FetchType.EAGER)
     private List<Registration> registrationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "position", fetch = FetchType.EAGER)
     private List<Player> playerList;
@@ -74,6 +76,15 @@ public class Position implements Serializable {
 
     public void setPositionName(String positionName) {
         this.positionName = positionName;
+    }
+
+    @XmlTransient
+    public List<SpareRequest> getSpareRequestList() {
+        return spareRequestList;
+    }
+
+    public void setSpareRequestList(List<SpareRequest> spareRequestList) {
+        this.spareRequestList = spareRequestList;
     }
 
     @XmlTransient

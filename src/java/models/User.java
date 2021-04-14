@@ -58,6 +58,8 @@ public class User implements Serializable {
     private Executive executive;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "submitter", fetch = FetchType.EAGER)
     private List<Score> scoreList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "submitter", fetch = FetchType.EAGER)
+    private List<SpareRequest> spareRequestList;
     @JoinColumn(name = "contactID", referencedColumnName = "contactID")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Contact contactID;
@@ -135,6 +137,15 @@ public class User implements Serializable {
 
     public void setScoreList(List<Score> scoreList) {
         this.scoreList = scoreList;
+    }
+
+    @XmlTransient
+    public List<SpareRequest> getSpareRequestList() {
+        return spareRequestList;
+    }
+
+    public void setSpareRequestList(List<SpareRequest> spareRequestList) {
+        this.spareRequestList = spareRequestList;
     }
 
     public Contact getContactID() {

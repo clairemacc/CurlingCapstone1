@@ -14,6 +14,7 @@ import models.League;
 import models.Player;
 import models.Position;
 import models.Spare;
+import models.SpareRequest;
 import models.Team;
 import models.User;
 import services.AccountService;
@@ -21,6 +22,7 @@ import services.GameService;
 import services.LeagueService;
 import services.PlayerService;
 import services.PositionService;
+import services.SpareRequestService;
 import services.SpareService;
 import services.TeamService;
 
@@ -95,6 +97,7 @@ public class SpareRequestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         String action = request.getParameter("action");
         
         if (action.equals("review")) {
@@ -122,18 +125,7 @@ public class SpareRequestServlet extends HttpServlet {
             } else {
                 PositionService ps = new PositionService();
                 Position positionChosen = ps.getByPosID(Integer.parseInt(position));
-               
-                LeagueService ls = new LeagueService();
-                 League league = null;
-                
-                if(gameChosen.getDate().getDay() == 2){
-                   league = ls.getByWeekday("tuesday");
-                }
-                else if(gameChosen.getDate().getDay() == 4){
-                    league = ls.getByWeekday("thursday");
-                }
-                
-                session.setAttribute("league", league);
+
                 session.setAttribute("position", positionChosen);
                 session.setAttribute("game", gameChosen);
                 session.setAttribute("team", teamChosen);
@@ -141,7 +133,8 @@ public class SpareRequestServlet extends HttpServlet {
             }
 
             getServletContext().getRequestDispatcher("/WEB-INF/spareRequest.jsp").forward(request, response);
-        } else {
+        } 
+        else {
             SpareService ss = new SpareService();
             List<Spare> spares = ss.getAll();
             Game gameChosen = (Game) session.getAttribute("game");
@@ -166,8 +159,12 @@ public class SpareRequestServlet extends HttpServlet {
             String awayTeam = gameChosen.getAwayTeam().getTeamName();
             String team = teamChosen.getTeamName();
             String position = positionChosen.getPositionName();
-
-            ss.emailSpares(emails, path, date, gameDate, homeTeam, awayTeam, team, position);
+            League league = teamChosen.getLeagueID();
+            
+            SpareRequestService reqService = new SpareRequestService();
+            SpareRequest req = reqService.insert(user, positionChosen, teamChosen, gameChosen, today);
+            
+            ss.emailSpares(req.getRequestID(), league, emails, path, date, gameDate, homeTeam, awayTeam, team, position);
             request.setAttribute("review", 3);
             getServletContext().getRequestDispatcher("/WEB-INF/spareRequest.jsp").forward(request, response);
 

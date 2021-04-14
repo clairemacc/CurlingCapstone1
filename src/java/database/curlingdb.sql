@@ -216,6 +216,31 @@ CREATE TABLE IF NOT EXISTS `curlingdb`.`registration` (
     FOREIGN KEY (`position`)
     REFERENCES `curlingdb`.`position` (`positionID`));
 
+-- -----------------------------------------------------
+-- Table `curlingdb`.`spareRequest`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `curlingdb`.`spareRequest` (
+  `requestID` VARCHAR(6) NOT NULL, 
+  `submitter` VARCHAR(6) NOT NULL, 
+  `position` INT(1) NOT NULL, 
+  `teamID` VARCHAR(6) NOT NULL,
+  `gameID` VARCHAR(6) NOT NULL,
+  `requestDate` DATE NOT NULL,
+  `isActive` BOOLEAN DEFAULT TRUE,
+  PRIMARY KEY (`requestID`),
+  CONSTRAINT `fk_spareReqToUser`
+    FOREIGN KEY (`submitter`)
+    REFERENCES `curlingdb`.`user` (`userID`),
+  CONSTRAINT `fk_spareReqToPosition`
+    FOREIGN KEY (`position`)
+    REFERENCES `curlingdb`.`position` (`positionID`),
+  CONSTRAINT `fk_spareReqToTeam`
+    FOREIGN KEY (`teamID`)
+    REFERENCES `curlingdb`.`team` (`teamID`),
+  CONSTRAINT `fk_spareReqToGame`
+    FOREIGN KEY (`gameID`)
+    REFERENCES `curlingdb`.`game` (`gameID`));
+
 
 --spare registration = position choice, flexible boolean 
 

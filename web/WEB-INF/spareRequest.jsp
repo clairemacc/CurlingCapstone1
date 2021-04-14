@@ -97,18 +97,41 @@
                     <c:if test="${nullValue eq true}">
                         <p style="color: red">Please provide information for all fields.</p>
                     </c:if>
+                    <c:if test="${differentTeam eq true}">
+                        <p style="color: red">This team is not playing in the game you have selected.</p>
+                    </c:if>
                                       
                 </c:when>
                   <c:when test="${review eq 2}">
                         <form action="spareRequest" method="post">
                         <table>
-                            <tr><b>Date of Request: </b>${today} </tr><br>
-                            <tr><b>League: </b> ${league.weekday}</tr><br>
-                            <tr><b>Date of Game: </b> ${game.date} </tr><br>
-                            <tr><b>Game: </b>  ${game.homeTeam.teamName} <i>vs.</i> ${game.awayTeam.teamName} </tr><br>
-                            <tr><b>Team of Spare: </b> ${team.teamName}</tr><br>
-                            <tr><b>Position: </b> ${position.positionName}</tr><br>
-
+                            <tr>
+                                <td colspan="2" style="font-size: 18px; color: #002c91; padding-bottom: 5px; border-bottom: 1px solid #CC3333"><b>Spare Request Review</b></td>
+                            </tr>
+                            <tr>
+                                <td><b>Game: </b></td>
+                                <td>${game.homeTeam.teamName} <i>vs.</i> ${game.awayTeam.teamName}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Game date: </b></td>
+                                <td>${game.date} </td>
+                            </tr>
+                            <tr>
+                                <td><b>League: </b></td>
+                                <td>${team.leagueID.leagueID} (${team.leagueID.weekday})</td>
+                            </tr>                            
+                            <tr>
+                                <td><b>Team: </b></td>
+                                <td>${team.teamName}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Position: </b></td>
+                                <td>${position.positionName}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Date of request:&emsp;</b></td>
+                                <td>${today} </td>
+                            </tr>
                         </table>
 
                         <table class="tableButtons">
@@ -124,8 +147,8 @@
                     </form>
                   </c:when>
                 <c:otherwise>
-                    <b> Your email has been sent to spares who can play the selected position!</b>
-                  
+                    <h3 style="margin-top: 0px;">Your request was submitted successfully.</h3>
+                    <p>The available spares have been notified, and a League Executive will<br> contact you shortly regarding the status of your request.</p>
                 </c:otherwise>
             </c:choose>    
 

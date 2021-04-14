@@ -27,11 +27,11 @@ public class SpareService {
         return sdb.get(email);
     }
     
-    public boolean emailSpares(List<String> emails, String path, String date, String gameDate, String homeTeam, String awayTeam, String team, String position) {
+    public boolean emailSpares(String requestID, League league, List<String> emails, String path, String date, String gameDate, String homeTeam, String awayTeam, String team, String position) {
         boolean sent = false;
         ContactService ss = new ContactService();
 
-        String template = path + "/emailtemplates/spareReqTemplate.html";
+        String template = path + "\\emailtemplates\\spareReqTemplate.html";
         for (int i = 0; i < emails.size(); i++) {
             for (String e : emails) 
                 System.out.println(e);
@@ -43,13 +43,16 @@ public class SpareService {
                 tags.put("lastname", contact.getLastName());
                 tags.put("email", emails.get(i));
                 tags.put("date", date);
+                tags.put("leagueID", league.getLeagueID());
+                tags.put("weekday", league.getWeekday());
                 tags.put("gameDate", gameDate);
                 tags.put("homeTeam", homeTeam);
                 tags.put("awayTeam", awayTeam);
                 tags.put("team", team);
                 tags.put("position", position);
+                tags.put("requestID", requestID);
 
-                emailSpareRequest.sendMail(emails.get(i), "REQUEST FOR A SPARE", template, tags);
+                GmailService.sendMail(emails.get(i), "ARC Curling - Request for a Spare", template, tags);
             } catch (Exception ex) {
                 Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
             }

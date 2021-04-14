@@ -44,9 +44,9 @@ public class Team implements Serializable {
     @Basic(optional = false)
     @Column(name = "teamName")
     private String teamName;
-    @OneToMany(mappedBy = "awayTeam", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "awayTeam", fetch = FetchType.EAGER)
     private List<Game> gameList;
-    @OneToMany(mappedBy = "homeTeam", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "homeTeam", fetch = FetchType.EAGER)
     private List<Game> gameList1;
     @JoinColumn(name = "leagueID", referencedColumnName = "leagueID")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -55,6 +55,8 @@ public class Team implements Serializable {
     private List<Score> scoreList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "team", fetch = FetchType.EAGER)
     private Standing standing;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamID", fetch = FetchType.EAGER)
+    private List<SpareRequest> spareRequestList;
     @OneToMany(mappedBy = "teamID", fetch = FetchType.EAGER)
     private List<Player> playerList;
 
@@ -127,6 +129,15 @@ public class Team implements Serializable {
 
     public void setStanding(Standing standing) {
         this.standing = standing;
+    }
+
+    @XmlTransient
+    public List<SpareRequest> getSpareRequestList() {
+        return spareRequestList;
+    }
+
+    public void setSpareRequestList(List<SpareRequest> spareRequestList) {
+        this.spareRequestList = spareRequestList;
     }
 
     @XmlTransient
