@@ -14,6 +14,8 @@ public class SpareDB {
         
         try {
             return em.createNamedQuery("Spare.findAll").getResultList();
+        } catch (Exception e) {
+            return null;
         } finally {
             em.close();
         }
@@ -24,6 +26,8 @@ public class SpareDB {
         
         try {
             return em.createQuery("SELECT s FROM Spare s ORDER BY s.spareID").getResultList();
+        } catch (Exception e) {
+            return null;
         } finally {
             em.close();
         }

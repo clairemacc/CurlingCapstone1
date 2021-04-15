@@ -28,72 +28,83 @@
             <tr>
                 <td class="manageLeft">
                     <form method="get" action="management">
-                        <button type="submit" name="display" value="manageRegistration">Verify registration</button><br>
-                        <button type="submit" name="display" value="manageAccounts">User accounts</button><br>
-                        <button type="submit" name="display" value="manageTeams">Teams</button><br>
-                        <button type="submit" name="display" value="manageLeagues">Leagues</button><br>
-                        <button type="submit" name="display" value="manageUsers">Scores</button><br>
-                        <button type="submit" name="display" value="managePosts">News posts</button><br>
-                        <button type="submit" name="display" value="manageSpareRequests">Spare requests</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageRegistration">Verify registration</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageAccounts">User accounts</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageTeams">Teams</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageLeagues">Leagues</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageSchedules">Schedules</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageScores">Scores</button><br>
+                        <button type="submit" name="mgmtDisplay" value="managePosts">News posts</button><br>
+                        <button type="submit" name="mgmtDisplay" value="manageSpareRequests">Spare requests</button><br>
                     </form>
                 </td>
                 <c:choose>
-                    <c:when test="${display == 'manageRegistration'}">
+                    <c:when test="${mgmtDisplay == 'manageRegistration'}">
                         <td class="manageRight" style="vertical-align: top">
                             <jsp:include page="./subpages/management/manageRegistration.jsp"></jsp:include>
                         </td>
                     </c:when>   
                     
-                    <c:when test="${display == 'verifyGroupRegs'}">
+                    <c:when test="${mgmtDisplay == 'verifyGroupRegs'}">
                         <td class="manageRight vg" style="vertical-align: top;">
                             <jsp:include page="./subpages/management/verifyGroupRegs.jsp"></jsp:include>
                         </td>
                     </c:when>
                         
-                    <c:when test="${display == 'verifyIndivRegs'}">
+                    <c:when test="${mgmtDisplay == 'verifyIndivRegs'}">
                         <td class="manageRight vg" style="vertical-align: top;">
                             <jsp:include page="./subpages/management/verifyIndivRegs.jsp"></jsp:include>
                         </td>
                     </c:when>
                         
-                    <c:when test="${display == 'registrationSetup'}">   
+                    <c:when test="${mgmtDisplay == 'registrationSetup'}">   
                         <td class="manageRight att">
                             <jsp:include page="./subpages/management/registrationSetup.jsp"></jsp:include>
                         </td>
                     </c:when>
                         
-                    <c:when test="${display == 'manageAccounts'}">
+                    <c:when test="${mgmtDisplay == 'manageAccounts'}">
                         <td class="manageRight acc" style="vertical-align: top; padding-left: 10px;">
                             <jsp:include page="./subpages/management/manageAccounts.jsp"></jsp:include>
                         </td>
                     </c:when>
                         
-                    <c:when test="${display == 'manageTeams'}">
+                    <c:when test="${mgmtDisplay == 'manageTeams'}">
                         <td class="manageRight acc" style="vertical-align: top; padding-left: 10px;">
                             <jsp:include page="./subpages/management/manageTeams.jsp"></jsp:include>
                         </td>
                     </c:when>
                         
-                    <c:when test="${display == 'manageLeagues'}">
+                    <c:when test="${mgmtDisplay == 'manageLeagues'}">
                         <td class="manageRight acc" style="vertical-align: top; padding-left: 10px;">
                            <jsp:include page="./subpages/management/manageLeagues.jsp"></jsp:include>
                         </td>
                     </c:when>
                         
-                    <c:when test="${display == 'manageSpareRequests'}">
+                    <c:when test="${mgmtDisplay == 'manageSpareRequests'}">
                         <td class="manageRight acc" style="vertical-align: top; padding-left: 10px;">
                            <jsp:include page="./subpages/management/manageSpareRequests.jsp"></jsp:include>
                         </td>
                     </c:when>
-                    <c:when test="${display == 'viewSpareRequest'}">
+                    <c:when test="${mgmtDisplay == 'viewSpareRequest'}">
                         <td class="manageRight acc" style="vertical-align: top; padding-left: 10px;">
                            <jsp:include page="./subpages/management/assignSpare.jsp"></jsp:include>
                         </td>
-                    </c:when>                        
+                    </c:when>  
+                    <c:when test="${mgmtDisplay == 'manageSchedules'}">
+                        <td class="manageRight acc" style="vertical-align: top;">
+                            <jsp:include page="./subpages/management/manageSchedules.jsp"></jsp:include>
+                        </td>
+                    </c:when>  
+                    <c:when test="${mgmtDisplay == 'manageScores'}">
+                        <td class="manageRight acc" style="vertical-align: top;">
+                            <jsp:include page="./subpages/management/manageScores.jsp"></jsp:include>
+                        </td>
+                    </c:when>                          
                             
                 </c:choose>
             </tr>
-        </table>
+        </table><br><br>
         <script>
             var selectAll = document.getElementById("selectAll");
             var checks = document.getElementsByClassName("checks");

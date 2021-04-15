@@ -3,8 +3,13 @@ package servlets;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,11 +17,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.League;
+import models.Team;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import services.GameService;
+import services.LeagueService;
+import services.TeamService;
 
 public class ViewScheduleServlet extends HttpServlet {
 
@@ -24,22 +34,18 @@ public class ViewScheduleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processSelect(request);
-        request.getServletContext().getRequestDispatcher("/WEB-INF/viewSchedules.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+        
         String selectFile = request.getParameter("selectFile");
         String realPath = request.getServletContext().getRealPath("") + "\\uploads\\" + selectFile;
         FileInputStream readFile = new FileInputStream(new File(realPath));
         Workbook workbook = new XSSFWorkbook(readFile);
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> rowIter = sheet.iterator();
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
 
         ArrayList<String> cells = new ArrayList<>();
-        ;
+        
         while (rowIter.hasNext()) {
             Row row = rowIter.next();
             Iterator<Cell> cellIter = row.iterator();
@@ -53,31 +59,67 @@ public class ViewScheduleServlet extends HttpServlet {
                         break;
 
                     case NUMERIC:
-                        Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, "Logging: " + cell.getNumericCellValue());
-                        cells.add(Double.toString(cell.getNumericCellValue()));
+                        Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, "Logging: " + cell.getDateCellValue());
+                        String newDate = dateFormat.format(cell.getDateCellValue());
+                        newDate = newDate.substring(0, 8);
+                        cells.add(newDate);
                         break;
-
+                        
                     default:
                         //not yet supporting other data types please keep it simple
                         break;
                 }
             }
             cells.add("/nl");
-
         }
 
         for (String read : cells) {
             Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, read);
-
         }
-
-        request.setAttribute("cells", cells);
+        boolean invalid = false;
+        try {
+            dateFormat = new SimpleDateFormat("dd/MM/yy");
+            GameService gameService = new GameService();
+            TeamService teamService = new TeamService();
+            
+            Team homeTeam;
+            Team awayTeam;
+            Date date;
+        
+            for (int i = 4; i < (cells.size() - 3) ; i = i + 4) {
+               homeTeam = teamService.get(cells.get(i));
+               awayTeam = teamService.get(cells.get(i + 1));
+               date = dateFormat.parse(cells.get(i + 2));
+               
+               if (homeTeam != null && awayTeam != null && date != null) 
+                   gameService.insert(homeTeam, awayTeam, date);
+               else {
+                   invalid = true;
+                   break;
+               }
+               
+               request.setAttribute("games", gameService.getAll());
+            }
+                    
+        } catch (ParseException e) {
+           invalid = true;
+        }
+            
+        if (invalid)
+            request.setAttribute("uploadMessage", "parseError");
+        else 
+            request.setAttribute("uploadMessage", "success");
 
         workbook.close();
         readFile.close();
 
         processSelect(request);
-        request.getServletContext().getRequestDispatcher("/WEB-INF/viewSchedules.jsp").forward(request, response);
+        request.getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
     }
 

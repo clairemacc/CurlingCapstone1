@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.Executive;
+import models.Game;
 import models.League;
 import models.Player;
 import models.Registration;
@@ -22,6 +23,7 @@ import models.User;
 import services.AccountService;
 import services.ContactService;
 import services.ExecutiveService;
+import services.GameService;
 import services.LeagueService;
 import services.PlayerService;
 import services.PositionService;
@@ -38,12 +40,12 @@ public class ManagementServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user"); 
-        String display = request.getParameter("display"); 
+        String mgmtDisplay = request.getParameter("mgmtDisplay"); 
         
-        if (display == null) {
-            display = (String) session.getAttribute("display");
-            if (display == null || display.equals("selectContacts")) {
-                display = "verifyRegs";
+        if (mgmtDisplay == null) {
+            mgmtDisplay = (String) session.getAttribute("mgmtDisplay");
+            if (mgmtDisplay == null) {
+                mgmtDisplay = "manageRegistration";
             }
         }
         if (request.getParameter("teamAction") == null) {
@@ -52,7 +54,7 @@ public class ManagementServlet extends HttpServlet {
             session.removeAttribute("toRemoveList");
         }
         
-        if (display.equals("manageRegistration")) {
+        if (mgmtDisplay.equals("manageRegistration")) {
             RegistrationService regService = new RegistrationService();
             List<Registration> regs = regService.getAllActive();
             
@@ -94,11 +96,11 @@ public class ManagementServlet extends HttpServlet {
                 request.setAttribute("spareNum", "0");
             }
         }
-        else if (display.equals("registrationSetup")) {
+        else if (mgmtDisplay.equals("registrationSetup")) {
             String leagueOpt = "";
             LeagueService leagueService = new LeagueService();
             List<League> leagues = leagueService.getAll();
-            request.setAttribute("display", "registrationSetup");
+            request.setAttribute("mgmtDisplay", "registrationSetup");
             
             if (session.getAttribute("isIndiv") == null && session.getAttribute("isSpare") == null) {
                 List<Registration> regs = (List<Registration>) session.getAttribute("regs");
@@ -134,8 +136,8 @@ public class ManagementServlet extends HttpServlet {
             session.setAttribute("leagues", leagues);
         }
         
-        else if (display.equals("manageAccounts")) {
-            session.setAttribute("display", "manageAccounts");
+        else if (mgmtDisplay.equals("manageAccounts")) {
+            session.setAttribute("mgmtDisplay", "manageAccounts");
             AccountService accService = new AccountService();
             
             List<User> allUsers = accService.getAll();
@@ -144,8 +146,8 @@ public class ManagementServlet extends HttpServlet {
             List<Role> roles = accService.getAllRoles();
             session.setAttribute("roles", roles); 
         }
-        else if (display.equals("manageTeams")) {
-            session.setAttribute("display", "manageTeams");
+        else if (mgmtDisplay.equals("manageTeams")) {
+            session.setAttribute("mgmtDisplay", "manageTeams");
             TeamService teamService = new TeamService();
             
             List<Team> allTeams = teamService.getAll();
@@ -169,8 +171,8 @@ public class ManagementServlet extends HttpServlet {
             List<User> allUsers = accService.getAll();
             session.setAttribute("allUsers", allUsers);
         }
-        else if (display.equals("manageLeagues")) {
-            session.setAttribute("display", "manageLeagues");
+        else if (mgmtDisplay.equals("manageLeagues")) {
+            session.setAttribute("mgmtDisplay", "manageLeagues");
             
             LeagueService leagueService = new LeagueService();
             List<League> allLeagues = leagueService.getAll();
@@ -180,15 +182,15 @@ public class ManagementServlet extends HttpServlet {
             List<Executive> allExecutives = execService.getAll();
             session.setAttribute("allExecutives", allExecutives);
         }
-        else if (display.equals("manageSpareRequests")) {
-            session.setAttribute("display", "manageSpareRequests");
+        else if (mgmtDisplay.equals("manageSpareRequests")) {
+            session.setAttribute("mgmtDisplay", "manageSpareRequests");
             
             SpareRequestService srService = new SpareRequestService();
             List<SpareRequest> requests = srService.getAllActive();
             request.setAttribute("num", requests.size());
             session.setAttribute("requests", requests);
         }
-        else if (display.equals("viewSpareRequest")) {
+        else if (mgmtDisplay.equals("viewSpareRequest")) {
             SpareRequestService srService = new SpareRequestService();
             SpareRequest spRequest = srService.get(request.getParameter("requestID"));
             request.setAttribute("spRequest", spRequest);
@@ -197,16 +199,28 @@ public class ManagementServlet extends HttpServlet {
             List<Spare> spares = spareService.getAll();
             request.setAttribute("spares", spares);
         }
+        else if (mgmtDisplay.equals("manageSchedules")) {
+            session.setAttribute("mgmtDisplay", "manageSchedules");
+            
+            LeagueService leagueService = new LeagueService();
+            session.setAttribute("leagues", leagueService.getAll());
+            
+            GameService gameService = new GameService();
+            session.setAttribute("games", gameService.getAll());
+        }
+        else if (mgmtDisplay.equals("manageScores")) {
+            session.setAttribute("mgmtDisplay", "manageScores");
+        }
         
-        
+        /////
         
         String action = request.getParameter("action");
         if (action != null) {
             RegistrationService regService = new RegistrationService();
             if (action.equals("viewRegs")) {                
                 if (request.getParameter("viewGroupRegs") != null) {
-                    display = "verifyGroupRegs";
-                    session.setAttribute("display", display);
+                    mgmtDisplay = "verifyGroupRegs";
+                    session.setAttribute("mgmtDisplay", mgmtDisplay);
                     session.removeAttribute("isIndiv");
                     session.removeAttribute("isSpare");
                 }
@@ -220,12 +234,12 @@ public class ManagementServlet extends HttpServlet {
                         session.removeAttribute("isIndiv");
                     }
                         
-                    display = "verifyIndivRegs";
-                    session.setAttribute("display", display);
+                    mgmtDisplay = "verifyIndivRegs";
+                    session.setAttribute("mgmtDisplay", mgmtDisplay);
                 }
             }
             else if (action.equals("selectGroupID")) {
-                display = "verifyGroupRegs";
+                mgmtDisplay = "verifyGroupRegs";
                 String thisGroupID = request.getParameter("viewGroup");
                 request.setAttribute("innerDisplay", "viewGroup");
                 session.setAttribute("thisGroupID", thisGroupID);
@@ -236,7 +250,7 @@ public class ManagementServlet extends HttpServlet {
                 session.setAttribute("regs", regs);
             }
             else if (action.equals("selectRegID")) {
-                display = "verifyIndivRegs";
+                mgmtDisplay = "verifyIndivRegs";
                 String thisReg = request.getParameter("viewReg");
                 
                 request.setAttribute("innerDisplay", "viewIndiv");
@@ -245,7 +259,7 @@ public class ManagementServlet extends HttpServlet {
                 session.setAttribute("reg", reg);
             }
             else if (action.equals("selectSpareRegID")) {
-                display = "verifySpareRegs";
+                mgmtDisplay = "verifySpareRegs";
                 String thisReg = request.getParameter("viewSpareReg");
                 
                 request.setAttribute("innerDisplay", "viewSpare");
@@ -282,7 +296,7 @@ public class ManagementServlet extends HttpServlet {
                         } 
                     }
                     
-                    session.setAttribute("display", "registrationSetup");
+                    session.setAttribute("mgmtDisplay", "registrationSetup");
                     response.sendRedirect("management");
                     return;
                 }
@@ -544,7 +558,7 @@ public class ManagementServlet extends HttpServlet {
         if (reqAction != null) {
             if (request.getParameter("viewRequest") != null) {
                 String requestID = request.getParameter("viewRequest");
-                session.setAttribute("display", "viewSpareRequest");
+                session.setAttribute("mgmtDisplay", "viewSpareRequest");
                 response.sendRedirect("management?requestID=" + requestID);
                 return;
             }
@@ -552,7 +566,7 @@ public class ManagementServlet extends HttpServlet {
         
         
         
-        request.setAttribute("display", display);
+        request.setAttribute("mgmtDisplay", mgmtDisplay);
         getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
         
     }
@@ -581,7 +595,7 @@ public class ManagementServlet extends HttpServlet {
                 else {
                     team = teamService.insert(league, teamName);
                     session.setAttribute("thisTeam", team);
-                    session.setAttribute("display", "registrationSetup");
+                    session.setAttribute("mgmtDisplay", "registrationSetup");
                     request.setAttribute("innerDisplay", "teamSetup");
 
                     if (session.getAttribute("isIndiv") == null && session.getAttribute("isSpare") == null) {
@@ -704,11 +718,11 @@ public class ManagementServlet extends HttpServlet {
                     session.removeAttribute("updatedReg");
                     session.removeAttribute("isIndiv");
                     session.removeAttribute("isSpare");
-                    String display = (String) session.getAttribute("display");
+                    String mgmtDisplay = (String) session.getAttribute("mgmtDisplay");
                     String thisGroupID = (String) session.getAttribute("thisGroupID");
-                    session.removeAttribute("display");
+                    session.removeAttribute("mgmtDisplay");
                     session.removeAttribute("thisGroupID");
-                    request.setAttribute("display", display);
+                    request.setAttribute("mgmtDisplay", mgmtDisplay);
                     request.setAttribute("thisGroupID", thisGroupID);
                 }
                 
@@ -935,85 +949,18 @@ public class ManagementServlet extends HttpServlet {
             }
             
         }
+        
+        String gameAction = request.getParameter("gameAction");
+        if (gameAction != null) {
+            if (gameAction.equals("deleteGame")) {
+                String gameID = request.getParameter("realDeleteGameButton");
+                GameService gameService = new GameService();
+                gameService.delete(gameID);
+                
+                request.setAttribute("games", gameService.getAll());
+            }
+        }
+        
         getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
     }
 }
-
-            
-
-        
-        /*
-        AccountService accountService = new AccountService();
-        String action = request.getParameter("action");
-        switch(action){
-            case "validate":
-            {
-                String id = request.getParameter("id");
-                if(true){
-                    request.setAttribute("error", "User does not exists, please refresh your page and try again!");
-                }
-                else{
-                    request.setAttribute("info", "Validate successful!");
-                }
-                //request.setAttribute("users", accountService.getAllNotVerify());
-                request.setAttribute("type", 0);//verify users
-                getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
-            }
-            break;
-            case "modify":
-            {
-                String id = request.getParameter("id");
-                String email = request.getParameter("email");
-                String firstName = request.getParameter("firstName");
-                String lastName = request.getParameter("lastName");
-                String phone = request.getParameter("phone");
-                String roleID = request.getParameter("role");
-                Role role = new Role(Integer.parseInt(roleID));
-                User user = new User(id);
-                if(!accountService.modifyUser(user)){
-                    request.setAttribute("error", "Email already taken by someone else!");
-                }
-                else{
-                    request.setAttribute("info", "Modify successful!");
-                }
-                //request.setAttribute("users", accountService.getAllVerify());
-                request.setAttribute("roles", accountService.getAllRoles());
-                request.setAttribute("type", 1);
-                getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
-            }
-            break;
-            case "invalidate":
-            {
-                String id = request.getParameter("id");
-                if(true){
-                    request.setAttribute("error", "User does not exists, please refresh your page and try again!");
-                }
-                else{
-                    request.setAttribute("info", "Invalidate successful!");
-                }
-                //request.setAttribute("users", accountService.getAllVerify());
-                request.setAttribute("roles", accountService.getAllRoles());
-                request.setAttribute("type", 1);
-                getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
-            }
-            break;
-            case "delete":
-            {
-                String id = request.getParameter("id");
-                if(!accountService.deleteUser(id)){
-                    request.setAttribute("error", "User does not exists, please refresh your page and try again!");
-                }
-                else{
-                    request.setAttribute("info", "Delete successful!");
-                }
-                //request.setAttribute("users", accountService.getAllVerify());
-                request.setAttribute("roles", accountService.getAllRoles());
-                request.setAttribute("type", 1);
-                getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
-            }
-            break;
-            default:
-        }
-        
-    }
-}*/

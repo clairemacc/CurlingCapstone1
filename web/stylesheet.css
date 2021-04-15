@@ -484,7 +484,7 @@ hr {
 }
 
 .standingsContent table tr td {
-    padding: 24px 50px;
+    padding: 20px 50px;
 }
 
 .standingsContent .t {
@@ -495,8 +495,9 @@ hr {
 }
 
 .standingsContent .t1 {
-    padding-right: 90px;
+    padding-right: 40px;
     padding-left: 30px;
+    width: 250px;
     text-align: left;
 }
 
@@ -1308,26 +1309,15 @@ hr {
     font-weight: bold;
 }
 
-.deleteUser {
-    position: absolute;
-    padding: 30px; 
-    background: #F3F3F3; 
-    color: #CC3333;
-    display: none;
-    top: 50px;
-    border-radius: 3px;
-    border: 1px solid black;
-    box-shadow: 0px 5px 15px black;
-    text-align: center;
-    align-items: center;
-    width: 300px;
-}
 
 .deleteTeam {
-    position: absolute; 
+    position: fixed; 
+    right: 450px; 
+    bottom: 300px; 
+    width: 300px; 
+    height: auto;
+    z-index: 100;
     padding: 30px; 
-    bottom: 50%; 
-    right: 50%; 
     background: #F3F3F3; 
     color: #CC3333;
     display: none;
@@ -1353,4 +1343,8 @@ hr {
     height: auto;
     min-height: 100px;
     font-size: 14px;
+}
+
+.sched tr td {
+    border: none;
 }

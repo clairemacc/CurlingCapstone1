@@ -95,8 +95,14 @@ public class SpareService {
     
     public String generateSpareID() {
         List<Spare> spares = getAllOrdered();
-        String idStr = spares.get(spares.size() - 1).getSpareID();
-        int idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        int idNum;
+        
+        if (spares == null || spares.isEmpty()) 
+            idNum = 0;
+        else {
+            String idStr = spares.get(spares.size() - 1).getSpareID();
+            idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        }
         
         String spareID;
         int newIdNum = idNum + 1;

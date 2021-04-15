@@ -35,8 +35,8 @@
         <div class="sidebar2"></div>
         <div class="background"></div>
         <div class="pageTitle"><h2>Standings</h2></div>
-        <div class="content standingsContent">
-            <table>
+        <div class="content standingsContent" style="position: relative; width: 675px">
+            <table style="margin-left:5px;">
                 <tr>
                     <td class="t t1">Team</td>
                     <td class="t">GP</td>
@@ -57,7 +57,7 @@
                 <b>W&nbsp; - &nbsp;</b>Wins &emsp;&emsp;&emsp;
                 <b>L&nbsp; - &nbsp;</b>Losses
             </p>
-        </div>
+        </div><br>
         
         
         <script type="text/javascript">

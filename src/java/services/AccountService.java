@@ -207,8 +207,14 @@ public class AccountService {
     
     public String generateUserID() {
         List<User> users = getAllOrdered();
-        String idStr = users.get(users.size() - 1).getUserID();
-        int idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        int idNum;
+        
+        if (users == null || users.isEmpty())
+            idNum = 0;
+        else {
+            String idStr = users.get(users.size() - 1).getUserID();
+            idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        }
         
         String userID;
         int newIdNum = idNum + 1;

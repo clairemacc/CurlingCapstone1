@@ -107,11 +107,11 @@
                         <form action="spareRequest" method="post">
                         <table>
                             <tr>
-                                <td colspan="2" style="font-size: 18px; color: #002c91; padding-bottom: 5px; border-bottom: 1px solid #CC3333"><b>Spare Request Review</b></td>
+                                <td colspan="2" style="font-size: 18px; color: #002c91; padding-bottom: 10px; border-bottom: 1px solid #CC3333"><b>Spare Request Overview</b></td>
                             </tr>
                             <tr>
-                                <td><b>Game: </b></td>
-                                <td>${fn:replace(game.homeTeam.teamName, "\\", "")} <i>vs.</i> ${fn:replace(game.awayTeam.teamName, "\\", "")}</td>
+                                <td style="padding-top: 10px;"><b>Game: </b></td>
+                                <td style="padding-top: 10px">${fn:replace(game.homeTeam.teamName, "\\", "")} <i>vs.</i> ${fn:replace(game.awayTeam.teamName, "\\", "")}</td>
                             </tr>
                             <tr>
                                 <td><b>Game date: </b></td>

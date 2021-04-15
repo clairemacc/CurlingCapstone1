@@ -98,8 +98,14 @@ public class ContactService {
     
     public String generateContactID() {
         List<Contact> contacts = getAll();
-        String idStr = contacts.get(contacts.size() - 1).getContactID();
-        int idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        int idNum;
+        
+        if (contacts == null || contacts.isEmpty())
+            idNum = 0;
+        else {
+            String idStr = contacts.get(contacts.size() - 1).getContactID();
+            idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        }
         
         String contactID;
         int newIdNum = idNum + 1;

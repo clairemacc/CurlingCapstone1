@@ -120,7 +120,7 @@
     </tr>
 </table>
 <form method="post" action="management">
-    <div name="deleteUser" class="deleteUser" id="deleteThisUser">
+    <div name="deleteUser" class="deleteTeam" id="deleteThisUser">
         <h4></h4>
         <button type="submit" name="realDeleteUserButton" id="realDeleteUserButton">Delete</button>&ensp;
         <button type="button" name="cancelDelete" onclick="closeDeleteUser()">Cancel</button>

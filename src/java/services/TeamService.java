@@ -114,8 +114,14 @@ public class TeamService {
     
     public String generateTeamID() {
         List<Team> teams = getAllOrdered();
-        String idStr = teams.get(teams.size() - 1).getTeamID();
-        int idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        int idNum;
+        
+        if (teams == null || teams.isEmpty()) 
+            idNum = 0;
+        else {
+            String idStr = teams.get(teams.size() - 1).getTeamID();
+            idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        }
         
         String teamID;
         int newIdNum = idNum + 1;

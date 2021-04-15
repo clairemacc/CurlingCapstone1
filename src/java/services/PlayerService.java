@@ -73,8 +73,14 @@ public class PlayerService {
     
     public String generatePlayerID() {
         List<Player> players = getAllOrdered();
-        String idStr = players.get(players.size() - 1).getPlayerID();
-        int idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        int idNum;
+        
+        if (players == null || players.isEmpty())
+            idNum = 0;
+        else {
+            String idStr = players.get(players.size() - 1).getPlayerID();
+            idNum = Integer.parseInt(idStr.substring(2, idStr.length()));
+        }
         
         String playerID;
         int newIdNum = idNum + 1;
