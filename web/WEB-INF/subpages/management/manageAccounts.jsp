@@ -7,10 +7,6 @@
         <td>
             <table class="manageAccountsTable">
                 <tr>
-                    <th colspan="6" style="border: none; padding: 5px; border-radius: 3px; font-weight: normal; background: #afbbc7;">Search:&ensp;
-                        <input type="text" size="30"></td>
-                </tr>
-                <tr>
                     <th>User ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -43,27 +39,27 @@
                                                     </tr>
                                                     <tr>
                                                         <td>First name: </td>
-                                                        <td><input type="text" name="firstName" value="${user.contactID.firstName}"</td>
+                                                        <td><input type="text" name="firstName" value="${user.contactID.firstName}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Last name :</td>
-                                                        <td><input type="text" name="lastName" value="${user.contactID.lastName}"</td>
+                                                        <td><input type="text" name="lastName" value="${user.contactID.lastName}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Address: </td>
-                                                        <td><input type="text" name="address" value="${user.contactID.address}"</td>
+                                                        <td><input type="text" name="address" value="${user.contactID.address}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td>City: </td>
-                                                        <td><input type="text" name="city" value="${user.contactID.city}"</td>
+                                                        <td><input type="text" name="city" value="${user.contactID.city}"></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Postal code: </td>
-                                                        <td><input type="text" name="postal" value="${user.contactID.postal}"</td>
+                                                        <td><input type="text" name="postal" value="${user.contactID.postal}" pattern="[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]" maxlength="6""></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Phone number: </td>
-                                                        <td><input type="text" name="phone" value="${user.contactID.phone}"</td>
+                                                        <td><input type="text" name="phone" value="${user.contactID.phone}"></td>
                                                     </tr>
                                                 </table>
                                             </td>

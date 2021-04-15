@@ -17,10 +17,6 @@
         <td>
             <table class="manageAccountsTable teamsTable" style="border-collapse: collapse" >
                 <tr>
-                    <th colspan="5" style="border: none; padding: 5px; border-radius: 3px; font-weight: normal; background: #afbbc7">Search:&ensp;
-                        <input type="text" size="30"></td>
-                </tr>
-                <tr>
                     <th>Team ID</th>
                     <th>Team name</th>
                     <th>League</th>

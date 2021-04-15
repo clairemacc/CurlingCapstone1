@@ -40,7 +40,7 @@
                 </tr>                
                 <tr>
                     <td>Postal Code: <br>
-                        <input type="text" name="postal" size="8" value="${member.postal}" pattern="[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]" maxlength="6"</td>
+                        <input type="text" name="postal" size="8" value="${member.postal}" pattern="[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]" maxlength="6"></td>
                 </tr>
             </table>
         </td>

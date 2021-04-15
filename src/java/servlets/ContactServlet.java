@@ -1,6 +1,5 @@
 package servlets;
 
-import dataaccess.TeamDB;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,7 @@ import services.AccountService;
 import services.ContactService;
 import services.ExecutiveService;
 import services.LeagueService;
-import services.PlayerService;
 import services.PositionService;
-import services.SortAndFilterService;
 import services.TeamService;
 
 public class ContactServlet extends HttpServlet {

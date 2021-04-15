@@ -487,6 +487,9 @@ public class ManagementServlet extends HttpServlet {
                     session.setAttribute("updatedReg", updatedReg);
                 }
             }
+            else if (action.equals("searchUsers")) {
+                
+            }
         }
         
         //////

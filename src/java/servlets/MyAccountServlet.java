@@ -23,38 +23,19 @@ public class MyAccountServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         
         String display = request.getParameter("display");
-        if (display == null) {
+        if (display == null) 
             display = "personalInfo";
-        }
         
-        String action = request.getParameter("action");
-        boolean editInProgress = false;
-        
-        if (display.equals("personalInfo")){
-            if (action != null) {
-                if (action.startsWith("save")) {
-                    session.setAttribute("display", display);
-                    session.setAttribute("action", action);
-                    doPost(request, response);
-                    return;
-                }
-
-                if (action.startsWith("edit")) {
-                    editInProgress = true;
-                    request.setAttribute("editing", action.substring(4, action.length()).toLowerCase());
-                }
-            }
+        if (request.getParameter("editing") == null) {
+            session.removeAttribute("editing");
+            session.removeAttribute("editThis");
+            session.setAttribute("editing", "");
         }
-        else if (display.equals("teamInfo")) {
-            PlayerService playerService = new PlayerService();
-            //Player player = playerService.getByUserID(action);
-            //Team team = player.getTeamID();
-            
-        }
+        else 
+            request.setAttribute("message", "nullFields");
         
         request.setAttribute("user", user);
         request.setAttribute("display", display);
-        request.setAttribute("editInProgress", editInProgress);
         getServletContext().getRequestDispatcher("/WEB-INF/myAccount.jsp").forward(request, response);
     }
 
@@ -66,51 +47,134 @@ public class MyAccountServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
         
         String display = (String) session.getAttribute("display");
-        String action = (String) session.getAttribute("action");
-        String message = "";
-        String editing = "";
+        String action = request.getParameter("action");
         
-        if (display != null) {
-            if (display.equals("personalInfo")) {
-                if (action != null) {
-                    String firstName = user.getContactID().getFirstName();
-                    String lastName = user.getContactID().getLastName();
-                    String address = user.getContactID().getAddress();
-                    String city = user.getContactID().getCity();
-                    String postal = user.getContactID().getPostal();
-                    String email = user.getContactID().getEmail();
-                    String phone = user.getContactID().getPhone();
-                    
-                    
-                    if (action.equals("saveName")) {
-                        firstName = request.getParameter("firstName");
-                        lastName = request.getParameter("lastName");
-                        
-                    }
-                    else if (action.equals("saveAddress")) {
-                        address = request.getParameter("address");
-                        city = request.getParameter("city");
-                        postal = request.getParameter("postal");
-                    }
-                    else if (action.equals("savePhone"))
-                        phone = request.getParameter("phone");
-                    
-                    if (firstName == null || firstName.equals("") || lastName == null || lastName.equals("") || 
-                            address == null || address.equals("") || city == null || city.equals("") || 
-                            postal == null || postal.equals("") || phone == null || phone.equals("")) {
-                        message = "nullFields";
-                        editing = action.substring(4, action.length()).toLowerCase();
-                    }
-                    else {
-                        ContactService contService = new ContactService();
-                        contService.update(user.getContactID().getContactID(), firstName, lastName, address, city, postal, email, phone);
+        if (action != null) {
+            if (action.equals("savePersonal")) {
+                String firstName = user.getContactID().getFirstName();
+                String lastName = user.getContactID().getLastName();
+                String address = user.getContactID().getAddress();
+                String city = user.getContactID().getCity();
+                String postal = user.getContactID().getPostal();
+                String phone = user.getContactID().getPhone();
+
+                String isNull = "";
+
+                if (request.getParameter("saveFirstName") != null) {
+                    firstName = request.getParameter("firstName");
+                    if (firstName == null || firstName.equals("")) 
+                        isNull = "firstName";
+                }
+                else if (request.getParameter("saveLastName") != null) {
+                    lastName = request.getParameter("lastName");
+                    if (lastName == null || lastName.equals("")) 
+                        isNull = "lastName";
+                }
+                else if (request.getParameter("saveAddress") != null) {
+                    address = request.getParameter("address");
+                    if (address == null || address.equals("")) 
+                        isNull = "address";
+                }
+                else if (request.getParameter("saveCity") != null) {
+                    city = request.getParameter("city");
+                    if (city == null || city.equals("")) 
+                        isNull = "city";
+                }
+                else if (request.getParameter("savePostal") != null) {
+                    postal = request.getParameter("postal");
+                    if (postal == null || postal.equals("")) 
+                        isNull = "postal";
+                }
+                else if (request.getParameter("savePhone") != null) {
+                    phone = request.getParameter("phone");
+                    System.out.println("phone: " + phone);
+                    if (phone == null || phone.equals("")) {
+                        isNull = "phone";
                     }
                 }
+                System.out.println("this is null: " + isNull);
+
+                if (!isNull.equals("")) {
+                    session.setAttribute("editThis", isNull);
+                    session.setAttribute("editing", "editing");
+                    response.sendRedirect("myAccount?editing=editing&editThis="+ isNull);
+                    return;
+                }
+                else {
+                    System.out.println("entering update");
+                    ContactService contService = new ContactService();
+                    contService.update(user.getContactID().getContactID(), firstName, lastName, address, city, postal, user.getContactID().getEmail(), phone);
+                    display = "personalInfo";
+                }
+            }
+            
+            else if (action.equals("saveNewEmail")) {
+                String newEmail = request.getParameter("newEmail");
+                String confNewEmail = request.getParameter("confNewEmail");
+                AccountService accService = new AccountService();
+                
+                String message = "";
+                boolean invalid = false;
+                
+                if (newEmail == null || newEmail.equals("") || confNewEmail == null || confNewEmail.equals("")) {
+                    message = "nullFields";
+                    invalid = true;
+                }
+                else if (!newEmail.equals(confNewEmail)) {
+                    message = "emailMismatch";
+                    invalid = true;
+                }
+                else {
+                    for (User u : accService.getAll()) {
+                        if (u.getEmail().equals(newEmail)) {
+                            message = "emailExists";
+                            invalid = true;
+                        }
+                    }
+                }
+                
+                if (invalid) {
+                    request.setAttribute("message", message);
+                    request.setAttribute("newEmail", newEmail);
+                }
+                else {
+                    accService.update(user.getUserID(), newEmail, user.getPassword(), user.getRole().getRoleID(), true);
+                    request.setAttribute("message", "success");
+                }
+                display = "changeEmail";
+            }
+            
+            else if (action.equals("saveNewPassword")) {String currPassword = request.getParameter("currPassword"); 
+                String newPassword = request.getParameter("newPassword");
+                String confNewPassword = request.getParameter("confNewPassword");
+                
+                if (!user.getPassword().equals(currPassword)) 
+                    request.setAttribute("message", "wrongPassword");
+                
+                else if (newPassword == null || newPassword.equals("") || confNewPassword == null || confNewPassword.equals("")) 
+                    request.setAttribute("message", "nullFields");
+                
+                else if (!newPassword.equals(confNewPassword)) 
+                    request.setAttribute("message", "passwordMismatch");
+                
+                else if (user.getPassword().length() < 8)
+                    request.setAttribute("message", "passwordTooShort");
+                
+                else if (user.getPassword().equals(newPassword))
+                    request.setAttribute("message", "samePassword");
+               
+            
+                else {
+                    AccountService accService = new AccountService();
+                    accService.update(user.getUserID(), user.getEmail(), newPassword, user.getRole().getRoleID(), true);
+                    request.setAttribute("message", "success");
+                }
+                display = "changePassword";
             }
         }
         AccountService accService = new AccountService();
         user = accService.getByUserID(user.getUserID());
-        request.setAttribute("editing", editing);
+        request.setAttribute("display", display);
         session.setAttribute("user", user);
         getServletContext().getRequestDispatcher("/WEB-INF/myAccount.jsp").forward(request, response);
     }

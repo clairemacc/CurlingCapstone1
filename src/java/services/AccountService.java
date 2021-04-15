@@ -123,17 +123,6 @@ public class AccountService {
         return udb.getByResetUUID(uuid);
     }
     
-    public List<User> getAllNotVerify() {
-        UserDB udb = new UserDB();
-        return udb.getAllNotVerify();
-    } 
-    
-        
-   /* public List<User> getAllVerify() {
-        UserDB udb = new UserDB();
-        return udb.getAllVerify();
-    } */
-    
     public void changeUserPassword(User user, String password){
         UserDB udb = new UserDB();
         user.setPassword(password);
