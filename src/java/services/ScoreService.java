@@ -5,10 +5,12 @@ import dataaccess.ScoreDB;
 import dataaccess.StandingDB;
 import dataaccess.TeamDB;
 import dataaccess.UserDB;
+import java.util.Date;
 import java.util.List;
 import models.Game;
 import models.User;
 import models.Score;
+import models.Standing;
 import models.Team;
 
 public class ScoreService {
@@ -23,8 +25,8 @@ public class ScoreService {
         return sdb.get(gameID);
     }
     
-    public void insert(String gameID, User submitter, int homeScore, int awayScore, String winner) {
-        Score score = new Score(gameID, homeScore, awayScore);
+    public void insert(String gameID, User submitter, int homeScore, int awayScore, String winner, Date today) {
+        Score score = new Score(gameID, homeScore, awayScore, today);
         String loser = "";
         
         StandingService standService = new StandingService();
@@ -57,7 +59,37 @@ public class ScoreService {
                 
         ScoreDB sdb = new ScoreDB();
         sdb.insert(score);
+    }
+    
+    public void delete(String gameID) {
+        ScoreDB sdb = new ScoreDB();
+        Score score = get(gameID);
+        Game game = score.getGame();
+        String homeTeam = game.getHomeTeam().getTeamID();
+        String awayTeam = game.getAwayTeam().getTeamID();
         
+        int gamesWon;
+        int gamesLost;
+        int gamesPlayed;
         
+        StandingService ss = new StandingService();
+        for (Standing s : ss.getAll()) {
+            if (s.getTeamID().equals(homeTeam) || s.getTeamID().equals(awayTeam)) {
+                gamesWon = s.getGamesWon();
+                gamesLost = s.getGamesLost();
+                gamesPlayed = s.getGamesPlayed() - 1;
+                
+                if (score.getWinner() != null) {
+                    if (s.getTeamID().equals(score.getWinner().getTeamID()))
+                        gamesWon = gamesWon - 1;
+                    else 
+                        gamesLost = gamesLost - 1;
+                }
+                
+                ss.updateGames(s.getTeamID(), gamesWon, gamesLost, gamesPlayed);
+            }
+        }
+        
+        sdb.delete(score);
     }
 }

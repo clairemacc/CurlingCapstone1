@@ -35,6 +35,8 @@
     <class>models.ArchivedGames</class>
     <class>models.SpareRequest</class>
     <class>models.SpareAssigned</class>
+    <class>models.Newspost</class>
+    <class>models.NewsPost</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
   </persistence-unit>
 </persistence>

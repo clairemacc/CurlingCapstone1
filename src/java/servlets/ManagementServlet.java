@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -25,9 +26,11 @@ import services.ContactService;
 import services.ExecutiveService;
 import services.GameService;
 import services.LeagueService;
+import services.NewsPostService;
 import services.PlayerService;
 import services.PositionService;
 import services.RegistrationService;
+import services.ScoreService;
 import services.SpareRequestService;
 import services.SpareService;
 import services.TeamService;
@@ -209,7 +212,14 @@ public class ManagementServlet extends HttpServlet {
             session.setAttribute("games", gameService.getAll());
         }
         else if (mgmtDisplay.equals("manageScores")) {
+            ScoreService scoreService = new ScoreService();
+            request.setAttribute("scores", scoreService.getAll());
             session.setAttribute("mgmtDisplay", "manageScores");
+        }
+        else if (mgmtDisplay.equals("managePosts")) {
+            NewsPostService newsService = new NewsPostService();
+            request.setAttribute("newsPosts", newsService.getAll());
+            session.setAttribute("mgmtDisplay", "managePosts");
         }
         
         /////
@@ -928,8 +938,6 @@ public class ManagementServlet extends HttpServlet {
                 
                 else if (leagueAction.equals("deleteLeague")) {
                     String leagueID = request.getParameter("realDeleteLeagueButton");
-                    System.out.println(leagueID);
-                    leagueService.delete(leagueID);
                     session.setAttribute("allLeagues", leagueService.getAll());
                 }
             }
@@ -962,6 +970,61 @@ public class ManagementServlet extends HttpServlet {
                 
                 request.setAttribute("games", gameService.getAll());
             }
+        }
+        
+        String scoreAction = request.getParameter("scoreAction");
+        if (scoreAction != null) {
+            ScoreService scoreService = new ScoreService();
+            boolean invalid = false;
+            if (scoreAction.equals("saveScore")) {
+                String gameID = request.getParameter("saveScoreButton");
+                String newHomeScore = request.getParameter("newHomeScore");
+                String newAwayScore = request.getParameter("newAwayScore");
+                
+                int homeScore = 0;
+                int awayScore = 0;
+                
+                try {
+                    homeScore = Integer.parseInt(newHomeScore);
+                    awayScore = Integer.parseInt(newAwayScore);
+                    
+                    if (homeScore < 0 || awayScore < 0) 
+                        invalid = true;
+                    
+                    
+                } catch (NumberFormatException e) {
+                    invalid = true;
+                }
+                
+                if (invalid) {
+                    request.setAttribute("invalidInput", gameID);
+                    request.setAttribute("editingScore", gameID);
+                }
+                else {
+                    Game game = scoreService.get(gameID).getGame();
+                    User submitter = scoreService.get(gameID).getSubmitter();
+                    Date date = scoreService.get(gameID).getSubmitDate();
+                    String homeTeam = game.getHomeTeam().getTeamID();
+                    String awayTeam = game.getAwayTeam().getTeamID();
+                    String winner = "tie";
+                    
+                    if (homeScore > awayScore) 
+                        winner = homeTeam;
+                    else if (awayScore > homeScore)
+                        winner = awayTeam;
+                    
+                    scoreService.delete(gameID);
+                    scoreService.insert(gameID, submitter, homeScore, awayScore, winner, date);
+                }
+            }
+            
+            else if (scoreAction.equals("deleteScore")) {
+                String gameID = request.getParameter("realDeleteScoreButton");
+                scoreService.delete(gameID);
+            }
+            
+            request.setAttribute("scores", scoreService.getAll());
+            
         }
         
         getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);

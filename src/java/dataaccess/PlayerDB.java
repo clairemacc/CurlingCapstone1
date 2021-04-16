@@ -59,6 +59,7 @@ public class PlayerDB {
         
         try {
             User user = player.getUserID();
+            
             if (user.getPlayerList() == null) 
                 user.setPlayerList(new ArrayList<>());
             user.getPlayerList().add(player);

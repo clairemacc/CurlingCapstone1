@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,32 +35,17 @@
         <div class="background"></div>
         <div class="pageTitle"><h2>Upcoming Events and Announcements</h2></div>
         <div class="content newsContent">
-            <table class="postTitle">
-                <tr>
-                    <td>Lorem Ipsum</td>
-                    <td class="postDate">January 1, 2018</td>
-                </tr>
-            </table>
-            <div class="postContent">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-                    culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div><hr class="newsHr">
-            <table class="postTitle">
-                <tr>
-                    <td>Lorem Ipsum</td>
-                    <td class="postDate">December 22, 2017</td>
-                </tr>
-            </table>
-            <div class="postContent">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-                    culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
+            <c:forEach var="news" items="${newsPosts}">
+                <table class="postTitle">
+                    <tr>
+                        <td>${news.title}</td>
+                        <td class="postDate"><fmt:formatDate type="date" value="${news.postDate}"/></td>
+                    </tr>
+                </table>
+                <div class="postContent">
+                    <p>${news.body}</p>
+                </div><hr class="newsHr">
+            </c:forEach>
         </div>
         
     </body>

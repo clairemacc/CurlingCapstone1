@@ -42,4 +42,19 @@ public class ScoreDB {
         }
        
     }
+    
+    public void delete(Score score) {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction eTr = em.getTransaction();
+        
+        try {
+            eTr.begin();
+            em.remove(em.merge(score));
+            eTr.commit();
+        } catch (Exception e) {
+            eTr.rollback();
+        } finally {
+            em.close();
+        }
+    }
 }

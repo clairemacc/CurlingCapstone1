@@ -39,6 +39,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByIsActive", query = "SELECT u FROM User u WHERE u.isActive = :isActive")})
 public class User implements Serializable {
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    private Executive executive;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "submitter", fetch = FetchType.EAGER)
+    private List<Score> scoreList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "submitter", fetch = FetchType.EAGER)
+    private List<SpareRequest> spareRequestList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -54,12 +61,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "isActive")
     private boolean isActive;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
-    private Executive executive;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "submitter", fetch = FetchType.EAGER)
-    private List<Score> scoreList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "submitter", fetch = FetchType.EAGER)
-    private List<SpareRequest> spareRequestList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID", fetch = FetchType.EAGER)
+    private List<NewsPost> newsPostList;
     @JoinColumn(name = "contactID", referencedColumnName = "contactID")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Contact contactID;
@@ -131,21 +134,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Score> getScoreList() {
-        return scoreList;
+    public List<NewsPost> getNewsPostList() {
+        return newsPostList;
     }
 
-    public void setScoreList(List<Score> scoreList) {
-        this.scoreList = scoreList;
-    }
-
-    @XmlTransient
-    public List<SpareRequest> getSpareRequestList() {
-        return spareRequestList;
-    }
-
-    public void setSpareRequestList(List<SpareRequest> spareRequestList) {
-        this.spareRequestList = spareRequestList;
+    public void setNewsPostList(List<NewsPost> newsPostList) {
+        this.newsPostList = newsPostList;
     }
 
     public Contact getContactID() {
@@ -196,6 +190,25 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "models.User[ userID=" + userID + " ]";
+    }
+
+
+    @XmlTransient
+    public List<Score> getScoreList() {
+        return scoreList;
+    }
+
+    public void setScoreList(List<Score> scoreList) {
+        this.scoreList = scoreList;
+    }
+
+    @XmlTransient
+    public List<SpareRequest> getSpareRequestList() {
+        return spareRequestList;
+    }
+
+    public void setSpareRequestList(List<SpareRequest> spareRequestList) {
+        this.spareRequestList = spareRequestList;
     }
     
 }

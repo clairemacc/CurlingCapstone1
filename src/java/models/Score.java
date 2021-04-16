@@ -6,6 +6,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Score.findAll", query = "SELECT s FROM Score s")
     , @NamedQuery(name = "Score.findByGameID", query = "SELECT s FROM Score s WHERE s.gameID = :gameID")
     , @NamedQuery(name = "Score.findByHomeScore", query = "SELECT s FROM Score s WHERE s.homeScore = :homeScore")
-    , @NamedQuery(name = "Score.findByAwayScore", query = "SELECT s FROM Score s WHERE s.awayScore = :awayScore")})
+    , @NamedQuery(name = "Score.findByAwayScore", query = "SELECT s FROM Score s WHERE s.awayScore = :awayScore")
+    , @NamedQuery(name = "Score.findBySubmitDate", query = "SELECT s FROM Score s WHERE s.submitDate = :submitDate")})
 public class Score implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,6 +48,10 @@ public class Score implements Serializable {
     @Basic(optional = false)
     @Column(name = "awayScore")
     private int awayScore;
+    @Basic(optional = false)
+    @Column(name = "submitDate")
+    @Temporal(TemporalType.DATE)
+    private Date submitDate;
     @JoinColumn(name = "gameID", referencedColumnName = "gameID", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private Game game;
@@ -61,10 +69,11 @@ public class Score implements Serializable {
         this.gameID = gameID;
     }
 
-    public Score(String gameID, int homeScore, int awayScore) {
+    public Score(String gameID, int homeScore, int awayScore, Date submitDate) {
         this.gameID = gameID;
         this.homeScore = homeScore;
         this.awayScore = awayScore;
+        this.submitDate = submitDate;
     }
 
     public String getGameID() {
@@ -89,6 +98,14 @@ public class Score implements Serializable {
 
     public void setAwayScore(int awayScore) {
         this.awayScore = awayScore;
+    }
+
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
     }
 
     public Game getGame() {

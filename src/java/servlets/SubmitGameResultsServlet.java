@@ -187,8 +187,11 @@ public class SubmitGameResultsServlet extends HttpServlet {
                         
                         User user = (User) session.getAttribute("user");
                         
+                        long timeMillis = System.currentTimeMillis();
+                        Date today = new Date(timeMillis);
+                        
                         ScoreService scoreService = new ScoreService();
-                        scoreService.insert(gameID, user, homeScore, awayScore, winner);
+                        scoreService.insert(gameID, user, homeScore, awayScore, winner, today);
                         
                         request.setAttribute("score", scoreService.get(gameID));
                         request.setAttribute("display", "displaySubmitComplete");

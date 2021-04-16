@@ -100,7 +100,12 @@
                         <td class="manageRight acc" style="vertical-align: top;">
                             <jsp:include page="./subpages/management/manageScores.jsp"></jsp:include>
                         </td>
-                    </c:when>                          
+                    </c:when>
+                    <c:when test="${mgmtDisplay == 'managePosts'}">
+                        <td class="manageRight acc" style="vertical-align: top;">
+                            <jsp:include page="./subpages/management/managePosts.jsp"></jsp:include>
+                        </td>
+                    </c:when>   
                             
                 </c:choose>
             </tr>

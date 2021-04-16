@@ -170,6 +170,7 @@ CREATE TABLE IF NOT EXISTS `curlingdb`.`score` (
   `homeScore` INT(2) NOT NULL,
   `awayScore` INT(2) NOT NULL,
   `winner` VARCHAR(6),
+  `submitDate` DATE NOT NULL,
   PRIMARY KEY (`gameID`),
   CONSTRAINT `fk_scoreToGame` 
     FOREIGN KEY (`gameID`)
@@ -257,8 +258,22 @@ CREATE TABLE IF NOT EXISTS `curlingdb`.`spareAssigned` (
     FOREIGN KEY (`spareID`)
     REFERENCES `curlingdb`.`spare` (`spareID`));
 
+-- -----------------------------------------------------
+-- Table `curlingdb`.`newsPost` 
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `curlingdb`.`newsPost` (
+  `postID` VARCHAR(6) NOT NULL,
+  `userID` VARCHAR(6) NOT NULL,
+  `title` VARCHAR(30) NOT NULL, 
+  `body` TEXT NOT NULL,
+  `postDate` DATE NOT NULL,
+  PRIMARY KEY (`postID`),
+  CONSTRAINT `fk_newsPostToUser` 
+    FOREIGN KEY (`userID`)
+    REFERENCES `curlingdb`.`user` (`userID`));
 
---spare registration = position choice, flexible boolean 
+
+-- spare registration = position choice, flexible boolean 
 
 -- modify here!
 
@@ -315,7 +330,7 @@ INSERT INTO `position` VALUES (3, 'Third');
 INSERT INTO `position` VALUES (4, 'Skip');
 
 
---add an admin user here
+-- add an admin user here
 
 INSERT INTO `user` VALUES ('U_0001', 'C_0001', 2, 'test1@email.com', 'password1', null, true);
 INSERT INTO `user` VALUES ('U_0002', 'C_0002', 2, 'test2@email.com', 'password2', null, true);
@@ -427,3 +442,7 @@ INSERT INTO `spare` VALUES ('S_0005', 'C_0029', 'L02', 1, true);
 INSERT INTO `spare` VALUES ('S_0006', 'C_0030', 'L02', 2, false);
 INSERT INTO `spare` VALUES ('S_0007', 'C_0031', 'L02', 3, true);
 INSERT INTO `spare` VALUES ('S_0008', 'C_0032', 'L02', 4, true);
+
+INSERT INTO `newsPost` VALUES('N_0001', 'U_0026', 'Lorem Ipsum',
+ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+'2021-04-15');
