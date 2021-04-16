@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
 
+/**
+ * This class is used in order to authenticate a normal player. Once a player
+ * logs in using the UI this class will allow the user to view different
+ * menu items.
+ * @author CurlingCapstone
+ */
 public class AuthenticationFilter implements Filter {
 
     @Override

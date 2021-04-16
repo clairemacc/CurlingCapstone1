@@ -9,6 +9,13 @@ import javax.servlet.http.HttpSession;
 import models.User;
 import services.AccountService;
 
+/**
+ * This class is used if a user forgets their password and needs to reset it.
+ * If a registered user requests a password reset they will receive an email
+ * with instructions for a new password. Once a new password is created the old
+ * password is overwritten in the database.
+ * @author CurlingCapstone
+ */
 public class ForgotPasswordServlet extends HttpServlet {
 
     @Override

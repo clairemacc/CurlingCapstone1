@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.User;
 
+/**
+ * This class will be used to authenticate a league executive. Once a league
+ * executive logs in they will have access to the same  menu items as a player
+ * as well as an additional management area.
+ * @author CurlingCapstone
+ */
 public class ManagementFilter implements Filter {
 
     @Override

@@ -24,6 +24,13 @@ import services.LeagueService;
 import services.PositionService;
 import services.TeamService;
 
+/**
+ * This class is used to display the contact information for league executives 
+ * and also send emails to those league executives. If a user is logged in their
+ * email will be autofilled, if not a user can enter their email. An email 
+ * subject line and basic body text are allowed.
+ * @author CurlingCapstone
+ */
 public class ContactServlet extends HttpServlet {
 
      @Override
@@ -247,41 +254,39 @@ public class ContactServlet extends HttpServlet {
                 }
             
                 if (action != null) {
-                    if (action.equals("resetSearch")) {
-                        session.removeAttribute("searchField");
-                        session.removeAttribute("searchBy");
-                        session.removeAttribute("sortBy");
-                        response.sendRedirect("contact?filter");
-                        return;
-                    }
-                    else if (action.equals("search")) {
-                        searchField = request.getParameter("searchField");
-                        searchBy = request.getParameter("searchBy");
-                        sortBy = request.getParameter("sortBy");
-
-                        List<Contact> updatedContacts = (List<Contact>) session.getAttribute("updatedContacts");
-                        
-                        filterList(updatedContacts, searchField, searchBy);
-                        sortList(updatedContacts, sortBy);
-                        
-                        session.setAttribute("updatedContacts", updatedContacts);
-                        session.setAttribute("searchField", searchField);
-                        session.setAttribute("searchBy", searchBy);
-                        session.setAttribute("sortBy", sortBy);
-                    }
-                    
-                    else if (action.equals("confirmContacts")) {
-                        List<Contact> selectedContacts = new ArrayList<>();
-
-                        for (Contact c : allContacts) {
-                            if (request.getParameter(c.getContactID() + "cont") != null) 
-                                selectedContacts.add(c);
-                        }
-                        
-                        session.setAttribute("display", "writeMessage");
-                        session.setAttribute("selectedContacts", selectedContacts);
-                        response.sendRedirect("contact?writeMessage");
-                        return;
+                    switch (action) {
+                        case "resetSearch":
+                            session.removeAttribute("searchField");
+                            session.removeAttribute("searchBy");
+                            session.removeAttribute("sortBy");
+                            response.sendRedirect("contact?filter");
+                            return;
+                        case "search":
+                            searchField = request.getParameter("searchField");
+                            searchBy = request.getParameter("searchBy");
+                            sortBy = request.getParameter("sortBy");
+                            List<Contact> updatedContacts = (List<Contact>) session.getAttribute("updatedContacts");
+                            filterList(updatedContacts, searchField, searchBy);
+                            sortList(updatedContacts, sortBy);
+                            session.setAttribute("updatedContacts", updatedContacts);
+                            session.setAttribute("searchField", searchField);
+                            session.setAttribute("searchBy", searchBy);
+                            session.setAttribute("sortBy", sortBy);
+                            break;
+                        case "confirmContacts":
+                            List<Contact> selectedContacts = new ArrayList<>();
+                            
+                            for (Contact c : allContacts) {
+                                if (request.getParameter(c.getContactID() + "cont") != null)
+                                    selectedContacts.add(c);
+                            }
+                            
+                            session.setAttribute("display", "writeMessage");
+                            session.setAttribute("selectedContacts", selectedContacts);
+                            response.sendRedirect("contact?writeMessage");
+                            return;
+                        default:
+                            break;
                     }
                 }
             }
@@ -378,32 +383,39 @@ public class ContactServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/contact.jsp").forward(request, response);
     }
     
+    /**
+     * 
+     * @param contacts
+     * @param searchField
+     * @param searchBy
+     * @return 
+     */
     protected List<Contact> filterList(List<Contact> contacts, String searchField, String searchBy) {
-        
-        if (searchBy.equals("lastName")) {
-            for (int i = 0; i < contacts.size(); i++) {
-                if (!searchField.equals("") && !contacts.get(i).getLastName().toLowerCase().startsWith(searchField.toLowerCase())) {
-                    contacts.remove(contacts.get(i));
-                    i--;
-                }
-            }
-        }
-        else if (searchBy.equals("firstName")) {
-            for (int i = 0; i < contacts.size(); i++) {
-                if (!searchField.equals("") && !contacts.get(i).getFirstName().toLowerCase().startsWith(searchField.toLowerCase())) {
-                    contacts.remove(contacts.get(i));
-                    i--;
-                }
-            }
-        }
-        else if (searchBy.equals("email")) {
-            for (int i = 0; i < contacts.size(); i++) {
-                if (!searchField.equals("") && !contacts.get(i).getEmail().toLowerCase().startsWith(searchField.toLowerCase())) {
-                    contacts.remove(contacts.get(i));
-                    i--;
-                }
-            }
-        }
+         switch (searchBy) {
+             case "lastName":
+                 for (int i = 0; i < contacts.size(); i++) {
+                     if (!searchField.equals("") && !contacts.get(i).getLastName().toLowerCase().startsWith(searchField.toLowerCase())) {
+                         contacts.remove(contacts.get(i));
+                         i--;
+                     }
+                 }    break;
+             case "firstName":
+                 for (int i = 0; i < contacts.size(); i++) {
+                     if (!searchField.equals("") && !contacts.get(i).getFirstName().toLowerCase().startsWith(searchField.toLowerCase())) {
+                         contacts.remove(contacts.get(i));
+                         i--;
+                     }
+                 }    break;
+             case "email":
+                 for (int i = 0; i < contacts.size(); i++) {
+                     if (!searchField.equals("") && !contacts.get(i).getEmail().toLowerCase().startsWith(searchField.toLowerCase())) {
+                         contacts.remove(contacts.get(i));
+                         i--;
+                     }
+                 }    break;
+             default:
+                 break;
+         }
         
         return contacts;
     }

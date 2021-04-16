@@ -9,9 +9,15 @@ import javax.servlet.http.HttpSession;
 import models.User;
 import services.AccountService;
 
+/**
+ * This class is used if a user wishes to change their password. If a user is in
+ * the myaccount section of the application and wishes to change their password
+ * they will be redirected here. Once the password is changed the old password 
+ * is overwritten in the database.
+ * @author CurlingCapstone
+ */
 public class ChangePasswordServlet extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
