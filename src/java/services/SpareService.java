@@ -13,28 +13,64 @@ import models.Position;
 import models.Spare;
 import models.SpareAssigned;
 
+/**
+ * This class provides functionality such as retrieve, insert, update and delete for the spare object
+ * 
+ */
 public class SpareService {
     
+    /**
+     * This returns a list of all the spares in the system
+     * @return list of spares in the system
+     */
     public List<Spare> getAll() {
         SpareDB sdb = new SpareDB();
         return sdb.getAll();
     }
     
+    /**
+     * This provides a list of spares in the system ordered by their spareID
+     * @return ordered list of spares
+     */
     public List<Spare> getAllOrdered() {
         SpareDB sdb = new SpareDB();
         return sdb.getAllOrdered();
     }
     
+    /**
+     * This returns a spares object that corresponds with the spareID being searched
+     * @param spareID - identifier of the spare object
+     * @return spare object found
+     */
     public Spare getBySpareID(String spareID) {
         SpareDB sdb = new SpareDB();
         return sdb.getBySpareID(spareID);
     }
 
+    /**
+     * This returns a spare object that corresponds with the email being searched
+     * @param email - email of the spare object
+     * @return spare object found
+     */
     public Spare get(String email) {
         SpareDB sdb = new SpareDB();
         return sdb.get(email);
     }
     
+     /**
+      * This puts together details for an email to be sent as a spare request
+      * @param requestID - requestID for spare request
+      * @param league - league for spare request
+      * @param emails - list of emails of spares
+      * @param path - beginning of the location of the email template
+      * @param date - date of spare request
+      * @param gameDate - date of game in need of spare
+      * @param homeTeam - home team for game
+      * @param awayTeam - away team for game
+      * @param team - team in need of spare
+      * @param position - position spare needs to fill
+      * @return sent - true if sent else false
+      */
     public boolean emailSpares(String requestID, League league, List<String> emails, String path, String date, String gameDate, String homeTeam, String awayTeam, String team, String position) {
         boolean sent = false;
         ContactService ss = new ContactService();
@@ -92,6 +128,14 @@ public class SpareService {
     }
 
 
+    
+    /**
+     * This inserts a new spare into the system
+     * @param contact - this is a contact object containing all the details for the spare
+     * @param league - league for the apre
+     * @param position - position of the spare
+     * @param flexibleP - true if the spare can play other positions
+     */
     public void insert(Contact contact, League league, Position position, boolean flexibleP) {
         SpareDB sdb = new SpareDB();
         
@@ -106,12 +150,20 @@ public class SpareService {
         sdb.insert(spare);
     }
     
+    /**
+     * Deletes a spare from the system
+     * @param spareID - id of spare
+     */
     public void delete(String spareID) {
         SpareDB sdb = new SpareDB();
         Spare spare = get(spareID);
         sdb.delete(spare);
     }
     
+    /**
+     * Generates an ID for a new spare
+     * @return newly generated ID
+     */
     public String generateSpareID() {
         List<Spare> spares = getAllOrdered();
         int idNum;

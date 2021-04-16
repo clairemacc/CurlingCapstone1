@@ -11,27 +11,55 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Registration;
 
+/**
+ * This class provides functionality such as retrieve, insert, update and delete for the registration object
+ * 
+ */
 public class RegistrationService {
+    
+    /**
+     * This returns a list of all the registrations in the system
+     * @return list of registrations in the system
+     */
     public List<Registration> getAll() {
         RegistrationDB rdb = new RegistrationDB();
         return rdb.getAll();
     }
     
+    /**
+     * This returns a list of all the active registrations in the system
+     * @return list of active registrations in the system
+     */
     public List<Registration> getAllActive() {
         RegistrationDB rdb = new RegistrationDB();
         return rdb.getAllActive();
     }
     
+    /**
+     * This returns a list of registrations with the same groupID
+     * @param groupID - ID of group
+     * @return list of registrations found
+     */
     public List<Registration> getByGroup(String groupID) {
         RegistrationDB rdb = new RegistrationDB();
         return rdb.getByGroup(groupID);
     }
     
+    /**
+     * This method returns a registration for contact using a given contactID
+     * @param contactID - identifier of a contact used for the search
+     * @return registration found
+     */
     public Registration getByContactID(String contactID) {
         RegistrationDB rdb = new RegistrationDB();
         return rdb.getByContactID(contactID);
     }
     
+    /**
+     * This puts together details for an email to be sent to notify admin of a new user registration
+     * @param registration - registration object for the new user
+     * @param path - beginning path for the location of the email template
+     */
     public void emailNewIndivReg(Registration registration, String path) {
         String to = "curlingproject@gmail.com";
         String subject = "ARC Curling - New Registration";
@@ -57,6 +85,11 @@ public class RegistrationService {
         }
     }
     
+     /**
+     * This puts together details for an email to be sent to notify admin of a new spare registration
+     * @param registration - registration object for the new spare
+     * @param path - beginning path for the location of the email template
+     */
     public void emailNewSpareReg(Registration registration, String path) {
         String to = "curlingproject@gmail.com";
         String subject = "ARC Curling - New Spare Registration";
@@ -82,6 +115,11 @@ public class RegistrationService {
         }
     }
     
+     /**
+     * This puts together details for an email to be sent to notify admin of a new group registration
+     * @param registration - registration object for the new group
+     * @param path - beginning path for the location of the email template
+     */
     public void emailNewGroupReg(List<Registration> regs, String path) {
         String to = "curlingproject@gmail.com";
         String subject = "ARC Curling - New Group Registration";
@@ -141,6 +179,18 @@ public class RegistrationService {
         
     }
     
+    /**
+     * Inserts a new registration into the database
+     * @param contactID - contact ID for the contact
+     * @param positionName - name of position for the new player
+     * @param flexibleP - true if the player can play more than one position
+     * @param leagues - leagues of player
+     * @param signupAll
+     * @param regType
+     * @param groupID - ID of group
+     * @param teamName - name of team
+     * @return registration - newly created registration object
+     */
     public Registration insert(String contactID, String positionName, boolean flexibleP, String leagues, boolean signupAll, String regType, String groupID, String teamName) {
         RegistrationDB rdb = new RegistrationDB();
         Registration registration = new Registration(contactID);
@@ -167,6 +217,19 @@ public class RegistrationService {
         return registration;
     }
     
+    /**
+     * This method updates an existing registration in the system
+     * @param contactID - contact ID for the contact
+     * @param positionName - name of position for the new player
+     * @param flexibleP - true if the player can play more than one position
+     * @param leagues - leagues of player
+     * @param signupAll
+     * @param regType
+     * @param groupID - ID of group
+     * @param teamName - name of team
+     * @param date - date of registration
+      * @return registration - newly created registration object
+     */
     public Registration update(String contactID, String positionName, boolean flexibleP, String leagues, boolean signupAll, String regType, String groupID, String teamName, Date date) {
         RegistrationDB rdb = new RegistrationDB();
         Registration registration = rdb.getByContactID(contactID);
@@ -187,6 +250,10 @@ public class RegistrationService {
         return registration;
     }
     
+    /**
+     * This method deactivates a registration
+     * @param reg - registration object to be deactivated
+     */
     public void deactivate(Registration reg) {
         RegistrationDB rdb = new RegistrationDB();
         System.out.println("to string:\n" + reg);
@@ -194,6 +261,10 @@ public class RegistrationService {
         rdb.update(reg);
     }
     
+    /**
+     * This method deletes a registration from the system
+     * @param contactID - id of the contact within the registration
+     */
     public void delete(String contactID) {
         RegistrationDB rdb = new RegistrationDB();
         Registration registration = rdb.getByContactID(contactID);

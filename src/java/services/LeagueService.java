@@ -12,22 +12,45 @@ import models.League;
 import models.Spare;
 import models.Team;
 
+/**
+ * Provides operations such as retrieve, insert, update and delete pertaining to leagues
+ * 
+ */
 public class LeagueService {
+    
+    /**
+     * This returns a list of of the leagues
+     * @return list of leagues
+     */
     public List<League> getAll() {
         LeagueDB ldb = new LeagueDB();
         return ldb.getAll();
     }
     
+    /**
+     * This method returns a league object corresponding to the leagueID being searched
+     * @param leagueID - identifier for a particular league 
+     * @return league object found
+     */
     public League getByLeagueID(String leagueID) {
         LeagueDB ldb = new LeagueDB();
         return ldb.getByLeagueID(leagueID);
     }
     
+    /**
+     * This returns a league that corresponds with weekday provided
+     * @param weekday - weekday being searched
+     * @return league object found
+     */
     public League getByWeekday(String weekday) {
         LeagueDB ldb = new LeagueDB();
         return ldb.getByWeekday(weekday);
     }
     
+    /**
+     * This inserts a new league into the system.
+     * @param weekday - the weekday of the new leeague
+     */
     public void insert(String weekday) {
         LeagueDB ldb = new LeagueDB();
         String leagueID = generateLeagueID();
@@ -36,6 +59,14 @@ public class LeagueService {
         ldb.insert(league);
     }
     
+    /**
+     * This updates an existing league in the system.
+     * @param leagueID - the id of the league to be updated
+     * @param weekday - weekday of the league
+     * @param executiveList - list of executives for that league
+     * @param teamList - list of teams for the league
+     * @param spareList  - list of the spares for the league
+     */
     public void update(String leagueID, String weekday, List<Executive> executiveList, List<Team> teamList, List<Spare> spareList) {
         LeagueDB ldb = new LeagueDB();
         League league = getByLeagueID(leagueID);
@@ -48,6 +79,10 @@ public class LeagueService {
         ldb.update(league);
     }
     
+    /**
+     * This removes a league from the database
+     * @param leagueID - id for the league to be removed
+     */
     public void delete(String leagueID) {
         LeagueDB ldb = new LeagueDB();
         League league = getByLeagueID(leagueID);
@@ -81,6 +116,10 @@ public class LeagueService {
         ldb.delete(league);
     }
     
+    /**
+     * This method generates a leagueID for a new league.
+     * @return leagueID - newly generated ID
+     */
     public String generateLeagueID() {
         List<League> leagues = getAll();
         String idStr = leagues.get(leagues.size() - 1).getLeagueID();

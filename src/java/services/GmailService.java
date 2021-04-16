@@ -18,8 +18,20 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+/**
+ * This class is responsible for sending emails from the website.
+ * 
+ */
 public class GmailService {
-
+    
+    /**
+     * This method is responsible for generating the fields of the email. It takes the email template and replaces placeholders with actual content.
+     * @param to - recipient of email
+     * @param subject - subject of email
+     * @param template - email template
+     * @param tags - hashmap containing tags and corresponding data
+     * @throws Exception - any exception thrown by this method
+     */
     public static void sendMail(String to, String subject, String template, HashMap<String, String> tags) throws Exception {
         String body = "";
         try {
@@ -44,6 +56,15 @@ public class GmailService {
         sendMail(to, subject, body, true);
     }
 
+    /**
+     * This method is responsible for actually sending out the emails to the recipients using the provided gmail account.
+     * @param to - recipient of the email
+     * @param subject - subject of email
+     * @param body - body of email
+     * @param bodyIsHTML - true if the body of the email is html; false if it is not
+     * @throws MessagingException
+     * @throws NamingException 
+     */
     public static void sendMail(String to, String subject, String body, boolean bodyIsHTML) throws MessagingException, NamingException {
         Context env = (Context) new InitialContext().lookup("java:comp/env");
         String username = (String) env.lookup("webmail-username");
