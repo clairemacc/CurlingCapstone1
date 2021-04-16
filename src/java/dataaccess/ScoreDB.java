@@ -5,6 +5,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import models.Score;
 
+/**
+ * This class is used to access the score of games within the database and make
+ * it accessible elsewhere in the application.
+ * @author CurlingCapstone
+ */
 public class ScoreDB {
     
     public List<Score> getAll() {

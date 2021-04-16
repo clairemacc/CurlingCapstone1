@@ -20,8 +20,24 @@ import services.ContactService;
 import services.PositionService;
 import services.RegistrationService;
 
+/**
+ * This servlet is used for a player to register as a team or as an individual.
+ * An individual can either be a player or a spare. The team registration will
+ * create a request to create a team that has to be completed by an executive.
+ * An executive does not register using this servlet as they can only be created
+ * by another executive in the management servlet.
+ * @author CurlingCapstone
+ */
 public class RegistrationServlet extends HttpServlet {
 
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -117,7 +133,6 @@ public class RegistrationServlet extends HttpServlet {
                             }
                         }
                     }
-                    
                 }
                 
                 if (invalid) {
@@ -188,10 +203,17 @@ public class RegistrationServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request,response);
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         HttpSession session = request.getSession();
         
         String message = "";

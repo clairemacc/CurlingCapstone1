@@ -3,12 +3,10 @@ package servlets;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -17,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.League;
 import models.Team;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,11 +22,24 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import services.GameService;
-import services.LeagueService;
 import services.TeamService;
 
+/**
+ * This servlet will be used by the user to view a previously uploaded
+ * league schedule. A user is able to select multiple schedules from a list of 
+ * buttons titled by the league name.
+ * @author 819466
+ */
 public class ViewScheduleServlet extends HttpServlet {
 
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,9 +51,7 @@ public class ViewScheduleServlet extends HttpServlet {
         Workbook workbook = new XSSFWorkbook(readFile);
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> rowIter = sheet.iterator();
-        
         SimpleDateFormat dateFormat = new SimpleDateFormat();
-
         ArrayList<String> cells = new ArrayList<>();
         
         while (rowIter.hasNext()) {
@@ -117,12 +125,25 @@ public class ViewScheduleServlet extends HttpServlet {
         request.getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method. (no content)
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
     }
 
+    /**
+     * Sets the filenames attribute.
+     * 
+     * @param request servlet request
+     */
     private void processSelect(HttpServletRequest request) {
         String realPath = request.getServletContext().getRealPath("") + "\\uploads";
         ArrayList<String> fileNames = null;
@@ -139,7 +160,5 @@ public class ViewScheduleServlet extends HttpServlet {
         } catch (Exception e) {
             request.setAttribute("fileNames", null);
         }
-
     }
-
 }

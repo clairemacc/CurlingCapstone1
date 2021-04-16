@@ -9,7 +9,7 @@ import models.Team;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the game objects.
- * 
+ * @author CurlingCapston
  */
 public class GameService { 
     

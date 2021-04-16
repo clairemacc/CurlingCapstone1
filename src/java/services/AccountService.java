@@ -1,7 +1,6 @@
 package services;
 
 import dataaccess.ContactDB;
-import dataaccess.ExecutiveDB;
 import dataaccess.PlayerDB;
 import dataaccess.RoleDB;
 import java.util.List;
@@ -9,13 +8,9 @@ import dataaccess.UserDB;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.Contact;
 import models.Player;
 import models.Role;
-import models.Score;
-import models.Spare;
 import models.User;
 
 /**
@@ -48,7 +43,7 @@ public class AccountService {
      * @param email -email address provided by the user
      * @param path - this is the beginning path of the where the email templates can be found.
      * @param url - url to the page that allows the user to change their password.
-     * @return 
+     * @return true if the password was successfully reset
      */
     public boolean resetPassword(String email, String path, String url) {
         try {

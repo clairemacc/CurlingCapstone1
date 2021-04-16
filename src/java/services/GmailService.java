@@ -20,7 +20,7 @@ import javax.naming.NamingException;
 
 /**
  * This class is responsible for sending emails from the website.
- * 
+ * @author CurlingCapston
  */
 public class GmailService {
     
@@ -62,8 +62,8 @@ public class GmailService {
      * @param subject - subject of email
      * @param body - body of email
      * @param bodyIsHTML - true if the body of the email is html; false if it is not
-     * @throws MessagingException
-     * @throws NamingException 
+     * @throws MessagingException /
+     * @throws NamingException /
      */
     public static void sendMail(String to, String subject, String body, boolean bodyIsHTML) throws MessagingException, NamingException {
         Context env = (Context) new InitialContext().lookup("java:comp/env");

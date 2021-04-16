@@ -17,7 +17,23 @@ import models.User;
 import services.GameService;
 import services.ScoreService;
 
+/**
+ * This servlet will be used to submit game results for a past game played by
+ * the team of the user logged in. This servlet is only accessed once a user 
+ * logs in. After game results have been submitted the game will no longer
+ * appear in the list of available scores to submit.
+ * @author CurlingCapstone
+ */
 public class SubmitGameResultsServlet extends HttpServlet {
+    
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -56,7 +72,6 @@ public class SubmitGameResultsServlet extends HttpServlet {
             }
         }
 
-
         ScoreService scoreService = new ScoreService();
         List<Score> scores = scoreService.getAll();
 
@@ -66,7 +81,6 @@ public class SubmitGameResultsServlet extends HttpServlet {
                     playerGames.remove(i);
             }
         }
-        
         
         if (playerGames.isEmpty()) 
             request.setAttribute("noGames", true);
@@ -166,6 +180,14 @@ public class SubmitGameResultsServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/submitGameResults.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();

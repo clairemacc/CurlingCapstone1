@@ -2,20 +2,17 @@ package services;
 
 import dataaccess.GameDB;
 import dataaccess.ScoreDB;
-import dataaccess.StandingDB;
 import dataaccess.TeamDB;
-import dataaccess.UserDB;
 import java.util.Date;
 import java.util.List;
 import models.Game;
 import models.User;
 import models.Score;
 import models.Standing;
-import models.Team;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the score object
- * 
+ * @author CurlingCapstone
  */
 public class ScoreService {
     

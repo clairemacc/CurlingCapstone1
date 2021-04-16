@@ -33,16 +33,6 @@ CREATE TABLE IF NOT EXISTS `curlingdb`.`role` (
   PRIMARY KEY (`roleID`));
 
 -- -----------------------------------------------------
--- Table `curlingdb`.`code`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `curlingdb`.`code` (
-  `email` VARCHAR(80) NOT NULL UNIQUE,
-  `time` VARCHAR(20), -- 20210324193020
-  `code` VARCHAR(10) NOT NULL,
-  `count` INT(2) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`email`));
-
--- -----------------------------------------------------
 -- Table `curlingdb`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `curlingdb`.`user` (

@@ -7,6 +7,11 @@ import models.Game;
 import models.League;
 import models.Team;
 
+/**
+ * This class is used to access game information from the database for use 
+ * elsewhere in the application.
+ * @author CurlingCapstone
+ */
 public class GameDB {
     
     public List<Game> getAll() {

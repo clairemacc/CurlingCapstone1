@@ -5,6 +5,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import models.Registration;
 
+/**
+ * This class is used to access the registration information needed for an 
+ * executive to observe. An executive can approve or decline registration.
+ * @author CurlingCapstone
+ */
 public class RegistrationDB {
     
     public List<Registration> getAll() {

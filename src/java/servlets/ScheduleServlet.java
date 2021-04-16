@@ -20,11 +20,25 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import services.GameService;
 import services.LeagueService;
 
+/**
+ * This servlet is used to upload a schedule using a .xlsx or .csv file format.
+ * Once an executive has uploaded a schedule it will be viewable using the 
+ * viewScheduleServlet. The .csv or .xlsx file need to be in a specific format 
+ * for the schedule to upload properly.
+ * @author 819466
+ */
 @MultipartConfig
 public class ScheduleServlet extends HttpServlet {
-
     public final String DIR = "uploads\\";
     
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,9 +65,16 @@ public class ScheduleServlet extends HttpServlet {
         }
         
         request.getRequestDispatcher("/WEB-INF/schedules.jsp").forward(request, response);
-
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,9 +90,6 @@ public class ScheduleServlet extends HttpServlet {
         try {
             List partsList = sfu.parseRequest(request);
             Iterator iter = partsList.iterator();
-                            System.out.println("request: " + request.toString());
-            System.out.println("parts: " + partsList);
-            System.out.println("request.getParts: " + request.getParts());
 
             while (iter.hasNext()) {
                 FileItem fi = (FileItem) iter.next();
@@ -82,7 +100,6 @@ public class ScheduleServlet extends HttpServlet {
                     String[] split = fi.getName().split("\\.");
                     String extension = split[split.length - 1];
                     
-
                     Logger.getLogger(ScheduleServlet.class.getName()).log(Level.INFO, extension);
 
                     if (extension.equals("csv") || extension.equals("xlsx")) {
@@ -109,5 +126,4 @@ public class ScheduleServlet extends HttpServlet {
         
         request.getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
     }
-
 }

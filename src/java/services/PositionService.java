@@ -6,7 +6,7 @@ import models.Position;
 
 /**
  * This provides functionality pertaining to the position objects.
- * 
+ * @author CurlingCapston
  */
 public class PositionService {
     /**

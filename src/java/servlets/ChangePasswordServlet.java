@@ -10,7 +10,7 @@ import models.User;
 import services.AccountService;
 
 /**
- * This class is used if a user wishes to change their password. If a user is in
+ * This servlet is used if a user wishes to change their password. If a user is in
  * the myaccount section of the application and wishes to change their password
  * they will be redirected here. Once the password is changed the old password 
  * is overwritten in the database.
@@ -18,6 +18,14 @@ import services.AccountService;
  */
 public class ChangePasswordServlet extends HttpServlet {
 
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,6 +55,14 @@ public class ChangePasswordServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/changePassword.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

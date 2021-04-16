@@ -16,7 +16,7 @@ import models.Team;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the team object
- * 
+ * @author CurlingCapston
  */
 public class TeamService {
     
@@ -99,8 +99,8 @@ public class TeamService {
      * @param teamName - name of team
      * @param league - league of team
      * @param playerList - list of players on team
-     * @param gameList - list of games for the team
-     * @param gameList1 
+     * @param gameList - list of home games for the team
+     * @param gameList1 - list of away games for the team
      */
     public void update(String teamID, String teamName, League league, List<Player> playerList, List<Game> gameList, List<Game> gameList1) {
         TeamDB tdb = new TeamDB();

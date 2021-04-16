@@ -8,6 +8,11 @@ import models.Player;
 import models.Team;
 import models.User;
 
+/**
+ * This class is used to access the information of a player within the 
+ * application. It is also used for deleting, creating and editing of a player.
+ * @author CurlingCapstone
+ */
 public class PlayerDB {
     
     public List<Player> getAll() {

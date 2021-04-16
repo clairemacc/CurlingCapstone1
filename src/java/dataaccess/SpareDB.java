@@ -7,6 +7,12 @@ import javax.persistence.EntityTransaction;
 import models.League;
 import models.Spare;
 
+/**
+ * This class is used to access the information of spares that have registered
+ * within the application. This information can be used to send emails as spare
+ * requests to the spare.
+ * @author CurlingCapstone
+ */
 public class SpareDB {
         
     public List<Spare> getAll() {

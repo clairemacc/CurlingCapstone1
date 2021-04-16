@@ -25,7 +25,7 @@ import services.PositionService;
 import services.TeamService;
 
 /**
- * This class is used to display the contact information for league executives 
+ * This servlet is used to display the contact information for league executives 
  * and also send emails to those league executives. If a user is logged in their
  * email will be autofilled, if not a user can enter their email. An email 
  * subject line and basic body text are allowed.
@@ -33,6 +33,14 @@ import services.TeamService;
  */
 public class ContactServlet extends HttpServlet {
 
+     /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */  
      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
@@ -110,7 +118,6 @@ public class ContactServlet extends HttpServlet {
                         session.setAttribute("updatedContacts", allContacts);
                     }
                 }
-                
                 else {
                     if (filter.equals("league")) {
                         for (League l : allLeagues) {
@@ -128,7 +135,6 @@ public class ContactServlet extends HttpServlet {
                         session.setAttribute("updatedLeagues", updatedLeagues);
                         session.setAttribute("updatedTeams", updatedTeams);
                     }
-
                     else if (filter.equals("team")) {
                         for (Team t : allTeams) {
                             if (request.getParameter(t.getTeamID()) != null) 
@@ -137,7 +143,6 @@ public class ContactServlet extends HttpServlet {
 
                         session.setAttribute("updatedTeams", updatedTeams);
                     }
-
                     else if (filter.equals("position")) {
                         for (Position p : allPositions) {
                             if (request.getParameter(p.getPositionName()) != null) 
@@ -146,7 +151,6 @@ public class ContactServlet extends HttpServlet {
 
                         session.setAttribute("updatedPositions", updatedPositions);
                     }
-
                     else if (filter.equals("role")) {
                         for (Role r : allRoles) {
                             if (request.getParameter(Integer.toString(r.getRoleID())) != null) 
@@ -155,7 +159,6 @@ public class ContactServlet extends HttpServlet {
 
                         session.setAttribute("updatedRoles", updatedRoles);
                     }
-
                     else if (filter.equals("spares")) {
                         String sparesIncl = request.getParameter("spares");
                         session.setAttribute("sparesIncl", sparesIncl);
@@ -307,6 +310,14 @@ public class ContactServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/contact.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -384,11 +395,13 @@ public class ContactServlet extends HttpServlet {
     }
     
     /**
+     * This method is responsible for filtering the list of search results. 
+     * It narrows the options of the search results based on the user input. 
      * 
-     * @param contacts
-     * @param searchField
-     * @param searchBy
-     * @return 
+     * @param contacts list of available contacts
+     * @param searchField user input
+     * @param searchBy determines the search criteria
+     * @return newly filtered list of contacts
      */
     protected List<Contact> filterList(List<Contact> contacts, String searchField, String searchBy) {
          switch (searchBy) {
@@ -420,6 +433,14 @@ public class ContactServlet extends HttpServlet {
         return contacts;
     }
     
+    /**
+     * This method takes a list of contacts and sorted them based on 
+     * the value selected by the user. 
+     * 
+     * @param contacts list of selected contacts
+     * @param sortBy determines the value being sorted
+     * @return newly sorted list of contacts
+     */
     protected List<Contact> sortList(List<Contact> contacts, String sortBy) {
         for (int i = 1; i < contacts.size(); i++) {
             int j = i - 1;
@@ -460,6 +481,14 @@ public class ContactServlet extends HttpServlet {
         return contacts;
     }
     
+    /**
+     * This method swaps the position of two contacts in a list.
+     * 
+     * @param contacts list of contacts
+     * @param i integer value
+     * @param j integer value
+     * @return newly swapped list of contacts
+     */
     protected List<Contact> swap(List<Contact> contacts, int i, int j) {
         Contact contact = contacts.get(j);
         contacts.remove(contact);

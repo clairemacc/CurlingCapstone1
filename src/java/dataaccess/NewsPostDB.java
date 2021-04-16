@@ -4,8 +4,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import models.NewsPost;
-import models.User;
 
+/**
+ * This class is used to access news posts for the home page of the application.
+ * @author CurlingCapstone
+ */
 public class NewsPostDB {
     public List<NewsPost> getAll() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

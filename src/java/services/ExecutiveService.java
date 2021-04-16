@@ -6,7 +6,7 @@ import models.Executive;
 
 /**
  * This class provides functionality pertaining to retrieving executives from the system.
- * 
+ * @author CurlingCapston
  */
 public class ExecutiveService {
     

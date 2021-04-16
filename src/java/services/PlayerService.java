@@ -10,7 +10,7 @@ import models.User;
 
 /**
  * This class provides functionality such as retrieve, update, insert and delete for players
- * 
+ * @author CurlingCapston
  */
 public class PlayerService { 
     

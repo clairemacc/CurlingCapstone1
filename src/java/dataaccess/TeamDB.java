@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import models.Game;
 import models.League;
-import models.Player;
 import models.Team;
 
+/**
+ * This class allows the application to create, edit, delete and access teams
+ * within the database.
+ * @author CurlingCapstone
+ */
 public class TeamDB {
     
     public List<Team> getAll() {

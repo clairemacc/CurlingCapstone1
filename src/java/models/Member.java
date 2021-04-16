@@ -2,6 +2,11 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * This object represents a Member object, which is used to create new registrations. 
+ * 
+ * @author CurlingCapstone
+ */
 public class Member implements Serializable{
     public final String firstName;
     public final String lastName;

@@ -13,13 +13,23 @@ import javax.servlet.http.HttpSession;
 import models.User;
 
 /**
- * This class will be used to authenticate a league executive. Once a league
+ * This filter will be used to authenticate a league executive. Once a league
  * executive logs in they will have access to the same  menu items as a player
  * as well as an additional management area.
  * @author CurlingCapstone
  */
 public class ManagementFilter implements Filter {
 
+    /**
+     * Handles the filtering functionality. 
+     * 
+     * @param request The servlet request we are processing
+     * @param response The servlet response we are creating
+     * @param chain The filter chain we are processing
+     *
+     * @throws IOException if an input/output error occurs
+     * @throws ServletException if a servlet error occurs
+     */  
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -41,10 +51,19 @@ public class ManagementFilter implements Filter {
         
         chain.doFilter(request, response);
     }
+    
+    /**
+     * Destroy method for this filter
+     */       
     @Override
     public void destroy() {        
 
     }
+    
+    /**
+     * Init method for this filter
+     * @param filterConfig the filter configuration
+     */
     @Override
     public void init(FilterConfig filterConfig) {        
 

@@ -1,8 +1,6 @@
 package services;
 
 import dataaccess.SpareDB;
-import dataaccess.SpareRequestDB;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,11 +9,10 @@ import models.Contact;
 import models.League;
 import models.Position;
 import models.Spare;
-import models.SpareAssigned;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the spare object
- * 
+ * @author CurlingCapston
  */
 public class SpareService {
     

@@ -1,17 +1,14 @@
 package services;
 
 import dataaccess.ContactDB;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jdk.nashorn.internal.runtime.regexp.RegExp;
 import models.Contact;
 
 /**
  * This class contains operations such as retrieve, insert update and emailing for the contact objects.
- * 
  */
 public class ContactService {
     
@@ -159,7 +156,7 @@ public class ContactService {
     
     /**
      * This method generates a contactID for a new contact object
-     * @return contactID -newly generated ID
+     * @return contactID - newly generated ID
      */
     public String generateContactID() {
         List<Contact> contacts = getAll();

@@ -17,21 +17,28 @@ import models.Spare;
 import models.SpareRequest;
 import models.Team;
 import models.User;
-import services.AccountService;
 import services.GameService;
-import services.LeagueService;
-import services.PlayerService;
 import services.PositionService;
 import services.SpareRequestService;
 import services.SpareService;
 import services.TeamService;
 
 /**
- *
+ * This servlet is used to send an email to the potential spares that have
+ * registered for the players league. A player or executive need to be logged 
+ * in for this servlet to be accessed.
  * @author 818736
  */
 public class SpareRequestServlet extends HttpServlet {
 
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -81,7 +88,6 @@ public class SpareRequestServlet extends HttpServlet {
         
         session.setAttribute("playerGames", playerGames);
        
-
         PositionService positionService = new PositionService();
         List<Position> positions = positionService.getAll();
         session.setAttribute("positions", positions);
@@ -93,6 +99,14 @@ public class SpareRequestServlet extends HttpServlet {
 
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -118,7 +132,6 @@ public class SpareRequestServlet extends HttpServlet {
             TeamService ts = new TeamService();
             Team teamChosen = ts.get(teamID);
 
-            
             if (!teamID.equals(gameChosen.getHomeTeam().getTeamID()) && !teamID.equals(gameChosen.getAwayTeam().getTeamID())) {
                 session.setAttribute("differentTeam", true);
                 session.setAttribute("review", 1);
@@ -170,5 +183,4 @@ public class SpareRequestServlet extends HttpServlet {
 
         }
     }
-
 }

@@ -6,6 +6,11 @@ import javax.persistence.EntityTransaction;
 import models.Contact;
 import models.User;
 
+/**
+ * This class is used to access the registered users within the database. 
+ * It can create, delete and edit users.
+ * @author CurlingCapstone
+ */
 public class UserDB {
     
     public List<User> getAll() {

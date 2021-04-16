@@ -5,6 +5,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import models.League;
 
+/**
+ * This class is used to access the information of leagues within the 
+ * application.
+ * @author CurlingCapstone
+ */
 public class LeagueDB {
     public List<League> getAll() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

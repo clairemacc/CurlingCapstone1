@@ -6,6 +6,11 @@ import javax.persistence.EntityTransaction;
 import models.SpareAssigned;
 import models.SpareRequest;
 
+/**
+ * This class allows the application to access and create spare requests. Once 
+ * a spare request has been filled it is deleted from the database.
+ * @author CurlingCapstone
+ */
 public class SpareRequestDB {
     
     public SpareRequest get(String requestID) {

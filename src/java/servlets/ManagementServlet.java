@@ -23,28 +23,30 @@ import models.Spare;
 import models.SpareRequest;
 import models.Team;
 import models.User;
-import services.AccountService;
-import services.ContactService;
-import services.ExecutiveService;
-import services.GameService;
-import services.LeagueService;
-import services.NewsPostService;
-import services.PlayerService;
-import services.PositionService;
-import services.RegistrationService;
-import services.ScoreService;
-import services.SpareRequestService;
-import services.SpareService;
-import services.TeamService;
+import services.*;
 
+/**
+ * This servlet handles all of the website's administrative
+ * functionality. Executives can access all areas of the website 
+ * through this servlet, and they can make changed by communicating
+ * with the service classes (and by extension, the database).
+ * @author 822408
+ */
 public class ManagementServlet extends HttpServlet {
-
+    
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user"); 
         String mgmtDisplay = request.getParameter("mgmtDisplay"); 
         
         if (mgmtDisplay == null) {
@@ -58,6 +60,10 @@ public class ManagementServlet extends HttpServlet {
             session.removeAttribute("updatedList");
             session.removeAttribute("toRemoveList");
         }
+        
+        /*
+        Display
+        */
         
         if (mgmtDisplay.equals("manageRegistration")) {
             RegistrationService regService = new RegistrationService();
@@ -224,10 +230,15 @@ public class ManagementServlet extends HttpServlet {
             session.setAttribute("mgmtDisplay", "managePosts");
         }
         
-        /////
+        
+        /*
+        Action
+        */
         
         String action = request.getParameter("action");
         if (action != null) {
+            
+            
             RegistrationService regService = new RegistrationService();
             if (action.equals("viewRegs")) {                
                 if (request.getParameter("viewGroupRegs") != null) {
@@ -482,8 +493,6 @@ public class ManagementServlet extends HttpServlet {
                 }
                 else {
                     Registration reg = (Registration) session.getAttribute("reg");
-                    ContactService contService = new ContactService();
-                    
                     String posID = request.getParameter(reg.getContactID() + "pos");
                     Position position = posService.getByPosID(Integer.parseInt(posID));
                     
@@ -504,7 +513,7 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
-        //////
+        // teamAction
         
         String teamAction = request.getParameter("teamAction");
         if (teamAction != null) {
@@ -533,10 +542,7 @@ public class ManagementServlet extends HttpServlet {
                     }
                 }
                 
-                if (invalid) {
-                    
-                }
-                else {
+                if (!invalid) {
                     List<Player> newMems = (List<Player>) session.getAttribute("newMems");
                     if (newMems == null) 
                         newMems = new ArrayList<>();
@@ -567,7 +573,7 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
-        //////////////////////////
+        // regAction
         
         String reqAction = request.getParameter("reqAction");
         if (reqAction != null) {
@@ -579,7 +585,7 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
-        /////
+        // postAction
         
         String postAction = request.getParameter("postAction");
         if (postAction != null) {
@@ -596,13 +602,19 @@ public class ManagementServlet extends HttpServlet {
             
         }
         
-        
-        
         request.setAttribute("mgmtDisplay", mgmtDisplay);
         getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);
         
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -610,8 +622,9 @@ public class ManagementServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         
-        String action = request.getParameter("action");
+        // action
         
+        String action = request.getParameter("action");
         if (action != null) {
             if (action.equals("createNewTeam")) {
                 TeamService teamService = new TeamService();
@@ -640,7 +653,6 @@ public class ManagementServlet extends HttpServlet {
                     request.setAttribute("positions", positions);
                     request.setAttribute("displayTeamCreated", true);
                 }
-                
             }
             
             else if (action.equals("confirmRegistration")) {
@@ -697,9 +709,7 @@ public class ManagementServlet extends HttpServlet {
                         League thisLeague = (League) session.getAttribute("thisLeague");
                         spareService.insert(updatedReg.getContact(), thisLeague, updatedReg.getPosition(), updatedReg.getFlexibleP());
                         request.setAttribute("innerDisplay", "teamCreatedSuccess");
-                        
                     }
-
                 }
                 
                 List<League> newLeagues = (List<League>) session.getAttribute("newLeagues");
@@ -730,7 +740,6 @@ public class ManagementServlet extends HttpServlet {
                     }
                     else {
                         regService.deactivate(updatedReg);
-                        
                     }
 
                     session.removeAttribute("groupRegs");
@@ -757,7 +766,6 @@ public class ManagementServlet extends HttpServlet {
                     request.setAttribute("mgmtDisplay", mgmtDisplay);
                     request.setAttribute("thisGroupID", thisGroupID);
                 }
-                
             }   
             else if (action.equals("saveUser")) {
                 if (request.getParameter("cancelButton") == null) {
@@ -796,7 +804,6 @@ public class ManagementServlet extends HttpServlet {
                             else if (isActiveStr.equals("inactive"))
                                 isActive = false;
                             
-                            
                             accService.update(editID, email, password, roleID, isActive);
                             
                             ContactService contService = new ContactService();
@@ -819,7 +826,7 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
-        /////
+        // teamAction
         
         String teamAction = request.getParameter("teamAction");
         if (teamAction != null) {
@@ -918,7 +925,7 @@ public class ManagementServlet extends HttpServlet {
         }
         
         
-        ////  
+        // leagueAction
         
         
         String leagueAction = request.getParameter("leagueAction");
@@ -962,6 +969,8 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
+        // srAction (spare request)
+        
         String srAction = request.getParameter("srAction");
         if (srAction != null) {
             String requestID = request.getParameter("assignSpareButton");
@@ -976,9 +985,10 @@ public class ManagementServlet extends HttpServlet {
             if (srService.insertSpareAssigned(requestID, spareID)) {
                 srService.deactivate(spRequest);
                 request.setAttribute("assigned", true);
-            }
-            
+            } 
         }
+        
+        // gameAction
         
         String gameAction = request.getParameter("gameAction");
         if (gameAction != null) {
@@ -990,6 +1000,8 @@ public class ManagementServlet extends HttpServlet {
                 request.setAttribute("games", gameService.getAll());
             }
         }
+        
+        // scoreAction
         
         String scoreAction = request.getParameter("scoreAction");
         if (scoreAction != null) {
@@ -1009,7 +1021,6 @@ public class ManagementServlet extends HttpServlet {
                     
                     if (homeScore < 0 || awayScore < 0) 
                         invalid = true;
-                    
                     
                 } catch (NumberFormatException e) {
                     invalid = true;
@@ -1042,11 +1053,10 @@ public class ManagementServlet extends HttpServlet {
                 scoreService.delete(gameID);
             }
             
-            request.setAttribute("scores", scoreService.getAll());
-            
+            request.setAttribute("scores", scoreService.getAll()); 
         }
         
-        ////
+        // postAction
         
         String postAction = request.getParameter("postAction");
         if (postAction != null) {
@@ -1088,9 +1098,6 @@ public class ManagementServlet extends HttpServlet {
                     }
                 }
             }
-            
-            
-            
             request.setAttribute("newsPosts", newsService.getAll());
         }
         

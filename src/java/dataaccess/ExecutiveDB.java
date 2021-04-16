@@ -5,6 +5,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import models.Executive;
 
+/**
+ * This class is used to access information about as well as delete an 
+ * executive.
+ * @author CurlingCapstone
+ */
 public class ExecutiveDB {
     
     public List<Executive> getAll() {
@@ -35,8 +40,8 @@ public class ExecutiveDB {
             eTr.begin();
             em.remove(em.merge(executive));
             eTr.commit();
-        //} catch (Exception e) {
-          //  eTr.rollback();
+        } catch (Exception e) {
+            eTr.rollback();
         } finally {
             em.close();
         }

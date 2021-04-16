@@ -14,7 +14,7 @@ import models.User;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the spare request object
- * 
+ * @author CurlingCapston
  */
 public class SpareRequestService {
     
@@ -75,7 +75,7 @@ public class SpareRequestService {
      * This method updates a spare request with the selected spare
      * @param requestID - unique ID of a spare request
      * @param spareID - unique ID of a spare 
-     * @return 
+     * @return true if object was inserted successully
      */
     public boolean insertSpareAssigned(String requestID, String spareID) {
         SpareRequestDB srdb = new SpareRequestDB();

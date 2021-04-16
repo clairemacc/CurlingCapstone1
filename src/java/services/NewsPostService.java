@@ -8,7 +8,7 @@ import models.User;
 
 /**
  * This class provides functionality for the Newsposts
- * 
+ * @author CurlingCapston
  */
 public class NewsPostService {
     /**

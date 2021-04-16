@@ -5,7 +5,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import models.Contact;
 
+/**
+ * This class is used to gather the contact information of database contacts. 
+ * @author CurlingCapstone
+ */
 public class ContactDB {
+    
+    
     public List<Contact> getAll() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         

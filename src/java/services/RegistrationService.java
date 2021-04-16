@@ -13,7 +13,7 @@ import models.Registration;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the registration object
- * 
+ * @author CurlingCapston
  */
 public class RegistrationService {
     
@@ -117,7 +117,7 @@ public class RegistrationService {
     
      /**
      * This puts together details for an email to be sent to notify admin of a new group registration
-     * @param registration - registration object for the new group
+     * @param regs registration list for the new group
      * @param path - beginning path for the location of the email template
      */
     public void emailNewGroupReg(List<Registration> regs, String path) {
@@ -185,8 +185,8 @@ public class RegistrationService {
      * @param positionName - name of position for the new player
      * @param flexibleP - true if the player can play more than one position
      * @param leagues - leagues of player
-     * @param signupAll
-     * @param regType
+     * @param signupAll - true if the user has selected to sign up for all leagues
+     * @param regType - individual, group, or spare
      * @param groupID - ID of group
      * @param teamName - name of team
      * @return registration - newly created registration object
@@ -223,8 +223,8 @@ public class RegistrationService {
      * @param positionName - name of position for the new player
      * @param flexibleP - true if the player can play more than one position
      * @param leagues - leagues of player
-     * @param signupAll
-     * @param regType
+     * @param signupAll - true if the user has chosen to sign up for all leagues selected 
+     * @param regType - individual, group, or spare
      * @param groupID - ID of group
      * @param teamName - name of team
      * @param date - date of registration

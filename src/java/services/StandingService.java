@@ -8,7 +8,7 @@ import models.Team;
 
 /**
  * This class provides functionality such as retrieve, insert, update and delete for the standing object
- * 
+ * @author CurlingCapston
  */
 public class StandingService {
     
@@ -34,7 +34,7 @@ public class StandingService {
     /**
      * This inserts a new Standing into the system
      * @param teamID - identifier of the team object
-     * @param wlt 
+     * @param wlt - win, loss, or tie
      */
     public void insert(String teamID, char wlt) {
         Standing standing = new Standing(teamID);
@@ -63,7 +63,7 @@ public class StandingService {
     /**
      * This updates an existing Standing for a particular team
      * @param teamID - identifier of the team object
-     * @param wlt 
+     * @param wlt - win, loss or tie
      */
     public void update(String teamID, char wlt) {
         StandingDB stdb = new StandingDB();

@@ -2,9 +2,12 @@ package dataaccess;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import models.League;
 import models.Position;
 
+/**
+ * This class is used to retrieve the position of a player from the database.
+ * @author CurlingCapstone
+ */
 public class PositionDB {
     public List<Position> getAll() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

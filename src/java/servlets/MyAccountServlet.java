@@ -6,16 +6,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.Player;
-import models.Team;
 import models.User;
 import services.AccountService;
 import services.ContactService;
-import services.PlayerService;
 
+/**
+ * This servlet is used for a user to look over the details of their account as 
+ * well as any curling league related information. A user can also edit several 
+ * details regarding their account.
+ * @author CurlingCapstone
+ */
 public class MyAccountServlet extends HttpServlet {
 
-    
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,6 +49,14 @@ public class MyAccountServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/WEB-INF/myAccount.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -163,7 +181,6 @@ public class MyAccountServlet extends HttpServlet {
                 else if (user.getPassword().equals(newPassword))
                     request.setAttribute("message", "samePassword");
                
-            
                 else {
                     AccountService accService = new AccountService();
                     accService.update(user.getUserID(), user.getEmail(), newPassword, user.getRole().getRoleID(), true);
@@ -176,6 +193,7 @@ public class MyAccountServlet extends HttpServlet {
         user = accService.getByUserID(user.getUserID());
         request.setAttribute("display", display);
         session.setAttribute("user", user);
+        
         getServletContext().getRequestDispatcher("/WEB-INF/myAccount.jsp").forward(request, response);
     }
 }

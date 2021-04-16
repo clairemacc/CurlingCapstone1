@@ -1,10 +1,8 @@
 package services;
 
-
 import dataaccess.ExecutiveDB;
 import dataaccess.LeagueDB;
 import dataaccess.SpareDB;
-import dataaccess.TeamDB;
 import java.util.ArrayList;
 import java.util.List;
 import models.Executive;
@@ -14,7 +12,7 @@ import models.Team;
 
 /**
  * Provides operations such as retrieve, insert, update and delete pertaining to leagues
- * 
+ * @author CurlingCapston
  */
 public class LeagueService {
     

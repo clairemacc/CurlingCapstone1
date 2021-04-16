@@ -10,8 +10,23 @@ import javax.servlet.http.HttpSession;
 import models.User;
 import services.AccountService;
 
+/**
+ * This servlet allows a player or executive to login. User input is checked against 
+ * the database to authenticate the user and grant them access. Once the user is logged
+ * in, they will have access to more restricted areas of the website, like score
+ * submission and account management. 
+ * @author CurlingCapstone
+ */
 public class LoginServlet extends HttpServlet {
 
+    /**
+     * Handles the HTTP GET method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -31,9 +46,16 @@ public class LoginServlet extends HttpServlet {
         }
         
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);  
-         
     }
 
+    /**
+     * Handles the HTTP POST method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,6 +85,7 @@ public class LoginServlet extends HttpServlet {
                 return;
             }
         }
+        
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 }
