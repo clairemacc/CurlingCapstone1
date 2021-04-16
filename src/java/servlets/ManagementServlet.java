@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import static java.lang.System.currentTimeMillis;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import models.Executive;
 import models.Game;
 import models.League;
+import models.NewsPost;
 import models.Player;
 import models.Registration;
 import models.Position;
@@ -577,6 +579,23 @@ public class ManagementServlet extends HttpServlet {
             }
         }
         
+        /////
+        
+        String postAction = request.getParameter("postAction");
+        if (postAction != null) {
+            if (postAction.equals("editPost")) {
+                String postID = request.getParameter("editPostButton");
+                request.setAttribute("editingPost", true);
+                NewsPostService newsService = new NewsPostService();
+                
+                NewsPost news = newsService.get(postID);
+                request.setAttribute("thisPost", news);
+            }
+            else if (postAction.equals("addPost")) 
+                request.setAttribute("addingPost", true);
+            
+        }
+        
         
         
         request.setAttribute("mgmtDisplay", mgmtDisplay);
@@ -1025,6 +1044,54 @@ public class ManagementServlet extends HttpServlet {
             
             request.setAttribute("scores", scoreService.getAll());
             
+        }
+        
+        ////
+        
+        String postAction = request.getParameter("postAction");
+        if (postAction != null) {
+            NewsPostService newsService = new NewsPostService();
+            if (request.getParameter("discard") == null) {
+                if (postAction.equals("savePost")) {
+                    String postID = request.getParameter("savePostButton");
+
+                    String title = request.getParameter("title");
+                    String body = request.getParameter("body");
+
+                    if (title == null || title.equals("") || body == null || body.equals("")) {
+                        request.setAttribute("message", "nullFields");
+                        request.setAttribute("editingPost", true);
+                        request.setAttribute("thisPost", newsService.get(postID));
+                    }
+                    else {
+                        newsService.update(postID, title, body);
+                        request.setAttribute("editingPost", false);
+                    }
+                }
+                else if (postAction.equals("deletePost")) {
+                    String postID = request.getParameter("realDeletePostButton");
+                    newsService.delete(postID);
+                }
+                else if (postAction.equals("createNewsPost")) {
+                    String title = request.getParameter("title");
+                    String body = request.getParameter("body");
+                    
+                    if (title == null || title.equals("") || body == null || body.equals("")) {
+                        request.setAttribute("message", "nullFields");
+                        request.setAttribute("addingPost", true);
+                    }
+                    else {
+                        long timeMillis = currentTimeMillis();
+                        Date postDate = new Date(timeMillis);
+                        
+                        newsService.insert(title, body, user, postDate);
+                    }
+                }
+            }
+            
+            
+            
+            request.setAttribute("newsPosts", newsService.getAll());
         }
         
         getServletContext().getRequestDispatcher("/WEB-INF/management.jsp").forward(request, response);

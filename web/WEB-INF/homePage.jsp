@@ -22,7 +22,6 @@
                     <c:when test="${role.roleID eq 2}">
                         <jsp:include page="./subpages/navbarPlayer.jsp"></jsp:include>
                     </c:when>
-                    
                     <c:otherwise>
                         <jsp:include page="./subpages/navbarGeneral.jsp"></jsp:include>
                     </c:otherwise>

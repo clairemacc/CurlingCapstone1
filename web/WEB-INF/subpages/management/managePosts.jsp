@@ -9,58 +9,92 @@
     </tr>
     <tr>
         <td>
-            <form method="post" action="management">
-                <table class="manageAccountsTable teamsTable score" style="border-collapse: collapse">
-                    <tr>
-                        <th style="width: 80px">Post ID</th>
-                        <th style="width: 120px;">Date</th>
-                        <th style="width: 250px">Title</th>
-                        <th style="width: 170px">Author</th> 
-                        <th></th>
-                    </tr>
-                    <c:forEach var="news" items="${newsPosts}">
-                        <tr>
-                            <td>${news.postID}</td>
-                            <td><fmt:formatDate type="date" value="${news.postDate}"/></td>                        
-                            <td>${fn:replace(news.title, "\\'", "'")}</td>
-                            <td>${news.userID.contactID.firstName} ${news.userID.contactID.lastName}</td>
-                            <td>
-                                <div id="edit${news.postID}">
-                                    <button type="submit" onclick="displayPostEdit(this.value)" name="editPostButton" value="${news.postID}">Edit</button>
-                                    <button type="button" onclick="displayPostDelete(this.value)" name="deletePostButton" value="${news.postID}">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <input type="hidden" name="postAction" value="editPost">
-            </form>
-            
-            <c:if test="${editingPost == true}">
-                <form method="post" action="management">
-                    <div name="editNewsPost" class="editNewsPost" id="editNewsPost">
-                        <table>
+            <c:choose>
+                <c:when test="${editingPost == true}">
+                    <form method="post" action="management">
+                        <div name="editNewsPost" class="editNewsPost" id="editNewsPost">
+                            <table>
+                                <tr>
+                                    <td><b>Title: </b>&emsp;<input type="text" size="40" style="font-size: 16px;"name="title" value="${thisPost.title}"></td>
+                                </tr>
+                                <tr>
+                                    <td><textarea class="textareaClass" name="body" value="${thisPost.body}" rows="13" cols="80" placeholder="Write your message here">${thisPost.body}</textarea></td>
+                                </tr>
+                                <c:if test="${message == 'nullFields'}">
+                                    <tr>
+                                        <td style="color: #CC3333"><b>Error: Fields cannot be null.</b></td>
+                                    </tr>
+                                </c:if>
+                            </table>
+                            <button type="submit" name="savePostButton" value="${thisPost.postID}">Save</button>&ensp;
+                            <button type="submit" name="discard">Discard</button>
+                        </div>
+                        <input type="hidden" name="postAction" value="savePost">
+                    </form>
+                </c:when>
+                <c:when test="${addingPost == true}">
+                    <form method="post" action="management">
+                        <div name="createNewsPost" class="editNewsPost" id="createNewsPost">
+                            <table>
+                                <tr>
+                                    <td><b>Title: </b>&emsp;<input type="text" size="40" style="font-size: 16px;"name="title" value="${newTitle}"></td>
+                                </tr>
+                                <tr>
+                                    <td><textarea class="textareaClass" name="body" value="${newBody}" rows="13" cols="80" placeholder="Write your new post here"></textarea></td>
+                                </tr>
+                                <c:if test="${message == 'nullFields'}">
+                                    <tr>
+                                        <td style="color: #CC3333"><b>Error: Fields cannot be null.</b></td>
+                                    </tr>
+                                </c:if>
+                            </table>
+                            <button type="submit" name="postAction" value="createNewsPost">Create post</button>&ensp;
+                            <button type="submit" name="discard">Discard</button>
+                        </div>
+                    </form>
+                </c:when>
+                
+                <c:otherwise>
+                </td></tr>
+                <tr>
+                    <td class="addNewPost"><form method="get" action="management"><button type="submit" name="postAction" value="addPost">Write a new post</button></form></td>
+                </tr>
+                    <form method="get" action="management">
+                        <table class="manageAccountsTable teamsTable score" style="border-collapse: collapse">
                             <tr>
-                                <td><b>Title: </b>&emsp;<input type="text" name="postTitle" value="${thisPost.title}"></td>
+                                <th style="width: 80px">Post ID</th>
+                                <th style="width: 120px;">Date</th>
+                                <th style="width: 250px">Title</th>
+                                <th style="width: 170px">Author</th> 
+                                <th></th>
                             </tr>
-                            <tr>
-                                <td><textarea class="textareaClass" name="body" value="${thisPost.body}" rows="10" cols="50" placeholder="Write your message here"></textarea></td>
-                            </tr>
+                            <c:forEach var="news" items="${newsPosts}">
+                                <tr>
+                                    <td>${news.postID}</td>
+                                    <td><fmt:formatDate type="date" value="${news.postDate}"/></td>                        
+                                    <td>${fn:replace(news.title, "\\'", "'")}</td>
+                                    <td>${news.userID.contactID.firstName} ${news.userID.contactID.lastName}</td>
+                                    <td>
+                                        <div id="edit${news.postID}">
+                                            <button type="submit" name="editPostButton" value="${news.postID}">Edit</button>
+                                            <button type="button" onclick="displayPostDelete('${news.title}', this.value)" name="deletePostButton" value="${news.postID}">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </table>
-                        <button type="submit" name="saveNewsPost" id="realDeleteScoreButton">Save</button>&ensp;
-                        <button type="button" name="discardPost" onclick="discard()">Discard</button>
-                    </div>
-                    <input type="hidden" name="scoreAction" value="deleteScore">
-                </form>
-            </c:if>
+                        <input type="hidden" name="postAction" value="editPost">
+                    </form>
+                </c:otherwise>
+            </c:choose>
             
             <form method="post" action="management">
-                <div name="deleteScore" class="deleteTeam" id="deleteThisScore">
+                <div name="deletePost" class="deleteTeam" id="deleteThisPost">
                     <h4></h4>
-                    <button type="submit" name="realDeleteScoreButton" id="realDeleteScoreButton">Delete</button>&ensp;
+                    <button type="submit" name="realDeletePostButton" id="realDeletePostButton">Delete</button>&ensp;
                     <button type="button" name="cancelDelete" onclick="closeDelete()">Cancel</button>
                 </div>
-                <input type="hidden" name="scoreAction" value="deleteScore">
+                <input type="hidden" name="postAction" value="deletePost">
             </form>
             
         </td>
@@ -68,70 +102,28 @@
 </table>
 
 <script type="text/javascript">
-    var editingThis = document.getElementById("editingScore").innerHTML;
-    if (editingThis === "")
-        document.getElementById("editingScore").innerHTML;
-    else {
-        displayScoreEdit(editingThis);
+    function displayPostDelete(title, postID) {
+        document.getElementById("deleteThisPost").children[0].innerHTML = '';
+        var text = 'Are you sure you want to permanently delete the post \"' + title + '\"?';
+        document.getElementById("deleteThisPost").children[0].innerHTML = text;
+        document.getElementById("deleteThisPost").style.display = "block";
+        document.getElementById("realDeletePostButton").value = postID;
     }
     
-    function displayScoreEdit(gameID) {
-        document.getElementById(gameID + "input").style.display = "block";
-        document.getElementById(gameID + "txt").style.display = "none";
-        
-        for (i = 0; i < editbtns.length; i++) {
-            editbtns[i].disabled = "disabled";
-            deletebtns[i].disabled = "disabled";
-        } 
-        
-        document.getElementById("edit" + gameID).style.display = "none";
-        document.getElementById("save" + gameID).style.display = "block";
-    }
-
-    function displayScoreDelete(gameID) {
-        document.getElementById("deleteThisScore").children[0].innerHTML = '';
-        var text = 'Are you sure you want to permanently delete the score of the game \"' + gameID + '\"?';
-        document.getElementById("deleteThisScore").children[0].innerHTML = text;
-        document.getElementById("deleteThisScore").style.display = "block";
-        document.getElementById("realDeleteScoreButton").value = gameID;
-    }
-    
-    function discardScore(gameID) {
-        document.getElementById("edit" + gameID).style.display = "block";
-        document.getElementById("save" + gameID).style.display = "none";
-        
-        document.getElementById(gameID + "txt").style.display = "block";
-        document.getElementById(gameID + "input").style.display = "none";
-        
-        for (i = 0; i < editbtns.length; i++) {
-            editbtns[i].disabled = "";
-            deletebtns[i].disabled = "";
-        } 
-        
-        document.getElementById("errorRow").style.display = "none";
-    }
-
     function closeDelete() {
-        document.getElementById("deleteThisScore").style.display = "none";
+        document.getElementById("deleteThisPost").style.display = "none";
     }
 </script>
 
 <style>
-    .score button {
-        
-    }
-    .score button:hover {
-        font-weight: normal;
+    .addNewPost button {
+        background: #596b94;
+        color:white;
+        border: none;
     }
     
-    .score tr td {
-        padding: 0px;
-        padding-right: 20px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .score tr th {
-        padding: 0px;
-        padding-right: 15px;
+    .addNewPost button:hover {
+        background: #afbbc7;
+        color: #000;
     }
 </style>
